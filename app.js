@@ -53,7 +53,7 @@ io.on('connection', function (socket) {
 mongoose.Promise = global.Promise;
 // mongoose.connect("mongodb://localhost:27017/anatomik-dev");
 //Database connection
-mongoose.connect(configDB.preprod)
+mongoose.connect(configDB.production)
   .catch(err => {
     console.log(err);
   });

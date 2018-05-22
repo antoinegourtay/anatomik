@@ -1,5 +1,5 @@
 {
     "localhost": "mongodb://localhost:27017/anatomik-dev",
     "preprod": "mongodb://antoineheroku:handball72@ds119489.mlab.com:19489/heroku_xjh43k4f",
-    "production": "mongodb://anatomikadmin:<dbpassword>@ds231700-a0.mlab.com:31700,ds231700-a1.mlab.com:31700/heroku_t0g6wf1t?replicaSet=rs-ds231700"
+    "production": "mongodb://anatomikadmin:@stephane2306@ds231700-a0.mlab.com:31700,ds231700-a1.mlab.com:31700/heroku_t0g6wf1t?replicaSet=rs-ds231700"
 }

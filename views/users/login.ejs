@@ -1,0 +1,42 @@
+<head>  
+
+<title> <%= title %> </title>
+
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<div class="login row">
+  <div class="login__form">
+    <div class="login__form--title">
+      <h1>Connexion</h1>
+    </div>
+    <div class="login__form--form">
+      <form action="/login" method="post" class="col s12">
+        <div class="input-field col s12">
+          <input type="email" name="email" class="validate" placeholder="Email">
+        </div>
+
+        <div class="input-field col s12">
+          <input type="password" name="password" class="validate" placeholder="Mot de passe">
+        </div>
+
+        <div class="input-field col s12">
+          <a href="/forgot">Mot de passe oublié ?</a>
+        </div>
+
+        <div class="button col s12">
+          <input type="submit" name="submit">
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<%- include('../partials/footer'); %>

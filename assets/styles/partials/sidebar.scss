@@ -1,0 +1,122 @@
+
+  ul{
+    &.side-nav{
+      margin-top: 64px;
+      width: 100px;
+      @media (max-width: 992px) {
+        width: 240px;
+        margin: 0;
+      }
+      li{
+        &.userInfos{
+          display: none;
+          @media (max-width: 992px) {
+            display: block;
+          }
+        }
+        a{
+          display: flex;
+          align-items: center;
+          margin-top: 20px;
+          &:hover{
+            background: none;
+          }
+          img{
+            width: 100%;
+            opacity: 0.3;
+            @media (max-width: 992px) {
+              opacity: 1;
+              width: 30px;
+            }
+            &:hover{
+              opacity: 1;
+            }
+          }
+          svg{
+            opacity: 0.3;
+            color: #D60968;
+            width: 36px;
+            height: 36px;
+            @media (max-width: 992px) {
+              opacity: 1;
+              width: 30px;
+            }
+          }
+          span{
+            display: none;
+            @media (max-width: 992px) {
+              display: block;
+              margin-left: 20px;
+            }
+          }
+        }
+      }
+      @media (min-width: 992px) {
+        &:hover{
+          width: 240px;
+          opacity: 1;
+          li{
+            a{
+              &.selected{
+                height: 58px !important;
+              }
+              img{
+                width: auto;
+                margin-right: 15px;
+                width: 40px;
+              }
+              span{
+                display: block;
+                color: #D60968;
+                opacity: 0.3;
+              }
+              &:hover{
+                img{
+                  opacity: 1;
+                }
+                span{
+                  color: #D60968;
+                }
+              }
+            }
+            &:hover{
+              a{
+                span{
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+      }
+
+  }
+}
+
+.content{
+  margin-left: 100px;
+  padding: 20px;
+  @media (max-width: 992px) {
+    margin: 0;
+  }
+}
+
+#slide-out{
+
+  .profil{
+    display: flex;
+    width: 64px;
+    height: 64px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 50%;
+    img{
+      width: 100%;
+    }
+  }
+  .selected{
+    background-color: #ffffff;
+    box-shadow: 0 1px 14px 0 rgba(214, 9, 104, 0.2);
+  }
+}

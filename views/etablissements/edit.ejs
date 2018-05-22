@@ -1,0 +1,258 @@
+<%- include('../partials/header'); %>
+<div class="row">
+  <%- include('../partials/sidenav'); %>
+  <div class="newEtablissement content">
+    <h2>Modifier un établissement</h2>
+    <form class="col s12 formValidate" id="formValidate" method="post" action="<%= endpoint %>">
+      <div class="row white">
+        <% if(user.organizationType === "Anatomik"){%>
+          <div class="input-field col s12">
+            <p>Choisissez une association</p>
+            <select name="association" class="js-example-basic-single" data-error="errorEtablissementAssociation">
+              <%associations.forEach(function(association){%>
+                <% if (etablissement.association != undefined){%>
+                  <option <% if(etablissement.association.id === association.id){ %> selected <% } %> value="<%= association.id %>"><%= association.name %></option>
+                <%}%>
+                <option value="<%= association.id %>"><%= association.name %></option>
+              <%})%>
+            </select>
+          </div>
+        <%}%>
+        <div class="input-field col s12">
+          <label for="name">Nom</label>
+          <input class="validate" type="text" id="name" name="name" value="<%= etablissement.name %>" data-error=".errorEtablissementName">
+          <div class="errorEtablissementName"></div>
+        </div>
+        <div class="input-field col s12">
+          <label for="name">Adresse</label>
+          <input class="validate" type="text" id="adresse" name="adresse" value="<%= etablissement.adresse %>" data-error=".errorEtablissementAdresse">
+          <div class="errorEtablissementAdresse"></div>
+        </div>
+        <div class="input-field col s6">
+          <label for="adresse">Complément d'adresse</label>
+          <input class="validate" type="text" placeholder="" name="complement_adresse" value="<%= etablissement.complement_adresse %>" >
+          <div class="errorAdress"></div>
+        </div>
+
+        <div class="input-field col s12">
+          <label for="name">Code Postal</label>
+          <input class="validate" type="number" id="code_postal" name="code_postal" value="<%= etablissement.code_postal %>" data-error=".errorEtablissementZip">
+          <div class="errorEtablissementZip"></div>
+        </div>
+        <div class="input-field col s12">
+          <label for="name">Ville</label>
+          <input class="validate" type="text" id="ville" name="ville" value="<%= etablissement.ville %>" data-error=".errorEtablissementVille">
+          <div class="errorEtablissementVille"></div>
+        </div>
+        <div class="input-field col s12">
+          <label for="name">Pays</label>
+          <input class="validate" type="text" id="pays" name="pays" value="<%= etablissement.pays %>" data-error=".errorEtablissementPays">
+          <div class="errorEtablissementPays"></div>
+        </div>
+        <div class="input-field col s12">
+          <p>Type d'établissement</p>
+          <select name="type" class="js-example-basic-single" data-error="errorEtablissementType">
+            <option value="<%= etablissement.type %>"><%= etablissement.type %></option>
+            <option value="Aucun(e)">Aucun(e)</option>
+            <option value="Aire Station Nomades">Aire Station Nomades</option>
+            <option value="Appartement de Coordination Thérapeutique (A.C.T.)">Appartement de Coordination Thérapeutique (A.C.T.)</option>
+            <option value="Autre Centre d'Accueil">Autre Centre d'Accueil</option>
+            <option value="Bureau d'Aide Psychologique Universitaire (B.A.P.U.)">Bureau d'Aide Psychologique Universitaire (B.A.P.U.)</option>
+            <option value="Centre Accueil Demandeurs Asile (C.A.D.A.)">Centre Accueil Demandeurs Asile (C.A.D.A.)</option>
+            <option value="Centre Action Médico-Sociale Précoce (C.A.M.S.P.)">Centre Action Médico-Sociale Précoce (C.A.M.S.P.)</option>
+            <option value="Centre Circonscription Sanitaire et Sociale">Centre Circonscription Sanitaire et Sociale</option>
+            <option value="Centre d'Accueil Familial Spécialisé">Centre d'Accueil Familial Spécialisé</option>
+            <option value="Centre d'Action Educative (C.A.E.)">Centre d'Action Educative (C.A.E.)</option>
+            <option value="Centre de Jour pour Personnes Agées">Centre de Jour pour Personnes Agées</option>
+            <option value="Centre de Lutte Contre Cancer">Centre de Lutte Contre Cancer</option>
+            <option value="Centre Hébergement; Réinsertion Sociale (C.H.R.S.)">Centre Hébergement; Réinsertion Sociale (C.H.R.S.)</option>
+            <option value="Centre Hospitalier (C.H.)">Centre Hospitalier (C.H.)</option>
+            <option value="Centre Hospitalier Régional (C.H.R.)">Centre Hospitalier Régional (C.H.R.)</option>
+            <option value="Centre Hospitalier Spécialisé lutte Maladies Mentales">Centre Hospitalier Spécialisé lutte Maladies Mentales</option>
+            <option value="Centre hospitalier, ex Hôpital local">Centre hospitalier, ex Hôpital local</option>
+            <option value="Centre Médico-Psycho-Pédagogique (C.M.P.P.)">Centre Médico-Psycho-Pédagogique (C.M.P.P.)</option>
+            <option value="Centre Placement Familial Socio-Educatif (C.P.F.S.E.)">Centre Placement Familial Socio-Educatif (C.P.F.S.E.)</option>
+            <option value="Centre Postcure Malades Mentaux">Centre Postcure Malades Mentaux</option>
+            <option value="Centre Provisoire Hébergement (C.P.H.)">Centre Provisoire Hébergement (C.P.H.)</option>
+            <option value="Centre Social">Centre Social</option>
+            <option value="Centre soins accompagnement prévention addictologie (CSAPA)">Centre soins accompagnement prévention addictologie (CSAPA)</option>
+            <option value="Club Equipe de Prévention">Club Equipe de Prévention</option>
+            <option value="EHPA ne percevant pas des crédits d'assurance maladie">EHPA ne percevant pas des crédits d'assurance maladie</option>
+            <option value="EHPA percevant des crédits d'assurance maladie">EHPA percevant des crédits d'assurance maladie</option>
+            <option value="Etablissement d'Accueil Mère-Enfant">Etablissement d'Accueil Mère-Enfant</option>
+            <option value="Etablissement d'Accueil Temporaire d'Enfants Handicapés">Etablissement d'Accueil Temporaire d'Enfants Handicapés</option>
+            <option value="Etablissement d'Accueil Temporaire pour Adultes Handicapés">Etablissement d'Accueil Temporaire pour Adultes Handicapés</option>
+            <option value="Etablissement d'hébergement pour personnes âgées dépendantes">Etablissement d'hébergement pour personnes âgées dépendantes</option>
+            <option value="Etablissement de santé privé autorisé en SSR">Etablissement de santé privé autorisé en SSR</option>
+            <option value="Etablissement de Soins Chirurgicaux">Etablissement de Soins Chirurgicaux</option>
+            <option value="Etablissement de Soins Longue Durée">Etablissement de Soins Longue Durée</option>
+            <option value="Etablissement de Soins Médicaux">Etablissement de Soins Médicaux</option>
+            <option value="Etablissement de Soins Pluridisciplinaire">Etablissement de Soins Pluridisciplinaire</option>
+            <option value="Etablissement Expérimental Autres Adultes">Etablissement Expérimental Autres Adultes</option>
+            <option value="Etablissement Expérimental Enfance Protégée">Etablissement Expérimental Enfance Protégée</option>
+            <option value="Etablissement Expérimental pour Adultes Handicapés">Etablissement Expérimental pour Adultes Handicapés</option>
+            <option value="Etablissement Expérimental pour Enfance Handicapée">Etablissement Expérimental pour Enfance Handicapée</option>
+            <option value="Etablissement pour Déficient Moteur">Etablissement pour Déficient Moteur</option>
+            <option value="Etablissement pour Enfants ou Adolescents PolyhandicapésEtablissement Soins Obstétriques Chirurgico-Gynécologiques">Etablissement pour Enfants ou Adolescents PolyhandicapésEtablissement Soins Obstétriques Chirurgico-Gynécologiques</option>
+            <option value="Etablissement Soins Obstétriques Chirurgico-Gynécologiques">Etablissement Soins Obstétriques Chirurgico-Gynécologiques</option>
+            <option value="Foyer Club Restaurant">Foyer Club Restaurant</option>
+            <option value="Foyer d'Accueil Médicalisé pour Adultes Handicapés (F.A.M.)">Foyer d'Accueil Médicalisé pour Adultes Handicapés (F.A.M.)</option>
+            <option value="Foyer d'Accueil Polyvalent pour Adultes HandicapésFoyer d'Action Educative (F.A.E.)">Foyer d'Accueil Polyvalent pour Adultes HandicapésFoyer d'Action Educative (F.A.E.)</option>
+            <option value="Foyer d'Action Educative (F.A.E.)">Foyer d'Action Educative (F.A.E.)</option>
+            <option value="Foyer de l'Enfance">Foyer de l'Enfance</option>
+            <option value="Foyer de Vie pour Adultes Handicapés">Foyer de Vie pour Adultes Handicapés</option>
+            <option value="Foyer Hébergement Adultes Handicapés">Foyer Hébergement Adultes Handicapés</option>
+            <option value="Foyer Hébergement Enfants et Adolescents Handicapés">Foyer Hébergement Enfants et Adolescents Handicapés</option>
+            <option value="Foyer Jeunes Travailleurs non transformé en Résidence Soc.">Foyer Jeunes Travailleurs non transformé en Résidence Soc.</option>
+            <option value="Foyer Travailleurs Migrants non transformé en Résidence Soc.Groupement de coopération sanitaire - Etablissement de santé">Foyer Travailleurs Migrants non transformé en Résidence Soc.Groupement de coopération sanitaire - Etablissement de santé</option>
+            <option value="Groupement de coopération sanitaire - Etablissement de santé">Groupement de coopération sanitaire - Etablissement de santé</option>
+            <option value="Groupement de coopération sanitaire de moyens">Groupement de coopération sanitaire de moyens</option>
+            <option value="Hébergement Familles des Malades">Hébergement Familles des Malades</option>
+            <option value="Hôpital des armées">Hôpital des armées</option>
+            <option value="Hospitalisation à Domicile">Hospitalisation à Domicile</option>
+            <option value="Institut d'Education Sensorielle Sourd/Aveugle">Institut d'Education Sensorielle Sourd/Aveugle</option>
+            <option value="Institut Médico-Educatif (I.M.E.)">Institut Médico-Educatif (I.M.E.)</option>
+            <option value="Institut pour Déficients Auditifs">Institut pour Déficients Auditifs</option>
+            <option value="Institut pour Déficients Visuels">Institut pour Déficients Visuels</option>
+            <option value="Institut Thérapeutique Éducatif et Pédagogique (I.T.E.P.)Intermédiaire de Placement Social">Institut Thérapeutique Éducatif et Pédagogique (I.T.E.P.)Intermédiaire de Placement Social</option>
+            <option value="Intermédiaire de Placement Social">Intermédiaire de Placement Social</option>
+            <option value="Jardin d'Enfants Spécialisé">Jardin d'Enfants Spécialisé</option>
+            <option value="Lieux de vie">Lieux de vie</option>
+            <option value="Lits Halte Soins Santé (L.H.S.S.)">Lits Halte Soins Santé (L.H.S.S.)</option>
+            <option value="Logement Foyer non Spécialisé">Logement Foyer non Spécialisé</option>
+            <option value="Maison d'Accueil Spécialisée (M.A.S.)">Maison d'Accueil Spécialisée (M.A.S.)</option>
+            <option value="Maison d'Enfants à Caractère Social">Maison d'Enfants à Caractère Social</option>
+            <option value="Maison de Santé pour Maladies Mentales">Maison de Santé pour Maladies Mentales</option>
+            <option value="Maisons Relais - Pensions de Famille">Maisons Relais - Pensions de Famille</option>
+            <option value="Résidences Sociales Hors Maisons Relais-Pensions de Famille">Résidences Sociales Hors Maisons Relais-Pensions de Famille</option>
+            <option value="Service Action Educative en Milieu Ouvert (A.E.M.O.)">Service Action Educative en Milieu Ouvert (A.E.M.O.)</option>
+            <option value="Service d'Accompagnement à la Vie Sociale (S.A.V.S.)">Service d'Accompagnement à la Vie Sociale (S.A.V.S.)</option>
+            <option value="Service d'Aide aux Familles en Difficulté">Service d'Aide aux Familles en Difficulté</option>
+            <option value="Service d'Aide aux Personnes Agées">Service d'Aide aux Personnes Agées</option>
+            <option value="Service d'Éducation Spéciale et de Soins à Domicile">Service d'Éducation Spéciale et de Soins à Domicile</option>
+            <option value="Service d'Enquêtes Sociales (S.E.S.)">Service d'Enquêtes Sociales (S.E.S.)</option>
+            <option value="Service de Réparation Pénale">Service de Réparation Pénale</option>
+            <option value="Service Educatif Auprès des Tribunaux (S.E.A.T.)">Service Educatif Auprès des Tribunaux (S.E.A.T.)</option>
+            <option value="Service Investigation Orientation Educative (S.I.O.E.)">Service Investigation Orientation Educative (S.I.O.E.)</option>
+            <option value="Service Social Spécialisé ou Polyvalent de Catégorie">Service Social Spécialisé ou Polyvalent de Catégorie</option>
+            <option value="Village d'Enfants">Village d'Enfants</option>
+          </select>
+
+        </div>
+        <div class="errorEtablissementType"></div>
+
+        <div class="input-field col s12">
+          <label for="name">Téléphone</label>
+          <input class="validate" type="text" id="telephone" name="telephone" value="<%= etablissement.telephone %>" data-error=".errorEtablissementTelephone">
+          <div class="errorEtablissementTelephone"></div>
+        </div>
+        <div class="input-field col s12">
+          <label for="name">mail</label>
+          <input class="validate" type="email" id="mail" name="mail" value="<%= etablissement.mail %>" data-error=".errorEtablissementMail">
+          <div class="errorEtablissementMail"></div>
+        </div>
+        <% if (user.organizationType === "Anatomik" || user.organizationType === "Association" && user.role === "Admin") {%>
+          <div class="col s12">
+            <p>Établissement Supprimé ?</p>
+            <input type="radio" id="is_archive" name="is_archive" class="validate" value="true" <% if (etablissement.is_archive == true){ %> checked <% } %> >
+            <label for="is_archive">Oui</label>
+            <input type="radio" id="is_not_archive" name="is_archive" class="validate" value="false" <% if (etablissement.is_archive == false){ %> checked <% } %> >
+            <label for="is_not_archive">Non</label>
+          </div>
+          <%}%>
+        <button class="btn waves-effect waves-light blue" type="submit"  value="Enregistrer" name="action">Submit
+          <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<%- include('../partials/footer'); %>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $('select').material_select();
+});
+</script>
+
+
+
+<script type="text/javascript">
+
+  $("#formValidate").validate({
+   rules: {
+       name: {
+           required: true,
+       },
+       adresse: {
+           required: true,
+           minlength: 5
+       },
+       code_postal: {
+         required: true,
+         minlength: 5
+       },
+       ville: {
+         required: true,
+       },
+       pays: {
+         required: true,
+         minlength: 3
+       },
+       type: {
+         required: true,
+       },
+       telephone: {
+         required: true,
+         minlength: 10
+       },
+       mail: {
+         required: true,
+         minlength: 8
+       },
+   },
+   //For custom messages
+   messages: {
+       name:{
+           required: "Vous devez saisir le nom du nouvel établissement",
+       },
+       adresse:{
+           required: "Vous devez saisir l'adresse de l'établissement",
+           minlength: "l'adresse de l'établissement doit comporter au minimum 5 caractères"
+       },
+       code_postal:{
+           required: "Saisissez le code postal de votre établisement",
+           minlength: "Votre nom de famille doit comporter au minimum 5 caractères"
+       },
+       ville:{
+           required: "Saisissez la ville de votre établissement",
+       },
+       pays:{
+           required: "Saisissez le pays de votre établissement",
+           minlength: "Le pays de votre établissement doit comporter au minimum 3 caractères"
+       },
+       pays:{
+           required: "Saisissez le type de votre établissement",
+       },
+       telephone:{
+           required: "Saisissez le numéro de téléphone de votre établissement",
+           minlength: "le numéro de téléphone de votre établissement doit comporter au minimum 10 caractères"
+       },
+       mail:{
+           required: "Saisissez le numéro de mail de votre établissement",
+           minlength: "le mail de votre établissement doit comporter au minimum 8 caractères"
+       },
+   },
+   errorElement : 'div',
+   errorPlacement: function(error, element) {
+     var placement = $(element).data('error');
+     if (placement) {
+       $(placement).append(error)
+     } else {
+       error.insertAfter(element);
+     }
+   }
+});
+</script>

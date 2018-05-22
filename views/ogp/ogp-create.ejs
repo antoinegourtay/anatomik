@@ -1,0 +1,202 @@
+<%- include('../partials/header'); %>
+    <div class="row">
+    <%- include('../partials/sidenav'); %>
+    <div class="ogpCreate content">
+      <h4>Gestion de projet <span>- Création du projet</span></h4>
+      <h2>Informations générales</h2>
+        <form class="col s12 repeater ogpCreate__form" method="post" action="/ogp/create">
+          <div class="ogpCreate__form__part1">
+            <div class="ogpCreate__form__part1__left">
+              <div class="input-field col s12">
+                  <label for="name">Nom du projet</label>
+                  <input class="validate" type="text" id="name" name="name">
+              </div>
+              <div class="input-field col s12">
+                  <label for="domaine">Objectif</label>
+                  <input class="validate" type="text" placeholder="Construction d'un bâtiment annexe" id="objective" name="objective">
+              </div>
+              <div class="state col s12">
+                <h3>État</h3>
+                <div class="state__radio">
+                  <p>
+                    <input name="state" type="radio" id="previsionnel" value="Prévisionnel" />
+                    <label for="previsionnel">Prévisionnel</label>
+                  </p>
+                  <p>
+                    <input name="state" type="radio" id="encours" value="En cours" />
+                    <label for="encours">En cours</label>
+                  </p>
+                  <p>
+                    <input name="state" type="radio" id="termine" value="Terminé" />
+                    <label for="termine">Terminé</label>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="ogpCreate__form__part1__right">
+              <div class="input-field col s12">
+                  <label for="description">Description</label>
+                  <textarea name="description" placeholder="Décrivez plus en détail les objectifs du projet" class="materialize-textarea validate"></textarea>
+              </div>
+              <div class="input-field select col s12">
+                <p>Référent</p>
+                <select name="associationResponsible">
+                  <option value="" disabled selected>Choisissez un référent</option>
+                  <% associationUsers.forEach(function(users) { %>
+                    <option value="<%= users.id %>"><%= users.fullname %></option>
+                  <%})%>
+                </select>
+              </div>
+              <div class="input-field col s6">
+                  <label for="date_debut">Date de début</label>
+                  <input type="text" class="datepicker validate" name="date_debut" required>
+              </div>
+              <div class="input-field col s6">
+                  <label for="date_fin">Date de fin</label>
+                  <input type="text" class="datepicker validate" name="date_fin" required>
+              </div>
+            </div>
+          </div>
+          <h2>Phases du projet</h2>
+          <div class="ogpCreate__form__part2">
+              <div data-repeater-list="etape">
+                <div data-repeater-item class="etape--item">
+                  <div class="deletePhase">
+                    <input data-repeater-delete type="button"/>
+                  </div>
+                  <h2 class="count">Phase 1 </h2>
+                  <div class="ogpCreate__form__part2__left">
+                    <div class="input-field col s12">
+                      <label for="">Nom de la phase</label>
+                      <input type="text" name="nom_phase" class="validate" value=""/>
+                    </div>
+                    <div class="input-field col s12">
+                      <label for="">Description</label>
+                      <input type="text" name="description_phase" class="validate" value=""/>
+                    </div>
+                  </div>
+                  <div class="ogpCreate__form__part2__right">
+                    <div class="input-field col s12 m6">
+                        <label for="date_debut_phase">Date de début phase</label>
+                        <input type="text" class="datepicker validate" name="date_debut_phase" required>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <label for="date_fin_phase">Date de fin de la phase</label>
+                        <input type="text" class="datepicker validate" name="date_fin_phase" required>
+                    </div>
+                  </div>
+                  <div class="input-field select col s12">
+                    <p>Entreprise référente</p>
+                    <select name="entreprise_select">
+                      <option value="" disabled selected>Choisissez une entreprise</option>
+                      <% entreprises.forEach(function(entreprise) { %>
+                        <option value="<%= entreprise.id %>"><%= entreprise.name %></option>
+                      <%})%>
+                    </select>
+                  </div>
+
+                  <div class="ogpCreate__form__part2__bottom col s12">
+                    <!-- innner repeater -->
+                    <div class="inner-repeater col s12 m6 offset-m3">
+                      <div data-repeater-list="sous_phase">
+                        <div class="ogpCreate__form__part2__bottom--item" data-repeater-item>
+                          <p>Sous phase</p>
+                          <div class="delete">
+                            <input data-repeater-delete type="button" class="deleteSousPhase"/>
+                          </div>
+                          <div class="input-field col s12">
+                            <label for="">Nom de ma sous phase</label>
+                            <input type="text" name="nom_sous_phase" class="validate" value=""/>
+                          </div>
+                          <div class="input-field col s12">
+                            <label for="prix_sous_phase">Montant HT</label>
+                            <input type="text" name="prix_sous_phase" class="validate" value=""/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="addSousPhase">
+                        <input data-repeater-create type="button" value="ajouter une sous phase" class="repeater-button"/>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="ogpCreate__form__part3">
+              <input data-repeater-create type="button" value="Ajouter une phase" />
+            </div>
+            <div class="ogpCreate__form__submit">
+              <button class="submit" type="submit" value="Enregistrer" name="action">Valider</button>
+            </div>
+        </form>
+      </div>
+    </div>
+
+    <%- include('../partials/footer'); %>
+
+    <script type="text/javascript" src="/javascripts/picker.js"></script>
+    <script type="text/javascript" src="/javascripts/picker.date.js"></script>
+    <script type="text/javascript" src="/javascripts/fr_FR.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('.repeater').repeater({
+                    // (Required if there is a nested repeater)
+                    // Specify the configuration of the nested repeaters.
+                    // Nested configuration follows the same format as the base configuration,
+                    // supporting options "defaultValues", "show", "hide", etc.
+                    // Nested repeaters additionally require a "selector" field.
+                    repeaters: [{
+                        // (Required)
+                        // Specify the jQuery selector for this nested repeater
+                        selector: '.inner-repeater'
+                    }],
+                    isFirstItemUndeletable: true,
+                    show: function () {
+                         $(this).slideDown();
+                         $('.datepicker').pickadate();
+                         $('select').material_select();
+                         var divs = document.getElementsByClassName("count");
+                         for(var i = 0; i < divs.length; i++){
+                            divs[i].innerHTML = "phase " + (i+1);
+                         }
+                         $(".repeater-button").click(function(){
+                           setTimeout(function(){
+                             $('select').material_select();
+                           }, 10);
+                         });
+                     },
+                     hide: function (deleteElement) {
+                       if(confirm('Etes vous sur de vouloir supprimer le contenu de cette phase ?')) {
+                       $(this).slideUp(deleteElement);
+                     }
+                  },
+                });
+            });
+
+        </script>
+
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('select').material_select();
+            });
+
+
+            $(".repeater-button").click(function(){
+              setTimeout(function(){
+                $('select').material_select();
+              }, 10);
+            });
+
+
+
+            $('input[type="checkbox"]').on('change', function(test) {
+               $('input[type="checkbox"]').not(this).prop('checked', false);
+            });
+
+            $('.datepicker').pickadate();
+
+
+        </script>

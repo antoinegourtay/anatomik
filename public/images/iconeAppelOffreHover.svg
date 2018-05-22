@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="43px" viewBox="0 0 40 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>[DASHBOARD]APPELOFFRE</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="[DASHBOARD]APPELOFFRE" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="AppelOffre" transform="translate(5.000000, 9.000000)" stroke="#D60968">
+            <polygon id="Path-6" stroke-width="2" points="16.8376439 25 30 12.9555401 13.5240843 10 0 20.1535571"></polygon>
+            <polygon id="Path-6" stroke-width="2" points="16.8376439 21 30 8.95554013 13.5240843 6 0 16.1535571"></polygon>
+            <polygon id="Path-6" stroke-width="2" points="16.8376439 15 30 2.95554013 13.5240843 0 0 10.1535571"></polygon>
+            <path d="M12.7935484,3.25 L23.0129032,5.75" id="Line-2" stroke-linecap="square"></path>
+            <path d="M10.8580645,6.25 L21.0774194,8.75" id="Line-2" stroke-linecap="square"></path>
+        </g>
+    </g>
+</svg>

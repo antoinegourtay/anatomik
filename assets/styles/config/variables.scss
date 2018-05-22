@@ -1,0 +1,19 @@
+@mixin red-card {
+  box-shadow: 0 2px 15px 0 #c0c0c0;
+  border: solid 1px #d60968;
+  border-radius: 6px;
+  background: white;
+  padding-bottom: 30px !important;
+}
+
+@mixin red-card-h2 {
+  font-family: Avenir;
+  font-size: 16px;
+  font-weight: 900;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #d60968;
+}

@@ -1,0 +1,8 @@
+<h4><a href="/offers">Retrouner sur les offres</a></h4>
+<h2><%= offer.name %></h2>
+<p><%=offer.description%></p>
+<p><%=offer.price%>€</p>
+<p><%= offer.association.name %></p>
+<%if(user.organizationType == 'Association' && user.associationName == offer.associationName){%>
+  <a href="/offers/edit/<%= offer.id %>">Modifier</a>
+<%}%>

@@ -1,0 +1,199 @@
+body{
+  background: #f2f2f2;
+}
+
+.collapsible-header p {
+  width: 14%;
+  padding: 1rem;
+}
+
+.offers{
+  .pagination{
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: center;
+  }
+  &__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    @media (max-width: 600px) {
+      flex-direction: column;
+    }
+    &--left{
+      h1{
+        font-family: Avenir;
+        font-size: 42px;
+        font-weight: 900;
+        color: #d60968;
+        @media (max-width: 992px) {
+          font-size: 16px;
+        }
+        span{
+          font-size: 18px;
+          font-weight: 500;
+          color: #000000;
+          @media (max-width: 992px) {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+    &--right{
+      display: flex;
+      a{
+        background: white;
+        padding: 20px;
+        border-radius: 6px;
+        margin-left: 20px;
+        font-family: Avenir;
+        font-size: 20px;
+        font-weight: 500;
+        text-align: center;
+        color: #d60968;
+        display: flex;
+        align-items: center;
+        svg{
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+
+  &__collapsible{
+    &--header{
+      ul{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        li{
+          opacity: 0.8;
+          text-align: center !important;
+          font-family: Avenir;
+          font-size: 14px;
+          font-weight: 500;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          text-align: left;
+          color: #d60968;
+          text-transform: uppercase;
+        }
+      }
+    }
+    &__hidden{
+      &__left{
+        &--lieu{
+          p{
+            font-family: Avenir-Roman;
+            font-size: 13px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: left;
+            color: black;
+            text-transform: uppercase;
+            span{
+              color: #d60968;
+            }
+          }
+        }
+        &--description{
+          h2{
+            font-family: Avenir-Roman;
+            font-size: 13px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: left;
+            color: #000000;
+            text-transform: uppercase;
+          }
+          p{
+            font-family: Avenir-Roman;
+            font-size: 13px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: 1.46;
+            letter-spacing: normal;
+            text-align: left;
+            color: #a4a4a4;
+            border-radius: 12px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px 0 rgba(230, 230, 230, 0.5);
+            padding: 20px;
+          }
+        }
+      }
+      &__right{
+        &--contact{
+          background-color: #ffffff;
+          box-shadow: 0 2px 4px 0 rgba(230, 230, 230, 0.5);
+          padding: 20px !important;
+          .top{
+            display: flex;
+            align-items: center;
+            img{
+              width: 46px;
+            }
+            .contact{
+              display: flex;
+              flex-direction: column;
+              margin-left: 20px;
+              border-radius: 6px;
+              a{
+                font-family: Avenir;
+                font-size: 12px;
+                font-weight: 500;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: normal;
+                text-align: left;
+                color: #120000;
+              }
+              p{
+                font-family: Avenir;
+                font-size: 12px;
+                font-weight: 300;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: normal;
+                text-align: left;
+                color: #000000;
+                margin: 0;
+              }
+            }
+          }
+          p{
+            font-family: Avenir;
+            font-size: 12px;
+            font-weight: 300;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: left;
+            color: black;
+            span{
+              color: #d60968;
+            }
+          }
+        }
+      }
+    }
+    &--visible{
+      p{
+        text-align: center;
+      }
+    }
+  }
+
+}

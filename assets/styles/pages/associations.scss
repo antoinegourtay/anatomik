@@ -1,0 +1,253 @@
+body{
+  background: #f2f2f2;
+}
+.association{
+  &.content{
+    padding: 0;
+  }
+  &__content{
+    padding: 30px;
+    @media (max-width: 992px) {
+      padding: 0px;
+    }
+  }
+  &__header{
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 40px;
+    background-image: url('../images/pattern.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    @media (max-width: 600px) {
+      flex-direction: column;
+    }
+    img{
+      &.assoImg{
+        border-radius: 6px;
+        width: 300px;
+      }
+    }
+    &__infos{
+      margin-left: 30px;
+      &--social{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        a{
+          .site{
+            color: white;
+            border: 1px solid white;
+            border-radius: 12pc;
+            padding: 5px;
+          }
+        }
+      }
+    }
+  }
+  &__content{
+    @media (max-width: 992px) {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+    &__left{
+      padding: 30px;
+      &__etablissements{
+        h2{
+          margin-top: 20px;
+          margin-bottom: 30px;
+          font-family: Avenir;
+          font-size: 16px;
+          color: #d60968;
+          font-weight: bold;
+        }
+        ul{
+          background: transparent;
+        }
+        &--liste{
+          border-radius: 6px;
+          background-color: #ffffff;
+          box-shadow: 0px 1px 2px 0px #c0c0c0;
+          height: auto;
+          max-height: 400px;
+          overflow-y: scroll;
+          margin-bottom: 40px;
+          tr{
+            box-shadow: 0 1px 4px 0 rgba(230, 230, 230, 0.5);
+          }
+          td{
+            font-family: Avenir-Roman;
+            font-size: 13px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            color: #000000;
+            @media (max-width: 600px) {
+              font-size: 12px;
+            }
+          }
+        }
+        &--carte{
+        }
+      }
+      &__membres{
+        height: auto;
+        max-height: 400px;
+        overflow-y: scroll;
+        h2{
+          margin-top: 20px;
+          margin-bottom: 30px;
+          font-family: Avenir;
+          font-size: 16px;
+          color: #d60968;
+          font-weight: bold;
+        }
+        table{
+          tr{
+            @media (max-width: 600px) {
+              font-size: 12px;
+            }
+            border-radius: 6px;
+            background-color: #ffffff;
+            box-shadow: 0px 1px 2px 0px #c0c0c0;
+            td{
+              img {
+                width: 50px !important;
+                height: 50px;
+              }
+              a{
+                font-family: Avenir;
+                font-size: 16px;
+                font-weight: 900;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: normal;
+                text-align: center;
+                color: #d60968;
+                @media (max-width: 600px) {
+                  font-size: 12px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    &__right{
+      &__informations{
+        background: white !important;
+        margin-top: -80px;
+        @include red-card;
+        padding-bottom: 30px !important;
+        @media (max-width: 992px) {
+          margin-top: 40px;
+        }
+        h2{
+          @include red-card-h2;
+        }
+      }
+      &__siege{
+        background: white !important;
+        margin-top: 30px !important;
+        @include red-card;
+        h2{
+          @include red-card-h2;
+        }
+        #map {
+          border-radius: 6px;
+          background-color: #ffffff;
+          box-shadow: 0px 1px 2px 0px #c0c0c0;
+          width: 100%;
+          height: 400px;
+          background-color: grey;
+        }
+        @include red-card;
+        h2{
+          @include red-card-h2;
+        }
+      }
+      &__about{
+        margin-top: 30px;
+        @include red-card;
+        background: white;
+        h2{
+          @include red-card-h2;
+        }
+        p{
+          font-family: Avenir-Roman;
+          font-size: 13px;
+          line-height: 1.46;
+          letter-spacing: normal;
+          text-align: left;
+          color: #a4a4a4;
+        }
+      }
+      &__informations{
+        &--top{
+          .line1{
+            font-size: 18px;
+            font-family: Avenir;
+            color: black;
+            @media (max-width: 600px) {
+              font-size: 12px;
+            }
+          }
+          p{
+            line-height: 0;
+          }
+          .line2{
+            font-size: 14px;
+            color: #D60968;
+            @media (max-width: 600px) {
+              font-size: 12px;
+            }
+          }
+          .right{
+            text-align: right;
+          }
+        }
+        &--middle{
+          margin-top: 50px;
+          .telephone , .mail , .site{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            p{
+              font-family: Avenir;
+              font-size: 20px;
+              font-weight: 500;
+              color: #000000;
+              margin-top: 20px;
+              margin-bottom: 10;
+              @media (max-width: 600px) {
+                font-size: 14px;
+              }
+            }
+            a{
+              font-family: Avenir;
+              font-size: 14px;
+              font-weight: 500;
+              color: #d60968;
+              @media (max-width: 600px) {
+                font-size: 12px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+#map1 {
+  border-radius: 6px;
+  background-color: #ffffff;
+  box-shadow: 0px 1px 2px 0px #c0c0c0;
+  width: 100%;
+  height: 400px;
+  background-color: grey;
+}

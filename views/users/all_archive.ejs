@@ -1,0 +1,54 @@
+<%- include('../partials/header'); %>
+<div class="row">
+  <%- include('../partials/sidenav'); %>
+  <div class="users content">
+    <div class="showAssociations__header">
+      <h2>Gestion des membres</h4>
+      <div class="showAssociations__header--right">
+          <a href="/users/show/1"><i data-feather="plus-square"></i>Membres en ligne</a>
+          <a href="/signup"><i data-feather="plus-square"></i>Ajouter un membre</a>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Restaurer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach(function(usr) { %>
+          <tr>
+            <td><%=usr.firstname%></td>
+            <td><%=usr.lastname%></td>
+            <td><a class="modal-trigger" href="#modal1">Restaurer</a></td>
+          </tr>
+
+          <!-- Modal Structure -->
+          <div id="modal1" class="modal">
+            <div class="modal-content">
+              <h4>Restaurer ?</h4>
+              <p>En cliquant sur continuer, vous restaurerez le membre <%=usr.fullname%>. Etes vous sur de vouloir continuer ? </p>
+            </div>
+            <div class="modal-footer">
+              <a href="/users/restore/<%=usr.id%>" class="modal-action modal-close waves-effect waves-green btn-flat">OUI</a>
+              <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">NON</a>
+            </div>
+          </div>
+        <%})%>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<%- include('../partials/footer'); %>
+
+<script type="text/javascript">
+$(document).ready(function(){
+// the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+$('.modal').modal();
+});
+
+</script>

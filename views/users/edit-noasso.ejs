@@ -1,0 +1,135 @@
+<%- include('../partials/header'); %>
+
+<div class="row">
+  <%- include('../partials/sidenav'); %>
+  <div class="editProfile content">
+    <div class="row white">
+      <h2>Éditer Mon profil</h2>
+      <form class="col s12" id="formValidate" action="/profile/<%= user_profile.id%>" method="post">
+        <div class="input-field col s12">
+          <label>Email *</label>
+          <input type="email" class="form-control" name="email" placeholder="thomas@gmail.fr" value="<%= user_profile.email %>" data-error=".errorEmail">
+          <div class="errorEmail"></div>
+        </div>
+        <div class="input-field col s6">
+          <label>Prénom *</label>
+          <input type="text" class="form-control" name="firstname" placeholder="Thomas" value="<%= user_profile.firstname %>" data-error=".errorPrenom">
+          <div class="errorPrenom"></div>
+        </div>
+        <div class="input-field col s6">
+          <label>Nom de famille *</label>
+          <input type="text" class="form-control" name="lastname" placeholder="Dupuis" value="<%= user_profile.lastname %>" data-error=".errorNom">
+          <div class="errorNom"></div>
+        </div>
+        <div class="input-field col s12">
+          <label>Mot de passe *</label>
+          <input type="password" class="form-control" placeholder="motdepasse" name="password" data-error=".errorPassword">
+          <div class="errorPassword"></div>
+        </div>
+        <div class="input-field col s12">
+          <label>Poste *</label>
+          <input type="text" class="form-control validate" placeholder="Directeur d'établissement" placeholder="Directeur d'établissement" name="poste" data-error=".errorPoste">
+          <div class="errorPoste"></div>
+        </div>
+        <div class="input-field col s12">
+          <div class="input-field">
+            <textarea id="textarea1" name="description" placeholder="Je suis actuellement directeur de l'établissemnt des oliviers" class="materialize-textarea" value="<%= user_profile.description %>"><%= user_profile.description %></textarea>
+            <label for="textarea1">Description</label>
+          </div>
+        </div>
+        <div class="input-field col s12">
+          <label>Téléphone</label>
+          <input type="number" class="form-control" placeholder="0178028902" name="telephone" value="<%= user_profile.telephone %>">
+        </div>
+        <div class="input-field col s6">
+          <label>Instagram</label>
+          <input type="text" class="form-control" placeholder="https://www.instagram.com/thomas_dupuis/" name="instagram" value="<%= user_profile.instagram %>">
+        </div>
+        <div class="input-field col s6">
+          <label>Facebook</label>
+          <input type="text" class="form-control" placeholder="https://www.facebook.com/search/top/?q=thomas%20dupuis" name="facebook" value="<%= user_profile.facebook %>">
+        </div>
+        <div class="input-field col s6">
+          <label>Twitter</label>
+          <input type="text" class="form-control" placeholder="https://twitter.com/ThomasDupuis" name="twitter" value="<%= user_profile.twitter %>">
+        </div>
+        <div class="input-field col s6">
+          <label>Linkedin</label>
+          <input type="text" class="form-control" placeholder="https://www.linkedin.com/in/thomas-dupuis" name="linkedin" value="<%= user_profile.linkedin %>">
+        </div>
+        <div class="input-field col s12">
+          <label>Compétences</label>
+          <input type="text" class="form-control" id="competences" placeholder="Enfance, soins" name="competences" value="<%= user_profile.competences%>">
+        </div>
+        <div class="input-field col s12">
+          <button class="btn waves-effect waves-light blue" type="submit" name="submit">Enregistrer
+            <i class="material-icons right">send</i>
+          </button>
+        </div>
+    </form>
+  </div>
+</div>
+
+<%- include('../partials/footer'); %>
+<script type="text/javascript">
+
+$("#formValidate").validate({
+ rules: {
+     email: {
+         required: true,
+         minlength: 8
+     },
+     firstname: {
+         required: true,
+         minlength: 3
+     },
+     lastname: {
+       required: true,
+     },
+     password: {
+       required: true,
+     },
+     organizationType: {
+       required: true,
+     },
+     poste: {
+       required: true,
+       minlength: 3
+     },
+ },
+ //For custom messages
+ messages: {
+     email:{
+         required: "Vous devez saisir un email",
+         minlength: "Votre email doit comporter au minimum 8 caractères"
+     },
+     firstname:{
+         required: "Vous devez saisir votre prénom",
+         minlength: "Votre prénom doit comporter au minimum 3 caractères"
+     },
+     lastname:{
+         required: "Saisissez votre nom de famille",
+         minlength: "Votre nom de famille doit comporter au minimum 3 caractères"
+     },
+     password:{
+         required: "Saisissez votre mot de passe",
+     },
+     organizationType:{
+         required: "Saisissez votre organisation",
+     },
+     poste:{
+         required: "Saisissez votre poste",
+         minlength: "Votre poste doit comporter au minimum 3 caractères"
+     },
+ },
+ errorElement : 'div',
+ errorPlacement: function(error, element) {
+   var placement = $(element).data('error');
+   if (placement) {
+     $(placement).append(error)
+   } else {
+     error.insertAfter(element);
+   }
+ }
+});
+</script>

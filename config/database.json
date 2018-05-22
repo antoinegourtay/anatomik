@@ -1,0 +1,4 @@
+{
+    "localhost": "mongodb://localhost:27017/anatomik-dev",
+    "preprod": "mongodb://antoineheroku:handball72@ds119489.mlab.com:19489/heroku_xjh43k4f"
+}

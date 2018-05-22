@@ -1,0 +1,130 @@
+  <%- include('../partials/header'); %>
+
+  <%- include('../partials/sidenav'); %>
+
+        <div class="offers content">
+          <div class="offers__header">
+            <div class="offers__header--left">
+              <h1>Appels d'offres <span> - <%= offers.length %> offres en cours</span></h1>
+            </div>
+            <div class="offers__header--right">
+              <%if (user.organizationType == 'Association'){%>
+                <a href="/offers/new"><i data-feather="plus-square"></i>Ajouter un appel d'offre</a>
+                <a href="/offers/archives">Appel d'Offre terminés</a>
+              <%}%>
+            </div>
+          </div>
+          <div class="offers__collapsible ">
+          	<div class="offers__collapsible--header">
+          		<ul class="row">
+          			<li class="col s4 m2">Nom de l'association</li>
+          			<li class="col m2 hide-on-small-only">Type d'établissement</li>
+          			<li class="col s4 m2">Domaine</li>
+          			<li class="col m2 hide-on-small-only">Budget</li>
+                <li class="col m2 hide-on-small-only">Délai</li>
+                <%if (user.organizationType == 'Association'){%>
+                  <li class="col s4 m2">Modifier</li>
+                <%}%>
+          		</ul>
+          	</div>
+          </div>
+          <% for(var i=0; i<offers.length; i++) { %>
+            <ul class="collapsible" data-collapsible="accordion">
+              <li>
+                <div class="collapsible-header offers__collapsible--visible row">
+                  <p class="col s4 m2"><%=offers[i].association.name%></p>
+                  <p class="col m2 hide-on-small-only">association</p>
+                  <p class="col s4 m2"><%=offers[i].domaine%></p>
+                  <p class="col m2 hide-on-small-only"><%=offers[i].price%> €</p>
+                  <p class="col m2 hide-on-small-only"><%=offers[i].delai%></p>
+                  <%if (user.organizationType == 'Association' && user.association.id == offers[i].association.id){%>
+                  <p class="col s4 m2"><a href="/offers/edit/<%= offers[i].id%>">modifier</a></p>
+                  <%}%>
+                </div>
+                <div class="collapsible-body offers__collapsible__hidden row">
+                  <div class="offers__collapsible__hidden__left col s12 m6">
+                    <div class="offers__collapsible__hidden__left--lieu">
+                      <p class="hide-on-med-and-up">Type d'établissement : <span> test</span></p>
+                      <p class="hide-on-med-and-up">Budget : <span> <%=offers[i].price%> €</span></p>
+                      <p class="hide-on-med-and-up">Délai : <span> <%=offers[i].delai%></span></p>
+                    </div>
+                    <div class="offers__collapsible__hidden__left--description">
+                      <h2>description de l'offre</h2>
+                      <p><%=offers[i].description%></p>
+                    </div>
+                  </div>
+                  <div class="offers__collapsible__hidden__right--contact col s12 m3 offset-m1">
+                      <div class="top">
+                        <%if (offers[i].user.photo_profil ){%>
+                          <img src="/images/uploads/<%= offers[i].user.photo_profil%>" alt="photo de profil" >
+                        <%}
+                        else {%>
+                          <img src="/images/PhotoNoProfil.png" alt="photo de profil" class="profil circle" style="background:#dadada;">
+                        <%}%>
+                        <div class="contact">
+                          <a href="/profile/<%= offers[i].user.id %>"><%=offers[i].user.firstname %> <%=offers[i].user.lastname %></a>
+                          <p><%= offers[i].user.role %></p>
+                          <p><%= offers[i].adresse %></p>
+                        </div>
+                      </div>
+                      <p>Mail : <span><%=offers[i].user.email %></span></p>
+                      <p>Téléphone : <span><%=offers[i].telephone %></span></p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          <%}%>
+
+          <div class="pagination col s12">
+              <% if (pages > 0) { %>
+                 <ul class="pagination text-center">
+                     <% if (current == 1) { %>
+                         <li class="disabled"><a>Première</a></li>
+                     <% } else { %>
+                         <li><a href="/offers/1">Première</a></li>
+                     <% } %>
+                     <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                     <% if (i !== 1) { %>
+                         <li class="disabled"><a>...</a></li>
+                     <% } %>
+                     <% for (;i <= (Number(current) + 4) && i <= pages; i++) { %>
+                         <% if (i == current) { %>
+                             <li class="active"><a><%= i %></a></li>
+                         <% } else { %>
+                             <li><a href="/offers/<%= i %>"><%= i %></a></li>
+                         <% } %>
+                         <% if (i == Number(current) + 4 && i < pages) { %>
+                             <li class="disabled"><a>...</a></li>
+                         <% } %>
+                     <% } %>
+                     <% if (current == pages) { %>
+                         <li class="disabled"><a>Dernière</a></li>
+                     <% } else { %>
+                         <li><a href="/offers/<%= pages %>">Dernière</a></li>
+                     <% } %>
+                 </ul>
+             <% } %>
+         </div>
+      </div>
+
+
+
+
+  <%- include('../partials/footer'); %>
+
+  <style media="screen">
+  .hider{
+    display: none;
+  }
+
+  [data-toggle="toggle"] {
+    display: block;
+  }
+  </style>
+  <script type="text/javascript">
+  $(document).ready(function() {
+  	$('[data-toggle="toggle"]').change(function(){
+  		$(this).parents().next('.hider').toggle();
+  	});
+  });
+  </script>

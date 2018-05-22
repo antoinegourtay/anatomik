@@ -1,0 +1,27 @@
+.footer{
+  background: white;
+  position: fixed;
+  bottom: 0;
+  height: 68px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    li{
+      a{
+        text-decoration: none;
+        color: #D60968;
+        margin: 20px;
+        @media (max-width: 420px) {
+          font-size: 11px;
+        }
+      }
+    }
+  }
+}

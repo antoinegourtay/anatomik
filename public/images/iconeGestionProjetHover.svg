@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="43px" viewBox="0 0 40 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>[DASHBOARD]GESTIONPROJET</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="[DASHBOARD]GESTIONPROJET" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="GestionProjet" transform="translate(5.000000, 9.000000)">
+            <g id="Group-2" transform="translate(0.000000, 1.000000)">
+                <g id="Group-6" stroke="#D60968" stroke-width="2">
+                    <rect id="Rectangle-8" x="1" y="1" width="28" height="21" rx="4"></rect>
+                </g>
+                <path d="M2.11172635,0.5 C1.25462298,0.5 0.547357088,1.17065602 0.501844616,2.02655017 C0.500199773,2.06368046 0.500199773,2.06368046 0.499870665,2.10084572 C0.499870665,2.87357729 1.12629337,3.5 1.89902495,3.5 L28.0001223,3.5 C28.8285494,3.5 29.5001223,2.82842712 29.5001223,2 C29.5001223,1.17157288 28.8285494,0.5 28.0001223,0.5 L2.11172635,0.5 Z" id="Rectangle-8" stroke="#D60968"></path>
+                <g id="Group-5" transform="translate(9.500000, 8.000000)">
+                    <circle id="Oval-4" stroke="#D60968" cx="5.5" cy="5.5" r="5.5"></circle>
+                    <g id="clock" transform="translate(4.888889, 1.018519)" fill="#D60968" fill-rule="nonzero">
+                        <path d="M2.11267905,7.15107212 C2.02742404,7.15107212 1.94291687,7.11493922 1.87785384,7.04183312 L0.0972206288,5.04107871 C0.0347750711,4.97091366 0,4.87637991 0,4.7772245 L0,0.54421303 C0,0.33833952 0.148448422,0.171539961 0.33204584,0.171539961 C0.515269333,0.171539961 0.663717754,0.33791937 0.663717754,0.54421303 L0.663717754,4.62302944 L2.34713033,6.51454484 C2.47688248,6.6603369 2.47688248,6.89646121 2.34713033,7.04183312 C2.2820673,7.11493922 2.19718621,7.15107212 2.11267905,7.15107212 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+            <rect id="Rectangle-13" stroke="#D60968" x="2.5" y="0.5" width="1" height="2"></rect>
+            <rect id="Rectangle-13" stroke="#D60968" x="24.5" y="0.5" width="2" height="2"></rect>
+        </g>
+    </g>
+</svg>

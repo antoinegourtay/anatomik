@@ -1,0 +1,173 @@
+<%- include('../partials/header'); %>
+<% if(user){%>
+  <!-- Page Layout here -->
+  <div class="row">
+      <%- include('../partials/sidenav'); %>
+
+    <div class="profil content">
+      <div class="profil__header">
+        <div class="profil__header--img">
+        <div id="profilModal" class="modal">
+          <div class="modal-content">
+            <h4>Changer l'image de profil</h4>
+          </div>
+          <div class="modal-footer">
+            <form class="col s12" method="post" action="/profile/photo/<%= user_profile._id %>" enctype="multipart/form-data">            
+                <input type="file" name="file">
+                <button class="btn waves-effect waves-light blue" type="submit"  value="Enregistrer" name="action">Submit
+            </form>
+          </div>
+        </div>
+          <%if (user_profile.photo_profil){%>
+            <a class="modal-trigger" href="#profilModal"><img src="/images/uploads/<%= user_profile.photo_profil%>" alt="photo de profil" class=""></a>
+          <%}
+          else {%>
+            <a class="modal-trigger" href="#v"><img src="/images/PhotoNoProfil.png" alt="photo de profil" class=""></a>
+          <%}%>
+        </div>
+        <div class="profil__header__infos">
+          <div class="profil__header__infos--left">
+            <h3><%= user_profile.firstname %> <%= user_profile.lastname %></h3>
+
+            <div class="profil__header__infos__left--social">
+              <%if (user_profile.facebook){%>
+                <a href="<%= user_profile.facebook %>" target="_blank"><img src="/images/logoFacebook.png" alt="facebook"></a>
+              <%}%>
+              <%if (user_profile.linkedin){%>
+                <a href="<%= user_profile.linkedin %>" target="_blank"><img src="/images/logoLinkedin.png" alt="Linkedin"></a>
+              <%}%>
+              <%if (user_profile.twitter){%>
+                <a href="<%= user_profile.twitter %>" target="_blank"><img src="/images/logoTwitter.png" alt="Twitter"></a>
+              <%}%>
+              <%if (user_profile.instagram){%>
+                <a href="<%= user_profile.instagram %>" target="_blank"><img src="/images/logoInstagram.png" alt="Instagram"></a>
+              <%}%>
+            </div>
+          </div>
+          <div class="profil__header__infos--right">
+            <% if(user_profile.id === user.id || user.organizationType === "Anatomik"){ %>
+              <a href="/profile/edit/<%=user_profile.id%>"><i data-feather="edit"></i>Modifier</a>
+            <%}%>
+          </div>
+        </div>
+      </div>
+      <div class="profil__left col s12 m12 l6">
+        <% if( user_profile.organizationType == "Association"){ %>
+          <h2>État des lieux</h2>
+          <div class="profil__left__etat">
+            <% if(user_profile.association){%>
+              <h3>Mon association</h3>
+              <div class="profil__left__etat__asso">
+                <%if (user_profile.association.logo ){%>
+                  <img src="/images/uploads/<%= user_profile.association.logo%>" alt="photo de profil" >
+                <%}
+                else {%>
+                  <img src="/images/AssoNoProfil.png" alt="photo de profil" class="profil">
+                <%}%>
+                <div class="profil__left__etat__asso--infos">
+                  <p class="poste">Éducateur spécialisé</p>
+                  <p class="asso"><%= user_profile.association.name%></p>
+                </div>
+              </div>
+            <%}%>
+
+
+            <div class="profil__left__etat__etablissement">
+              <% if(user_profile.etablissement){%>
+              <h3>Mon établissement</h3>
+              <ul>
+                <li><%= user_profile.etablissement.name %></li>
+                <li><%= user_profile.etablissement.ville %> <%= user_profile.etablissement.code_postal %></li>
+                <li>Association</li>
+                <li><a href="/etablissement/<%=user_profile.etablissement.id %>">Voir</a></li>
+              </ul>
+              <%}%>
+            </div>
+          </div>
+            <%}else if (user_profile.organizationType === "Entreprise"){%>
+              <h2>Mon entreprise</h2>
+              <div class="profil__left__etat">
+                <div class="profil__left__etat__asso">
+                  <img src="/images/uploads/<%= user_profile.entreprise.logo%>" alt="">
+                  <div class="profil__left__etat__asso--infos">
+                    <p class="poste"><%= user_profile.entreprise.domaine%></p>
+                    <p class="asso"><%= user_profile.entreprise.name%></p>
+                  </div>
+                </div>
+              </div>
+
+            <%}else{}%>
+
+        <h2>Mes compétences</h2>
+        <div class="profil__left__competences">
+          <%if (user_profile.poste){%>
+            <h3><%= user_profile.poste%></h3>
+          <%}%>
+          <%if (user_profile.competences){%>
+            <div class="profil__left__competences__tags">
+              <% user_profile.competences.forEach(function(competence) { %>
+                <div class="chip"><%= competence %></div>
+              <% }); %>
+
+            </div>
+          <%}%>
+
+        </div>
+
+      </div>
+
+      <div class="profil__right col  s12 m12 l4  offset-l1">
+        <div class="profil__right__informations col s12">
+          <h2>Informations personnelles</h2>
+          <div class="profil__right__informations--top">
+            <div class="col s6">
+              <p class="line1">Pays</p>
+              <p class="line2">France</p>
+            </div>
+            <div class="col s6 right">
+              <p class="line1">ville</p>
+              <p class="line2">75011 Paris</p>
+            </div>
+          </div>
+          <div class="profil__right__informations--middle col s12">
+            <%if (user_profile.telephone){%>
+              <div class="telephone">
+                <p>Téléphone</p>
+                <a href=""><%= user_profile.telephone %></a>
+              </div>
+            <%}%>
+            <%if (user_profile.email){%>
+              <div class="mail">
+                <p>Mail</p>
+                <a href=""><%= user_profile.email %></a>
+              </div>
+            <%}%>
+
+
+          </div>
+        </div>
+
+        <%if (user_profile.description){%>
+          <div class="profil__right__about col s12">
+            <h2>A propos</h2>
+            <p><%= user_profile.description %></p>
+          </div>
+        <%}%>
+      </div>
+
+
+
+    </div>
+
+  </div>
+<%}else{%>
+  <a href="/login">Connexion</a>
+<%}%>
+<%- include('../partials/footer'); %>
+<script>
+  $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
+
+  </script>

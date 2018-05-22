@@ -1,0 +1,224 @@
+<%- include('../partials/header'); %>
+
+<div class="row">
+  <%- include('../partials/sidenav'); %>
+  <div class="editEntreprise content">
+    <h2>Editer Mon Entreprise</h2>
+    <form class="col s12" method="post" id="formValidate" action="<%=endpoint%>" enctype="application/x-www-form-urlencoded">
+      <div class="row white">
+        <div class="input-field col s12">
+          <label for="name">Nom de l'entreprise *</label>
+          <input class="validate" type="text" placeholder="ONS RENOV" id="name" name="name" value="<%= entreprise.name %>" data-error=".errorName">
+          <div class="errorName"></div>
+        </div>
+        <div class="input-field col s6">
+          <label for="adresse">Adresse *</label>
+          <input class="validate" placeholder="65 rue greneta" type="text" id="adresse" name="adresse" value="<%= entreprise.adresse %>" data-error=".errorAdresse">
+          <div class="errorAdresse"></div>
+        </div>
+
+        <div class="input-field col s6">
+          <label for="adresse">Complément d'adresse</label>
+          <input class="validate" type="text" placeholder="" name="complement_adresse" value="<%= entreprise.complement_adresse %>" >
+          <div class="errorAdress"></div>
+        </div>
+
+
+        <div class="input-field col s6">
+          <label for="code_postal">Code Postal *</label>
+          <input class="validate" placeholder="75002" type="number" id="code_postal" name="code_postal" value="<%= entreprise.code_postal %>" data-error=".errorZip">
+          <div class="errorZip"></div>
+        </div>
+
+        <div class="input-field col s6">
+          <label for="ville">Ville *</label>
+          <input class="validate" placeholder="Paris" type="text" id="ville" name="ville" value="<%= entreprise.ville %>" data-error=".errorVille">
+          <div class="errorVille"></div>
+        </div>
+
+        <div class="input-field col s6">
+          <label for="name">Pays *</label>
+          <input class="validate" placeholder="Pays" type="text" id="pays" name="pays" value="<%= entreprise.pays %>" data-error=".errorPays">
+          <div class="errorPays"></div>
+        </div>
+
+        <div class="input-field col s12">
+          <label for="description">Description *</label>
+          <textarea id="description" name="description" placeholder="Faites appel à notre entreprise, pour toutes vos interventions dans le bâtiment. Du sol au plafond, notre expérience nous permet d'assurer tous travaux." class="materialize-textarea validate"><%= entreprise.description %></textarea>
+        </div>
+
+        <div class="input-field col s12">
+          <label for="domaine">Domaine de compétences *</label>
+          <input class="validate" type="text" id="domaine" placeholder="Peinture, Carrelage, Couverture" name="domaine" value="<%= entreprise.domaine %>" data-error=".errorDomaine">
+          <div class="errorDomaine"></div>
+        </div>
+
+        <div class="input-field col s12">
+          <label for="name">Email *</label>
+          <input class="validate" type="email" placeholder="onos@contact.fr" id="contact" name="contact" value="<%= entreprise.contact %>" data-error=".errorEmail">
+          <div class="errorEmail"></div>
+        </div>
+
+        <div class="input-field col s12">
+          <label for="name">Site web *</label>
+          <input class="validate" type="text" placeholder="http://www.onos.fr" id="site" name="site" value="<%= entreprise.site %>" >
+        </div>
+
+        <div class="input-field col s6">
+          <label for="siret">Siret</label>
+          <input class="validate" type="text" id="siret" name="siret" value="<%= entreprise.siret %>">
+        </div>
+
+        <div class="input-field col s6">
+          <label for="tva">Numéro de TVA</label>
+          <input class="validate" type="text" id="tva" name="tva" value="<%= entreprise.tva %>">
+        </div>
+
+        <div class="input-field col s12">
+          <label for="statut">Statut</label>
+          <input class="validate" type="text" id="statut" name="statut" value="<%= entreprise.statut %>">
+        </div>
+
+        <div class="input-field col s12">
+          <label for="telephone">Téléphone</label>
+          <input class="validate" type="text" id="telephone" name="telephone" value="<%= entreprise.telephone %>">
+        </div>
+
+        <div class="input-field col s12">
+          <label for="date_creation">Date de création</label>
+          <input type="text" class="datepicker" name="date_creation" value="<%=entreprise.date_creation%>">
+        </div>
+
+        <div class="input-field col s6">
+          <label for="facebook">Facebook</label>
+          <input class="validate" placeholder="Facebook" type="text" id="facebook" name="facebook" value="<%= entreprise.facebook %>">
+        </div>
+
+        <div class="input-field col s6">
+          <label for="twitter">Twitter</label>
+          <input class="validate" placeholder="Twitter" type="text" id="twitter" name="twitter" value="<%= entreprise.twitter %>">
+        </div>
+
+        <div class="input-field col s6">
+          <label for="instagram">Instagram</label>
+          <input class="validate" placeholder="Instagram" type="text" id="instagram" name="instagram" value="<%= entreprise.instagram %>">
+        </div>
+
+        <div class="input-field col s6">
+          <label for="linkedin">linkedin</label>
+          <input class="validate" placeholder="linkedin" type="text" id="linkedin" name="linkedin" value="<%= entreprise.linkedin %>">
+        </div>
+
+
+        <% if (user.organizationType === "Anatomik") {%>
+          <div class="col s12">
+            <p>Entreprise supprimé ?</p>
+            <input type="radio" id="is_archive" name="is_archive" class="validate" value="true" <% if (entreprise.is_archive == true){ %> checked <% } %> >
+            <label for="is_archive">Oui</label>
+            <input type="radio" id="is_not_archive" name="is_archive" class="validate" value="false" <% if (entreprise.is_archive == false){ %> checked <% } %> >
+            <label for="is_not_archive">Non</label>
+          </div>
+          <%}%>
+
+          <button class="btn waves-effect waves-light blue" type="submit"  value="Enregistrer" name="action">Submit
+          <i class="material-icons right">send</i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include('../partials/footer'); %>
+
+<script type="text/javascript" src="/javascripts/picker.js"></script>
+<script type="text/javascript" src="/javascripts/picker.date.js"></script>
+<script type="text/javascript" src="/javascripts/fr_FR.js"></script>
+
+<script type="text/javascript">
+
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+</script>
+
+
+
+<script type="text/javascript">
+
+
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+
+  $("#formValidate").validate({
+   rules: {
+       name: {
+           required: true,
+           minlength: 3
+       },
+       adresse: {
+           required: true,
+           minlength: 5
+       },
+       code_postal: {
+         required: true,
+         minlength: 5
+       },
+       ville: {
+         required: true,
+       },
+       pays: {
+         required: true,
+        },
+        description: {
+          required: true,
+          minlength:10
+        },
+        domaine: {
+          required: true,
+        },
+        contact: {
+          required: true,
+          minlength:10
+        },
+   },
+   //For custom messages
+   messages: {
+       name:{
+           required: "Vous devez saisir le nom de votre entreprise",
+           minlength: "Le nom de votre entreprise doit comporter au minimum 3 caractères"
+       },
+       adresse:{
+           required: "Vous devez saisir l'adresse de votre entreprise",
+       },
+       code_postal:{
+           required: "Saisissez le code postal de votre entreprise",
+       },
+       ville:{
+           required: "Saisissez la ville de votre entreprise",
+       },
+       pays:{
+           required: "Saisissez le pays de votre entreprise",
+       },
+       description:{
+           required: "Saisissez une description de votre entreprise",
+           minlength: "La description de votre entreprise doit comporter au minimum 10 caractères"
+       },
+       domaine:{
+           required: "Saisissez un domaine de compétence correspondant à votre entreprise",
+       },
+       contact:{
+           required: "Ajoutez une adresse email à votre entreprise",
+       },
+   },
+   errorElement : 'div',
+   errorPlacement: function(error, element) {
+     var placement = $(element).data('error');
+     if (placement) {
+       $(placement).append(error)
+     } else {
+       error.insertAfter(element);
+     }
+   }
+});
+</script>

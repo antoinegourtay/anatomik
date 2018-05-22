@@ -1,0 +1,138 @@
+.showAssociations{
+  table{
+    a{
+      color: black;
+      &:hover{
+        color: #d60968;
+      }
+    }
+  }
+  &__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @media (max-width: 992px) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    h2{
+      font-size: 42px;
+      font-weight: 900;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      color: #d60968;
+      @media (max-width: 992px) {
+        font-size: 16px;
+      }
+    }
+
+    &--right{
+      display: flex;
+      @media (max-width: 992px) {
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      a{
+        background: white;
+        padding: 10px;
+        border-radius: 36px;
+        margin-left: 20px;
+        font-family: Avenir;
+        font-size: 13px;
+        font-weight: 500;
+        text-align: center;
+        color: #d60968;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:hover{
+          transition: all 0.2s ;
+          border: 1px solid #d60968;
+        }
+        svg{
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+  &__all{
+    &__items{
+      display: flex;
+      flex-wrap: wrap;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      @media (min-width: 600px) {
+        background: white;
+        justify-content: space-between;
+      }
+      @media (max-width: 600px) {
+        justify-content: center;
+      }
+      &__item{
+        width: 311px;
+        height: auto;
+        background-color: #ffffff;
+        box-shadow: 2px 2px 4px 0 rgba(214, 9, 104, 0.06);
+        margin: 10px;
+
+        &:hover{
+          box-shadow: 4px 4px 12px 0 rgba(202, 0, 94, 0.1);
+          cursor: pointer;
+        }
+        &__top{
+          display: flex;
+          height: 110px;
+          justify-content: space-between;
+          overflow: hidden;
+          &--left{
+            img{
+              width: 110px;
+              background: #dadada;
+            }
+          }
+          &--right{
+            margin-top: 10px;
+            a{
+              text-decoration: none;
+              margin-right: 10px;
+              height: 30px;
+              svg{
+                &.edit, &.delete{
+                  stroke: black;
+                  &:hover{
+                    stroke:#d60968;
+                  }
+                }
+              }
+            }
+
+          }
+        }
+        &__bottom{
+          p{
+            font-family: Avenir;
+            font-size: 14px;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: center;
+            color: #000000;
+          }
+        }
+      }
+    }
+
+  }
+  .pagination{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+  }
+}

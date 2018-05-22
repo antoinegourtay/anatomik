@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="81px" height="87px" viewBox="0 0 81 87" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>[DASHBOARD]GESTIONPROJET</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="[DASHBOARD]GESTIONPROJET" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-3" transform="translate(11.000000, 19.000000)">
+            <g id="Group-2" transform="translate(0.000000, 2.000000)">
+                <g id="Group-6" stroke="#FFFFFF" stroke-width="2">
+                    <rect id="Rectangle-8" x="1" y="1" width="58" height="44" rx="4"></rect>
+                </g>
+                <g id="Group-5" transform="translate(19.000000, 16.000000)">
+                    <circle id="Oval-4" stroke="#FFFFFF" cx="11" cy="11" r="11"></circle>
+                    <g id="clock" transform="translate(9.777778, 2.037037)" fill="#FFFFFF" fill-rule="nonzero">
+                        <path d="M4.2253581,14.3021442 C4.05484807,14.3021442 3.88583375,14.2298784 3.75570768,14.0836662 L0.194441258,10.0821574 C0.0695501421,9.94182732 0,9.75275981 0,9.554449 L0,1.08842606 C0,0.676679039 0.296896843,0.343079922 0.66409168,0.343079922 C1.03053867,0.343079922 1.32743551,0.675838739 1.32743551,1.08842606 L1.32743551,9.24605889 L4.69426067,13.0290897 C4.95376496,13.3206738 4.95376496,13.7929224 4.69426067,14.0836662 C4.5641346,14.2298784 4.39437242,14.3021442 4.2253581,14.3021442 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+            <rect id="Rectangle-13" stroke="#FFFFFF" x="5.5" y="0.5" width="4" height="5"></rect>
+            <rect id="Rectangle-13" stroke="#FFFFFF" x="48.5" y="0.5" width="4" height="5"></rect>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,39 @@
+
+    <ul id="slide-out" class="side-nav fixed">
+    <li class="userInfos"><div class="user-view">
+      <div class="background">
+        <img src="/images/backgroundSideBar.png">
+      </div>
+      <a href="/profile/<%= user.id %>" class="profil">
+        <%if (user.photo_profil ){%>
+          <img src="/images/uploads/<%= user.photo_profil%>" alt="photo de profil" >
+        <%}
+        else {%>
+          <img src="/images/PhotoNoProfil.png" alt="photo de profil" class="profil">
+        <%}%>
+      </a>
+      <a href="#!name"><span class="white-text name"><%= user.firstname %></span></a>
+      <a href="#!email"><span class="white-text email"><%= user.email %></span></a>
+    </div></li>
+    <%if (user.organizationType == 'Association'){%>
+      <li class="nav"><a href="/association/<%= user.association.id %>"><img src="/images/iconeAppelOffreHover.svg" alt=""><span>Mon association</span></a></li>
+      <% if (user.etablissement){%>
+        <li class="nav"><a href="/etablissement/<%= user.etablissement.id %>"><img src="/images/iconeAppelOffreHover.svg" alt=""><span>Mon établissement</span></a></li>
+      <%} else{}%>
+    <%} else if(user.organizationType == 'Entreprise'){%>
+    <%}%>
+    <li class="nav"><a href="/ "><img src="/images/dashboardHover.svg" alt=""><span>dashboard</span></a></li>
+    <li class="nav"><a href="/offers"><img src="/images/dashboardOffreHover.svg" alt=""><span>Appels d'offres</span></a></li>
+    <li class="nav"><a href="/services"><img src="/images/dashboardAideHover.svg" alt=""><span>Aide et services</span></a></li>
+    <li class="nav"><a href="/ogp"><img src="/images/dashboardGestionProjetHover.svg" alt=""><span>Gestion de projet</span></a></li>
+    <li class="nav"><a href="/coming_soon"><img src="/images/dashboardMessagerieHover.svg" alt=""><span>Messagerie</span></a></li>
+    <%if (user.organizationType == 'Association' && user.role === "Admin" || user.organizationType == "Anatomik"){%>
+      <li class="nav"><a href="/associations/show"><img src="/images/dashboardGestionAssosHover.png" alt=""><span>Associations</span></a></li>
+      <li class="nav"><a href="/entreprises/show"><img src="/images/dashboardGestionEntreprisesHover.png" alt=""><span>Entreprises</span></a></li>
+    <%}%>
+    <%if (user.organizationType == 'Association' && user.role === "Admin" || user.organizationType == "Anatomik"){%>
+      <li class="nav"><a href="/users/show"><img src="/images/dashboardGestionMembreHover.svg" alt=""><span>Membres</span></a></li>
+      <li class="nav"><a href="/etablissements/show"><img src="/images/dashboardGestionEtablissementsHover.png" alt=""><span>Etablissements</span></a></li>
+    <%}%>
+    <li class="nav"><a href="/logout"><img src="/images/dashboardLogoutHover.svg" alt=""><span>Deconnexion</span></a></li>
+  </ul>

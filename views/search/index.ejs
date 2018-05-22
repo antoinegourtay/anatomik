@@ -1,0 +1,320 @@
+<%- include('../partials/header'); %>
+
+<%- include('../partials/sidenav'); %>
+<div class="search content">
+  <div class="search__header row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab"><a href="#tout">Tous</a></li>
+        <% if (associations.length < 1) { %>
+          <li class="tab inactive"><a href="#associations">Associations (<%= associations.length %>)</a></li>
+        <% } else { %>
+          <li class="tab"><a href="#associations">Associations (<%= associations.length %>)</a></li>
+        <% }%>
+
+        <% if (entreprises.length < 1) { %>
+          <li class="tab inactive"><a href="#entreprises">Entreprises (<%= entreprises.length %>)</a></li>
+        <% } else { %>
+          <li class="tab"><a href="#entreprises">Entreprises (<%= entreprises.length %>)</a></li>
+        <% }%>
+
+        <% if (etablissements.length < 1) { %>
+          <li class="tab inactive"><a href="#etablissements">Établissements (<%= etablissements.length %>)</a></li>
+        <% } else { %>
+          <li class="tab"><a href="#etablissements">Établissements (<%= etablissements.length %>)</a></li>
+        <% }%>
+
+        <li class="tab"><a href="#documents">Documents</a></li>
+
+        <% if (projets.length < 1) { %>
+          <li class="tab inactive"><a href="#projets">Projets (<%= projets.length %>)</a></li>
+        <% } else { %>
+          <li class="tab"><a href="#projets">Projets (<%= projets.length %>)</a></li>
+        <% }%>
+
+        <% if (users.length < 1) { %>
+          <li class="tab inactive"><a href="#membres">Membres (<%= users.length %>)</a></li>
+        <% } else { %>
+          <li class="tab "><a href="#membres">Membres (<%= users.length %>)</a></li>
+        <% }%>
+
+      </ul>
+      <h1>Résultats de la recherche pour : <span><%= query %></span> </h1>
+    </div>
+
+
+
+
+
+    <div id="tout" class="col s12 search__all">
+
+      <!-- Associations -->
+
+      <% if (associations.length < 1) {
+      } else {
+        %>
+        <div class="search__all__associations">
+          <h2>Association(s) (<%= associations.length %>)</h2>
+          <div class="search__all__associations__items">
+          <%if (associations.length > 4){%>
+            <% for (var i = 0; i <4; i++){%>
+              <div class="search__all__associations__items__item">
+                <a href="/association/<%=associations[i].id %>">
+                  <%if (associations[i].logo ){%>
+                    <img src="/images/uploads/<%= associations[i].logo%>" alt="photo de profil" >
+                  <%}
+                  else {%>
+                    <img src="/images/AssoNoProfil.png" alt="photo de profil" class="profil">
+                  <%}%>
+                  <p><%= associations[i].name%></p>
+                </a>
+              </div>
+            <%}%>
+          <%}else{%>
+            <% associations.forEach(function(association){ %>
+              <div class="search__all__associations__items__item">
+                  <a href="/association/<%=association.id %>">
+                    <%if (association.logo ){%>
+                      <img src="/images/uploads/<%= association.logo%>" alt="photo de profil" >
+                    <%}
+                    else {%>
+                      <img src="/images/AssoNoProfil.png" alt="photo de profil" class="profil">
+                    <%}%>
+                    <p><%= association.name%></p>
+                  </a>
+                </div>
+              <%})%>
+          <%}%>
+          </div>
+        </div>
+        <%}%>
+
+
+
+      <!-- Entreprises -->
+      <% if (entreprises.length < 1) {
+        } else {
+        %>
+        <div class="search__all__entreprises">
+          <h2>Entreprise(s) (<%= entreprises.length %>)</h2>
+          <div class="search__all__entreprises__items">
+            <% entreprises.forEach(function(entreprise) { %>
+              <a href="/entreprise/<%= entreprise.id %>">
+                <div class="search__all__entreprises__items__item">
+                  <%if (entreprise.logo){%>
+                    <img src="/images/uploads/<%= entreprise.logo%>" alt="photo de profil">
+                  <%}
+                  else {%>
+                    <img src="/images/CompanyNoProfil.png" alt="photo de profil">
+                  <%}%>
+                  <h2><%= entreprise.name%></h2>
+                  <p>Menuiserie</p>
+                </div>
+              </a>
+            <%})%>
+          </div>
+        </div>
+        <%} %>
+
+      <!-- Etablissements -->
+      <% if (etablissements.length < 1) {
+        } else {
+        %>
+        <div class="search__all__etablissements">
+          <h2>Etablissement(s) (<%= etablissements.length %>)</h2>
+          <div class="search__all__etablissements__items">
+            <div class="search__all__etablissements__items__item">
+              <table>
+                  <% etablissements.forEach(function(etablissement) { %>
+                    <tr>
+                      <td><%= etablissement.name %></td>
+                      <td><%= etablissement.ville %></td>
+                      <td><%= etablissement.association.name %></td>
+                      <td><a href="etablissement/<%= etablissement.id %>" class="secondary-content">Voir</a></td>
+                    </tr>
+                  <%})%>
+              </table>
+            </div>
+          </div>
+        </div>
+        <%} %>
+
+
+        <!-- documents -->
+
+      <div class="search__all__documents">
+        <h2>Documents (2)</h2>
+        <div class="search__all__documents__items">
+          <div class="search__all__documents__items__item">
+            <h2>Fiche de paie Novembre 17</h2>
+            <div class="bar"></div>
+            <div class="search__all__documents__items__item--footer"><p class="type">Doc</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- projets -->
+      <% if (projets.length < 1) {
+      }else{%>
+        <div class="search__all__projets">
+        <h2>Projets (<%= projets.length %>)</h2>
+          <div class="search__all__projets__items">
+            <% projets.forEach(function(projet){ %>
+              <a href="/ogp/<%= projet.id %>">
+                <div class="search__all__projets__items__item">
+                  <h2> <%= projet.name %> </h2>
+                  <div class="bar"></div>
+                  <div class="search__all__projets__items__item--footer"><p class="type">Menuiserie</p><p class="etat"><%= projet.state %></p></div>
+                </div>
+              </a>
+              <%})%>
+          </div>
+        </div>
+      <%}%>
+
+
+                    <!-- membres -->
+
+      <% if (users.length < 1) {
+        } else {%>
+        <div class="search__all__membres">
+          <h2>Membres (<%= users.length %>)</h2>
+          <div class="search__all__membres__items">
+            <div class="search__all__membres__items__item ">
+              <table>
+                <% users.forEach(function(user) { %>
+                <tr>
+                  <td>
+                    <%if (user.photo_profil){%>
+                      <img src="/images/uploads/<%= user.photo_profil%>" alt="photo de profil" class="circle">
+                    <%}
+                    else {%>
+                      <img src="/images/NavPhotoNoProfil.png" alt="photo de profil">
+                    <%}%>
+                  </td>
+                  <td class="name"><%= user.fullname%></td>
+                  <td class="fonction">Pole urgence 91 Croix rouge Francaise</td>
+                  <td class="poste"><%= user.poste%></td>
+                  <td><a href="profile/<%= user.id %>" class="secondary-content">Voir profil</a></td>
+                </tr>
+                <%})%>
+              </table>
+            </div>
+          </div>
+        </div>
+        <%} %>
+
+    </div>
+
+
+                        <!-- Onglets -->
+
+    <div id="entreprises" class="col s12">
+      <div class="search__all__entreprises">
+        <h2>Entreprise(s) (<%= entreprises.length %>)</h2>
+        <div class="search__all__entreprises__items">
+          <% entreprises.forEach(function(entreprise) { %>
+            <a href="/entreprise/<%= entreprise.id %>">
+              <div class="search__all__entreprises__items__item">
+                <%if (entreprise.logo){%>
+                  <img src="/images/uploads/<%= entreprise.logo%>" alt="photo de profil">
+                <%}
+                else {%>
+                  <img src="/images/CompanyNoProfil.png" alt="photo de profil">
+                <%}%>
+                <h2><%= entreprise.name%></h2>
+                <p>Menuiserie</p>
+              </div>
+            </a>
+          <%})%>
+        </div>
+      </div>
+    </div>
+    <div id="etablissements" class="col s12">
+      <div class="search__all__etablissements">
+        <h2>Etablissement(s) (<%= etablissements.length %>)</h2>
+        <div class="search__all__etablissements__items">
+          <div class="search__all__etablissements__items__item">
+            <table>
+                <% etablissements.forEach(function(etablissement) { %>
+                  <tr>
+                    <td><%= etablissement.name %></td>
+                    <td><%= etablissement.ville %></td>
+                    <td><%= etablissement.association.name %></td>
+                    <td><a href="etablissement/<%= etablissement.id %>" class="secondary-content">Voir</a></td>
+                  </tr>
+                <%})%>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="associations" class="col s12">
+      <div class="search__all__associations">
+        <h2>Association(s) (<%= associations.length %>)</h2>
+        <div class="search__all__associations__items">
+          <% associations.forEach(function(association) { %>
+            <a href="/association/<%= association.id %>">
+              <div class="search__all__associations__items__item">
+                <%if (association.logo ){%>
+                  <img src="/images/uploads/<%= association.logo%>" alt="photo de profil" >
+                <%}
+                else {%>
+                  <img src="/images/AssoNoProfil.png" alt="photo de profil" class="profil">
+                <%}%>
+                <p><%= association.name%></p>
+              </div>
+            </a>
+          <%})%>
+        </div>
+      </div>
+    </div>
+    <div id="documents" class="col s12">Documents</div>
+    <div id="projets" class="col s12">
+        <div class="search__all__projets">
+        <h2>Projets (<%= projets.length %>)</h2>
+          <div class="search__all__projets__items">
+            <% projets.forEach(function(projet){ %>
+              <a href="/ogp/<%= projet.id %>">
+                <div class="search__all__projets__items__item">
+                  <h2> <%= projet.name %> </h2>
+                  <div class="bar"></div>
+                  <div class="search__all__projets__items__item--footer"><p class="type">Menuiserie</p><p class="etat"><%= projet.state %></p></div>
+                </div>
+              </a>
+              <%})%>
+          </div>
+        </div>
+    </div>
+
+    <div id="membres" class="col s12">
+      <div class="search__all__membres">
+        <h2>Membres (<%= users.length %>)</h2>
+        <div class="search__all__membres__items">
+          <div class="search__all__membres__items__item ">
+            <table>
+              <% users.forEach(function(user) { %>
+              <tr>
+                <td>
+                  <%if (user.photo_profil){%>
+                    <img src="/images/uploads/<%= user.photo_profil%>" alt="photo de profil" class="circle">
+                  <%}
+                  else {%>
+                    <img src="/images/NavPhotoNoProfil.png" alt="photo de profil">
+                  <%}%>                </td>
+                <td class="name"><%= user.fullname%></td>
+                <td class="fonction">Pole urgence 91 Croix rouge Francaise</td>
+                <td class="poste"><%=user.poste%></td>
+                <td><a href="profile/<%= user.id %>" class="secondary-content">Voir profil</a></td>
+              </tr>
+              <%})%>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer'); %>

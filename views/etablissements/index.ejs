@@ -1,0 +1,102 @@
+<%- include('../partials/header'); %>
+
+<div class="row">
+  <%- include('../partials/sidenav'); %>
+
+  <div class="showAssociations content">
+    <div class="showAssociations__header">
+      <h2>Gestion des établissements</h4>
+        <div class="showAssociations__header--right">
+            <a href="/etablissements/archives/1"><i data-feather="trash-2"></i>Etablissement supprimés</a>
+          <a href="/etablissement/new"><i data-feather="plus-square"></i>Ajouter un etablissement</a>
+        </div>
+    </div>
+    <table class="striped">
+      <thead>
+        <tr>
+            <th>Nom de l'etablissement</th>
+            <%if(user.organizationType === "Anatomik"){%>
+              <th class="hide-on-med-and-down">Association</th>
+            <%}%>
+            <th>Modifier</th>
+            <th>Supprimer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% etablissements.forEach(function(etablissement) { %>
+          <tr>
+            <%if(etablissement.is_archive === false){%>
+              <td><a href="/etablissement/<%=etablissement.id%>"><%=etablissement.name%></a></td>
+            <%}else{%>
+              <td><%=etablissement.name%></td>
+            <%}%>
+            <%if(user.organizationType === "Anatomik"){%>
+                <%if(etablissement.association.is_archive === true){%>
+                  <td class="hide-on-med-and-down"><%=etablissement.association.name%></td>
+                <%}else{%>
+                <td class="hide-on-med-and-down"><a href="/association/<%=etablissement.association.id%>"><%=etablissement.association.name%></a></td>
+              <%}%>
+            <%}%>
+            <td><a href="/etablissement/edit/<%=etablissement.id%>">Modifier</a></td>
+            <td><a class="modal-trigger" href="#modal1">Archiver</a></td>
+          </tr>
+
+          <!-- Modal Structure -->
+          <div id="modal1" class="modal">
+            <div class="modal-content">
+              <h4>Archivé ?</h4>
+              <p>En cliquant sur continuer, vous archiverez l'établissement <%=etablissement.name%>. Etes vous sur de vouloir continuer ? </p>
+            </div>
+            <div class="modal-footer">
+              <a href="/etablissement/archive/<%=etablissement.id%>" class="modal-action modal-close waves-effect waves-green btn-flat">OUI</a>
+              <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">NON</a>
+            </div>
+          </div>
+        <%})%>
+      </tbody>
+    </table>
+    <div class="showAssociations__all">
+    </div>
+    <div class="pagination col s12">
+      <% if (pages > 0) { %>
+         <ul class="pagination text-center">
+             <% if (current == 1) { %>
+                 <li class="disabled"><a>Première</a></li>
+             <% } else { %>
+                 <li><a href="/users/show/1">Première</a></li>
+             <% } %>
+             <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+             <% if (i !== 1) { %>
+                 <li class="disabled"><a>...</a></li>
+             <% } %>
+             <% for (;i <= (Number(current) + 4) && i <= pages; i++) { %>
+                 <% if (i == current) { %>
+                     <li class="active"><a><%= i %></a></li>
+                 <% } else { %>
+                     <li><a href="/users/show/<%= i %>"><%= i %></a></li>
+                 <% } %>
+                 <% if (i == Number(current) + 4 && i < pages) { %>
+                     <li class="disabled"><a>...</a></li>
+                 <% } %>
+             <% } %>
+             <% if (current == pages) { %>
+                 <li class="disabled"><a>Dernière</a></li>
+             <% } else { %>
+                 <li><a href="/users/show/<%= pages %>">Dernière</a></li>
+             <% } %>
+         </ul>
+     <% } %>
+ </div>
+
+  </div>
+</div>
+
+
+<%- include('../partials/footer'); %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
+</script>

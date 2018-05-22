@@ -1,0 +1,68 @@
+.legals{
+  background-image: url('../images/patternTransparent.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  h4{
+    font-family: Avenir;
+    font-size: 42px;
+    font-weight: 900;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #d60968;
+  }
+  .white{
+    background: white;
+    margin-bottom: 40px;
+    border-radius: 6px;
+    padding: 20px;
+  }
+  h2{
+    font-family: Avenir;
+    font-size: 22px;
+    font-weight: 900;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #d60968;
+  }
+  h3{
+    font-family: Avenir;
+    font-size: 16px;
+    font-weight: 900;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: black;
+  }
+  p{
+    font-family: Avenir-Roman;
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #4a4a4a;
+  }
+  ul{
+    li{
+      font-family: Avenir-Roman;
+      font-size: 12px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: left;
+      color: #4a4a4a;
+    }
+  }
+}

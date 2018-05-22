@@ -1,0 +1,91 @@
+<%- include('../partials/header'); %>
+
+<%- include('../partials/sidenav'); %>
+
+  <div class="offers content">
+    <div class="offers__header">
+      <div class="offers__header--left">
+        <h1>Appels d'offres <span> - 122 offres en cours</span></h1>
+      </div>
+      <div class="offers__header--right">
+        <%if (user.organizationType == 'Association'){%>
+          <a href="/offers/new">Ajouter une offre</a>
+          <a href="/offers">Appel d'Offre actif</a>
+        <%}%>
+      </div>
+    </div>
+
+
+
+    <table class="offers__table highlight">
+    	<thead class="offers__table--header">
+    		<tr>
+    			<th>Nom de l'association</th>
+    			<th>Type d'établissement</th>
+    			<th>Domaine</th>
+    			<th>Budget</th>
+          <th>Délai</th>
+          <%if (user.organizationType == 'Association'){%>
+            <th>Mofifier</th>
+          <%}%>
+    		</tr>
+    	</thead>
+      <% for(var i=0; i<offers.length; i++) {%>
+    	<tbody>
+    		<tbody>
+    			<tr>
+    				<td>
+    					<label for="offers<%= i%>"><%=offers[i].association.name%></label>
+    					<input type="checkbox" name="test1" id="offers<%= i%>" data-toggle="toggle">
+    				</td>
+            <td>type d'établissement</td>
+            <td><%=offers[i].domaine%></td>
+            <td><%=offers[i].price%> €</td>
+            <td><%=offers[i].delai%></td>
+            <%if (user.organizationType == 'Association'){%>
+              <td><a href="/offers/edit/<%= offers[i].id%>">Modifier</a></td>
+            <%}%>
+    			</tr>
+    		</tbody>
+    		<tbody class="hider">
+    			<tr>
+            <td colspan="2"><p><%=offers[i].description%></p></td>
+            <td colspan="4">
+              <div class="Contact">
+                <div>Prénom / nom : <%=offers[i].user.firstname %> <%=offers[i].user.lastname %></div>
+                <div>Mail : <%=offers[i].user.email %></div>
+                <div>Téléphone : 06.51.24.01.03</div>
+              </div>
+            </td>
+    			</tr>
+    		</tbody>
+    	</tbody>
+      <% } %>
+    </table>
+
+    <style media="screen">
+.hider{
+  display: none;
+}
+
+  [data-toggle="toggle"] {
+  display: block;
+  }
+    </style>
+
+  </div>
+
+
+</div>
+
+
+<%- include('../partials/footer'); %>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('[data-toggle="toggle"]').change(function(){
+		$(this).parents().next('.hider').toggle();
+	});
+});
+</script>

@@ -1,0 +1,25 @@
+.newEtablissement{
+  background-image: url('../images/patternTransparent.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+  h2{
+    font-family: Avenir;
+    font-size: 42px;
+    font-weight: 900;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #d60968;
+  }
+  button{
+    z-index: 0;
+  }
+  .white{
+    background: white;
+    margin-bottom: 40px;
+    border-radius: 6px;
+  }
+}

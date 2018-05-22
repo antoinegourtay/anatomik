@@ -1,0 +1,16 @@
+.newOffer{
+  background: white;
+  margin-left: 120px !important;
+  margin-right: 20px;
+  margin-top: 20px;
+  padding: 20px;
+  @media (max-width: 992px) {
+    margin: 10px !important;
+  }
+  h4{
+    font-family: Avenir;
+    font-size: 42px;
+    font-weight: 900;
+    color: #d60968;
+  }
+}

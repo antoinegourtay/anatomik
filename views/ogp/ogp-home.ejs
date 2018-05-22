@@ -1,0 +1,58 @@
+<%- include('../partials/header'); %>
+  <div class="row">
+  <%- include('../partials/sidenav'); %>
+    <div class="ogp content">
+      <div class="services__header">
+        <div class="offers__header--left">
+          <h1>Gestion de projet <span> - <%= projects.length %> projet(s) en cours</span></h1>
+        </div>
+        <div class="services__header--right">
+          <a href="/ogp/create"><i data-feather="plus-square"></i>Créer un projet</a>
+        </div>
+      </div>
+      <% if(projects.length <= 0){%>
+      <div class="ogp__noProjects">
+        <div class="ogp__noProjects--title">
+          <p>Créer votre tout premier projet</p>
+        </div>
+        <a href="/ogp/create">
+          <div class="ogp__noProjects--button">
+            <p>Commencer</p>
+          </div>
+        </a>
+      </div>
+      <%}else{%>
+      <div class="ogp__projects">
+        <div class="ogp__projects__items">
+          <% projects.reverse().forEach((project) => { %>
+            <a href="/ogp/<%= project.id %>" class="col s12 m6 l4">
+              <div class="ogp__projects__items__item ">
+                <div class="ogp__projects__items__item__header">
+                  <div class="ogp__projects__items__item__header--img">
+                    <%if (project.associationResponsible.photo_profil ){%>
+                      <img src="/images/uploads/<%= project.associationResponsible.photo_profil%>" alt="photo de profil" >
+                    <%}
+                    else {%>
+                      <img src="/images/PhotoNoProfil.png" alt="photo de profil" class="profil">
+                    <%}%>
+                  </div>
+                  <p><%= project.associationResponsible.fullname%></p>
+                </div>
+                <h3 class="ogp__projects__items__item--title">  <%= project.name %></h3>
+                <div class="ogp__projects__items__item__state">
+                  <div class="ogp__projects__items__item__state--item">
+                    <p class="state"><%= project.state %></p>
+                  </div>
+                  <div class="ogp__projects__items__item__state--item">
+                    <p>80 %</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <% }); %>
+        </div>
+      </div>
+      <%}%>
+    </div>
+  </div>
+<%- include('../partials/footer'); %>

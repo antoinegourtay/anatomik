@@ -1,0 +1,184 @@
+<%- include('../partials/header'); %>
+
+<div class="row">
+  <%- include('../partials/sidenav'); %>
+  <div class="signup content">
+    <h4>Ajouter un membre</h4>
+    <div class="row white">
+      <form class="col s12 formValidate" id="formValidate" action="/signup" method="post">
+        <div class="signup__form--email">
+          <label>Email *</label>
+          <input type="text" class="form-control validate" placeholder="thomas@gmail.fr" name="email" data-error=".errorEmail">
+          <div class="errorEmail"></div>
+        </div>
+        <div class="signup__form--firstname col s6">
+          <label>Prénom *</label>
+          <input type="text" class="form-control validate"  placeholder="Thomas" name="firstname" data-error=".errorFirstname">
+          <div class="errorFirstname"></div>
+        </div>
+        <div class="signup__form--lastname col s6">
+          <label>Nom de famille *</label>
+          <input type="text" class="form-control validate" placeholder="Dupuis" name="lastname" data-error=".errorLastname">
+          <div class="errorLastname"></div>
+        </div>
+
+        <div class="signup__form--password">
+          <label>Mot de passe *</label>
+          <input type="password" placeholder="motdepasse" class="form-control" name="password" data-error=".errorPassword">
+          <div class="errorPassword"></div>
+        </div>
+
+        <div class="row hide">
+          <div class="file-field input-field">
+            <div class="btn">
+              <span>File</span>
+              <input type="file" name="photo_profil" value="PhotoNoProfil">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" placeholder="Sélectionnez votre photo de profil">
+            </div>
+          </div>
+        </div>
+
+        <% if(user.organizationType === 'Anatomik'){%>
+          <div class="signup__form--organisation">
+            <select  class="validate required" name="organizationType" id="selectid" onchange="mireille()" data-error="errorOrganizationType">
+              <option disabled selected>choisissez votre type d'organisation</option>
+              <option value="Entreprise">Entreprise</option>
+              <option value="Association">Association</option>
+            </select>
+            <label>Type d'organisation</label>
+            <div class="errorOrganizationType"></div>
+          </div>
+          <div class="signup__form--association" id="association" style="display:none;">
+            <select name="association" class="js-example-basic-single" onchange="mireille()">
+              <option disabled selected>Choisissez votre association</option>
+              <% associations.forEach(function(association) {%>
+                <option value="<%=association.id%>"><%=association.name%></option>
+                <%});%>
+              </select>
+            </div>
+            <div class="signup__form--association" id="entreprise" style="display:none;">
+              <select name="entreprise" class="js-example-basic-single" onchange="mireille()">
+                <option disabled selected>Choisissez votre entreprise</option>
+                <% entreprises.forEach(function(entreprise) {%>
+                  <option value="<%=entreprise.id%>"><%=entreprise.name%></option>
+                  <%});%>
+                </select>
+              </div>
+              <%}%>
+              <div class="signup__form--association">
+                <select name="role" onchange="mireille()">
+                  <option disabled selected>Ajouter un rôle</option>
+                  <option value="Admin">Administrateur</option>
+                  <option value="User">Utilisateur</option>
+                </select>
+                <label>Type d'organisation</label>
+              </div>
+              <% if(user.organizationType === 'Association'){%>
+            <div class="signup__form--association" id="association">
+              <% etablissements.forEach(function(etablissement) {%>
+                <%if(etablissement.is_archive === false){%>
+              <select name="etablissement" id="" onchange="mireille()">
+                <option disabled selected>Choisissez l'établissement</option>
+                  <option value="<%=etablissement.id%>"><%=etablissement.name%></option>
+                </select>
+                <%}%>
+                <%});%>
+              </div>
+            <%}%>
+            <div class="signup__form--password">
+              <label>Poste *</label>
+              <input type="text" class="form-control validate" placeholder="Directeur d'établissement" name="poste" data-error=".errorPoste">
+              <div class="errorPoste"></div>
+            </div>
+            <div class="input-field col s12">
+              <button class="btn waves-effect waves-light blue" type="submit" name="submit">Ajouter le membre
+                <i class="material-icons right">send</i>
+              </button>
+            </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer'); %>
+
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+  $('select').material_select();
+  });
+
+  var mireille = function(){
+    if(document.getElementById('selectid').value == "Entreprise") {
+     document.getElementById('association').style.display = "none";
+     document.getElementById('entreprise').style.display = "block";
+    }
+    else if (document.getElementById('selectid').value == "Association") {
+      document.getElementById('association').style.display = "block";
+      document.getElementById('entreprise').style.display = "none";
+    }
+  }
+
+  $("#formValidate").validate({
+   rules: {
+       email: {
+           required: true,
+           minlength: 8
+       },
+       firstname: {
+           required: true,
+           minlength: 3
+       },
+       lastname: {
+         required: true,
+       },
+       password: {
+         required: true,
+       },
+       organizationType: {
+         required: true,
+       },
+       poste: {
+         required: true,
+         minlength: 3
+       },
+   },
+   //For custom messages
+   messages: {
+       email:{
+           required: "Vous devez saisir un email",
+           minlength: "Votre email doit comporter au minimum 8 caractères"
+       },
+       firstname:{
+           required: "Vous devez saisir votre prénom",
+           minlength: "Votre prénom doit comporter au minimum 3 caractères"
+       },
+       lastname:{
+           required: "Saisissez votre nom de famille",
+           minlength: "Votre nom de famille doit comporter au minimum 3 caractères"
+       },
+       password:{
+           required: "Saisissez votre mot de passe",
+       },
+       organizationType:{
+           required: "Saisissez votre organisation",
+       },
+       poste:{
+           required: "Saisissez votre poste",
+           minlength: "Votre poste doit comporter au minimum 3 caractères"
+       },
+   },
+   errorElement : 'div',
+   errorPlacement: function(error, element) {
+     var placement = $(element).data('error');
+     if (placement) {
+       $(placement).append(error)
+     } else {
+       error.insertAfter(element);
+     }
+   }
+});
+</script>

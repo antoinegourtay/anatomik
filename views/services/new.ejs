@@ -1,0 +1,122 @@
+<%- include('../partials/header'); %>
+<!-- Page Layout here -->
+<div class="row">
+    <%- include('../partials/sidenav'); %>
+
+<div class="newOffer content">
+  <h4><%=title%></h4>
+  <a href="/services">Retourner sur les services</a>
+
+  <div class="row">
+    <form class="col s12 formValidate" id="formValidate" method="post" action="<%= endpoint %>">
+        <%if(errors){%>
+          <% errors.forEach(function(error) {%>
+            <p><%= error %></p>
+          <%})%>
+        <%}%>
+        <div class="input-field col s12">
+          <label for="name">Nom du service</label>
+          <input class="validate" placeholder="<%=placeholderName%>" type="text" id="name" name="name" value="<%= service.name %>"  data-error=".errorTxt1">
+          <div class="errorTxt1"></div>
+        </div>
+
+        <div class="input-field col s12">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" class="materialize-textarea validate" data-error=".errorTxt2" placeholder="Décrivez plus en détail votre demande/offre"><%= service.name %></textarea>
+          <div class="errorTxt2"></div>
+        </div>
+
+
+        <div class="input-field col s12">
+          <label for="date_debut">Date de début</label>
+          <input type="text" class="datepicker" name="date_debut" value="<%=service.date_debut%>" data-error=".errorTxt3">
+          <div class="errorTxt3"></div>
+        </div>
+
+        <div class="input-field col s12">
+          <label for="date_fin">Date de fin</label>
+          <input type="text" class="datepicker" name="date_fin" value="<%=service.date_fin%>" data-error=".errorTxt4">
+          <div class="errorTxt4"></div>
+        </div>
+
+        <div class="col s12 hidden">
+          <input type="radio" name="type" value="<%=serviceType%>" checked>
+        </div>
+
+        
+        <input class="hidden" type="radio" name="is_archive" value="false" checked>
+
+        <button class="btn waves-effect waves-light blue" type="submit"  value="Enregistrer" name="action">Submit
+          <i class="material-icons right">send</i>
+        </button>
+    </form>
+  </div>
+
+  </div>
+
+<%- include('../partials/footer'); %>
+
+
+<script type="text/javascript">
+  $("#formValidate").validate({
+   rules: {
+       name: {
+           required: true,
+           minlength: 3
+       },
+       description: {
+           required: true,
+           minlength: 10
+       },
+       date_debut: {
+         required: true,
+       },
+       date_fin: {
+         required: true,
+       },
+        is_archive: {
+          required: true,
+        },
+   },
+   //For custom messages
+   messages: {
+       name:{
+           required: "Vous devez saisir un nom",
+           minlength: "Le nom doit comporter au minimum 3 caractères"
+       },
+       description:{
+           required: "Vous devez saisir une description",
+           minlength: "La description doit comporter au minimum 10 caractères"
+       },
+       date_debut:{
+           required: "Saisissez une date de début",
+       },
+       date_fin:{
+           required: "Saisissez une date de fin",
+       },
+       is_archive:{
+           required: "remplissez le champ archive",
+       },
+   },
+   errorElement : 'div',
+   errorPlacement: function(error, element) {
+     var placement = $(element).data('error');
+     if (placement) {
+       $(placement).append(error)
+     } else {
+       error.insertAfter(element);
+     }
+   }
+});
+</script>
+<script type="text/javascript" src="/javascripts/picker.js"></script>
+<script type="text/javascript" src="/javascripts/picker.date.js"></script>
+<script type="text/javascript" src="/javascripts/fr_FR.js"></script>
+
+<script type="text/javascript">
+  $('.datepicker').pickadate()
+
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+</script>

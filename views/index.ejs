@@ -1,0 +1,167 @@
+<html>
+<head>
+  <title> <%= title %> </title>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  <link rel="stylesheet" href="/stylesheets/style.css">
+  <!-- <link rel="stylesheet" media="screen" href="/physicsJs/assets/style.css"> -->
+
+</head>
+<body>
+  <%if (user){%>
+    <div class="dashboard row">
+      <%- include('./partials/header'); %>
+      <div class="dashboard__subhHeader col s12 m10 offset-m1">
+        <h1>Bienvenue <%= user.firstname %> <%= user.lastname %></h1>
+        <%if (user.organizationType === 'Association'){%>
+          <div class="dashboard__subhHeader__infos">
+            <h3><%= user.association.name %></h3>
+            <div class="dashboard__subhHeader__infos__tags">
+              <div class="dashboard__subhHeader__infos__tags--left">
+                <%if (user.role === 'Admin'){%>
+                  <a href="/etablissement/new %>"><i data-feather="plus-circle"></i>Ajouter un établissement</a>
+                  <a href="/signup %>"><i data-feather="plus-circle"></i>Ajouter un membre</a>
+                <%}%>
+              </div>
+              <div class="dashboard__subhHeader__infos__tags--right">
+                <a href="/association/<%= user.association.id %>">Mon association</a>
+                <%if (user.etablissement){%>
+                  <a href="/etablissement/<%= user.etablissement.id %>">Mon établissement</a>
+                <%}%>
+                <a href="/profile/<%= user.id %>"><i data-feather="user"></i>Mon profil</a>
+              </div>
+            </div>
+          </div>
+        <%} else if (user.organizationType === 'Anatomik'){%>
+          <div class="dashboard__subhHeader__infos">
+            <div class="dashboard__subhHeader__infos__tags">
+              <div class="hide-on-med-and-up">
+                <!-- Dropdown Trigger -->
+                <a class='dropdown-trigger btn white' id="dropdownMenu" href='#' data-target='dropdown2' data-activates="dropdown2" >Menu</a>
+
+                <!-- Dropdown Structure -->
+                <ul id='dropdown2' class='dropdown-content'>
+                  <li><a href="/association/new %>"><i data-feather="plus-circle"></i>Ajouter une association</a></li>
+                  <li><a href="/entreprise/new %>"><i data-feather="plus-circle"></i>Ajouter une entreprise</a></li>
+                  <li><a href="/etablissement/new %>"><i data-feather="plus-circle"></i>Ajouter un établissement</a></li>
+                  <li><a href="/signup %>"><i data-feather="plus-circle"></i>Ajouter un membre</a></li>
+                </ul>
+              </div>
+
+
+
+              <div class="dashboard__subhHeader__infos__tags--left  hide-on-small-only">
+                <a href="/association/new %>"><i data-feather="plus-circle"></i>Ajouter une association</a>
+                <a href="/entreprise/new %>"><i data-feather="plus-circle"></i>Ajouter une entreprise</a>
+                <a href="/etablissement/new %>"><i data-feather="plus-circle"></i>Ajouter un établissement</a>
+                <a href="/signup %>"><i data-feather="plus-circle"></i>Ajouter un membre</a>
+              </div>
+              <div class="dashboard__subhHeader__infos__tags--right">
+                <a href="/profile/<%= user.id %>"><i data-feather="user"></i>Mon profil</a>
+              </div>
+            </div>
+          </div>
+        <%} else if (user.organizationType === 'Entreprise'){%>
+          <div class="dashboard__subhHeader__infos">
+            <h3><%= user.entreprise.name %></h3>
+            <div class="dashboard__subhHeader__infos__tags">
+              <div class="dashboard__subhHeader__infos__tags--left">
+                <a href="/signup %>">Ajouter un membre</a>
+              </div>
+              <div class="dashboard__subhHeader__infos__tags--right">
+                <a href="/entreprise/<%= user.entreprise.id %>">Mon entreprise</a>
+                <a href="/profile/<%= user.id %>"><i data-feather="user"></i>Mon profil</a>
+              </div>
+            </div>
+          </div>
+        <%}%>
+
+        <div class="dashboard__modules col s12">
+          <div class="dashboard__modules__bar top"></div>
+          <div class="dashboard__modules__module"><p>Vos modules</p></div>
+          <div class="dashboard__modules__bar bottom"></div>
+        </div>
+
+      <div class="dashboard__items col s12 m10 offset-m1">
+          <div class="dashboard__items--item col s6 m4 l4" onclick="location.href='/offers/1'">
+            <a href="/offers/1">
+              <img id="appelOffre" src="/images/dashboardOffre.svg" alt="">
+              <h3>Appel d'offre</h3>
+            </a>
+          </div>
+          <div class="dashboard__items--item col s6 m4 l4" onclick="location.href='/ogp'">
+            <a href="/ogp">
+              <img id="gestionProjet" src="/images/dashboardGestionProjet.svg" alt="">
+              <h3>Gestion de projet</h3>
+            </a>
+          </div>
+          <div class="dashboard__items--item col s6 m4 l4" onclick="location.href='/services'">
+            <a href="/services">
+              <img id="aideServices" src="/images/dashboardAide.svg" alt="">
+              <h3>Aide et services</h3>
+            </a>
+          </div>
+          <% if(user.role === "Admin"){%>
+            <div class="dashboard__items--item second col s6 m4 l4" onclick="location.href='/users/show'">
+              <a href="/users/show">
+                <img id="gestionMembres" src="/images/dashboardGestionMembre.svg" alt="">
+                <h3>Gestion des membres</h3>
+              </a>
+            </div>
+          <% }%>
+          <% if(user.organizationType === "Anatomik"){ %>
+          <div class="dashboard__items--item second col s6 m4 l4" onclick="location.href='/associations/show'">
+            <a href="/associations/show">
+              <img id="gestionAssos" src="/images/dashboardGestionAssos.png" alt="">
+              <h3>Gestion des associations</h3>
+            </a>
+          </div>
+          <%}%>
+          <% if(user.organizationType === "Anatomik" || user.organizationType === "Association" && user.role === "Admin"){ %>
+          <div class="dashboard__items--item second col s6 m4 l4" onclick="location.href='/etablissements/show'">
+            <a href="/etablissements/show">
+              <img id="gestionEtablissements" src="/images/dashboardGestionEtablissements.png" alt="">
+              <h3>Gestion des établissements</h3>
+            </a>
+          </div>
+          <%}%>
+          <% if(user.organizationType === "Anatomik"){ %>
+          <div class="dashboard__items--item second col s6 m4 l4" onclick="location.href='/entreprises/show'">
+            <a href="/entreprises/show">
+              <img id="gestionEntreprises" src="/images/dashboardGestionEntreprises.png" alt="">
+              <h3>Gestion des entreprises</h3>
+            </a>
+          </div>
+          <%}%>
+          <div class="dashboard__items--item second col s6 m4 l4" onclick="location.href='/coming_soon/'">
+            <a href="/coming_soon">
+              <img id="messagerie" src="/images/dashboardMessagerie.svg" alt="">
+              <h3>Messagerie</h3>
+            </a>
+          </div>
+      </div>
+    </div>
+<%} else if(!user){%>
+  <div class="dashboard__noUser col s12">
+    <div class="dashboard__noUser--logo">
+      <img src="/images/logo.png" alt="">
+      <p>La plateforme de référence pour les associations et les entreprises</p>
+    </div>
+    <div class="dashboard__noUser--button">
+      <a href="/login">Connexion</a>
+    </div>
+
+  </div>
+<%}%>
+
+
+<%- include('./partials/footer'); %>
+
+
+<script type="text/javascript">
+   $('.dropdown-trigger').dropdown();
+</script>

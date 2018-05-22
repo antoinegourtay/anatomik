@@ -1,0 +1,62 @@
+<%- include('../partials/header'); %>
+    <a href="/ogp/edit/">
+    </a>
+    <div class="row">
+      <%- include('../partials/sidenav'); %>
+      <div class="singleProject content">
+        <h4>Gestion de projet</h4>
+        <div class="singleProject__header">
+          <div class="singleProject__header__tab col s12">
+            <ul>
+              <li><a href="/ogp">Retour</a></li>
+              <li><a href="/ogp/">Tableau de bord</a></li>
+              <li><a  class="active" href="/ogp/documents">Gestion des documents</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="singleProject__documents col s12">
+          <div class="singleProject__documents__header">
+            <p>N°87879</p>
+            <h2><%= project.name %></h2>
+            <div class="singleProject__documents__header__phase">
+              <h2><%= phase.name %></h2>
+              <p>12 fichiers attachés</p>
+            </div>
+          </div>
+          <div class="singleProject__documents__content">
+            <form action="/ogp/documents/<%= projectId %>/<%= phaseId %>" class="col s12" enctype="multipart/form-data" method="post">
+              <div class="file-field input-field col s6">
+                 <div class="btn">
+                   <span>File</span>
+                   <input type="file" name="file">
+                 </div>
+                 <div class="file-path-wrapper">
+                   <input class="file-path validate" value="Ajoutez un document" type="text">
+                 </div>
+               </div>
+
+               <button class="btn waves-effect waves-light blue col s6" type="submit"  class="submit" type="submit" value="Enregistrer">Ajouter
+                 <i class="material-icons right">send</i>
+               </button>
+            </form>
+            <h2>Documents (<%= files.length %>)</h2>
+            <div class="singleProject__documents__content__all">
+             <% files.forEach((file)=> { %>
+              <a href="/download-file/<%= projectId %>/<%= phaseId %>/<%= file %>">
+                <div class="singleProject__documents__content__all--item">
+                  <h2><%= file %></h2>
+                  <div class="bar"></div>
+                  <div class="singleProject__documents__content__all--item--footer"><p class="type">Doc</p></div>
+                </div>
+              </a>
+             <% }) %>
+
+
+
+
+
+
+          </div>
+      </div>
+    </div>
+    <%- include('../partials/footer'); %>

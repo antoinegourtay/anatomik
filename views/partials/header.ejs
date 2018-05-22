@@ -1,0 +1,61 @@
+<html>
+<head>
+  <title> <%= title %> </title>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  <link rel="stylesheet" href="/stylesheets/style.css">
+  <!-- load fontawesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+<div class="navbar-fixed">
+  <nav>
+    <div class="nav-wrapper header">
+      <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+      <a href="/" class="hide-on-med-and-down">
+        <img src="/images/logoHeader.png" alt="">
+      </a>
+      <div class="header__search">
+        <div class="input-field">
+          <form method="get" action="/search">
+            <input id="search" type="search" placeholder="Faites votre recherche" name="search" required>
+            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            <i class="material-icons">close</i>
+          </form>
+        </div>
+      </div>
+      <div class="header__right hide-on-med-and-down">
+        <ul>
+          <li class='dropdown-button circle' data-activates='dropdown1'>
+            <a href="">
+              <%if (user.photo_profil ){%>
+                <img src="/images/uploads/<%= user.photo_profil%>" alt="photo de profil" >
+              <%}
+              else {%>
+                <img src="/images/PhotoNoProfil.png" alt="photo de profil" class="profil">
+              <%}%>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+
+      <!-- Dropdown Structure -->
+      <ul id='dropdown1' class='dropdown-content'>
+        <li><a href="/profile/<%= user.id %>"><i data-feather="user"></i>Mon profil</a></li>
+        <li class="divider"></li>
+        <li><a href="/profile/edit/<%= user.id %>"><i data-feather="edit"></i>Modifier mon profil</a></li>
+        <li class="divider"></li>
+        <li><a href="/logout"><i data-feather="power"></i>Deconnexion</a></li>
+      </ul>
+
+
+    </div>
+  </nav>
+</div>
+
+</head>
+<body>

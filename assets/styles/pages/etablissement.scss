@@ -1,0 +1,256 @@
+body{
+  background: #f2f2f2;
+}
+.etablissement{
+  &.content{
+    padding: 0;
+  }
+  &__content{
+    padding: 30px;
+  }
+  &__header{
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 40px;
+    // background-image: linear-gradient(236deg, #d60968, #fa2732);
+    background-image: url('../images/pattern.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    @media (max-width: 600px) {
+      flex-direction: column;
+    }
+    img{
+      &.assoImg{
+        border-radius: 6px;
+        width: 300px;
+      }
+    }
+    &__infos{
+      margin-left: 30px;
+      &--social{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  }
+  &__content{
+    @media (max-width: 992px) {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+    &__left{
+      padding: 30px;
+      &__etablissements{
+        h2{
+          margin-top: 20px;
+          margin-bottom: 30px;
+          font-family: Avenir;
+          font-size: 16px;
+          color: #d60968;
+          font-weight: bold;
+          @media (max-width: 600px) {
+            font-size: 14px;
+          }
+        }
+        ul{
+          background: transparent;
+        }
+        &--liste{
+          border-radius: 6px;
+          background-color: #ffffff;
+          box-shadow: 0px 1px 2px 0px #c0c0c0;
+          height: auto;
+          max-height: 400px;
+          overflow-y: scroll;
+          margin-bottom: 40px;
+          tr{
+            box-shadow: 0 1px 4px 0 rgba(230, 230, 230, 0.5);
+          }
+        }
+        &--carte{
+        }
+      }
+      &__membres{
+        border-radius: 6px;
+        background-color: #ffffff;
+        box-shadow: 0px 1px 2px 0px #c0c0c0;
+        height: auto;
+        max-height: 400px;
+        overflow-y: scroll;
+        @media (max-width: 992px) {
+          margin-top: 30px;
+        }
+        h2{
+          margin-top: 20px;
+          margin-bottom: 30px;
+          font-family: Avenir;
+          font-size: 16px;
+          color: #d60968;
+          font-weight: bold;
+          @media (max-width: 600px) {
+            font-size: 14px;
+          }
+        }
+        table{
+          tr{
+            @media (max-width: 600px) {
+              font-size: 12px;
+            }
+            background-color: #ffffff;
+            box-shadow: 0 1px 4px 0 rgba(230, 230, 230, 0.5);
+            td{
+              img{
+                width: 50px !important;
+              }
+              a{
+                font-family: Avenir;
+                font-size: 16px;
+                font-weight: 900;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: normal;
+                text-align: center;
+                color: #d60968;
+                @media (max-width: 600px) {
+                  font-size: 12px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    &__right{
+      &__informations{
+        background: white !important;
+        margin-top: -80px;
+        @media (max-width: 992px) {
+          margin-top: 40px;
+        }
+        @include red-card;
+        h2{
+          @include red-card-h2;
+          @media (max-width: 600px) {
+            font-size: 14px;
+          }
+        }
+      }
+      &__siege{
+        background: white !important;
+        h2{
+          @include red-card-h2;
+          @media (max-width: 600px) {
+            font-size: 14px;
+          }
+        }
+        #map {
+          border-radius: 6px;
+          background-color: #ffffff;
+          box-shadow: 0px 1px 2px 0px #c0c0c0;
+          width: 100%;
+          height: 400px;
+          background-color: grey;
+        }
+        margin-top: 30px;
+        @include red-card;
+      }
+      &__about{
+        margin-top: 40px;
+        border-radius: 6px;
+        box-shadow: 0px 1px 2px 0px #c0c0c0;
+        border: solid 1px transparent;
+        background: white;
+        h2{
+          font-family: Avenir;
+          font-size: 16px;
+          font-weight: 900;
+          color: #d60968;
+        }
+        p{
+          font-family: Avenir-Roman;
+          font-size: 13px;
+          line-height: 1.46;
+          letter-spacing: normal;
+          text-align: left;
+          color: #a4a4a4;
+        }
+      }
+      h2{
+        margin-top: 20px;
+        margin-bottom: 30px;
+        font-family: Avenir;
+        font-size: 16px;
+        color: #d60968;
+        @media (max-width: 600px) {
+          font-size: 14px;
+        }
+      }
+      &__informations{
+        &--top{
+          .line1{
+            font-size: 18px;
+            font-family: Avenir;
+            color: black;
+            @media (max-width: 600px) {
+              font-size: 12px;
+            }
+          }
+          p{
+            line-height: 0;
+          }
+          .line2{
+            font-size: 14px;
+            color: #D60968;
+            @media (max-width: 600px) {
+              font-size: 12px;
+            }
+          }
+          .right{
+            text-align: right;
+          }
+        }
+        &--middle{
+          margin-top: 50px;
+          .telephone , .mail , .site{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            p{
+              font-family: Avenir;
+              font-size: 20px;
+              font-weight: 500;
+              color: #000000;
+              margin-top: 20px;
+              margin-bottom: 10;
+              @media (max-width: 600px) {
+                font-size: 14px;
+              }
+            }
+            a{
+              font-family: Avenir;
+              font-size: 14px;
+              font-weight: 500;
+              color: #d60968;
+              @media (max-width: 600px) {
+                font-size: 12px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+#map1 {
+  border-radius: 6px;
+  background-color: #ffffff;
+  box-shadow: 0px 1px 2px 0px #c0c0c0;
+  width: 100%;
+  height: 400px;
+  background-color: grey;
+}

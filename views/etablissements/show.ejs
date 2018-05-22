@@ -1,0 +1,143 @@
+<%- include('../partials/header'); %>
+
+<div class="row">
+  <%- include('../partials/sidenav'); %>
+
+  <div class="etablissement content">
+    <div class="etablissement__header">
+      <img src="/images/logoEtablissement.png" class="assoImg" alt="">
+      <div class="profil__header__infos">
+        <div class="profil__header__infos--left">
+          <h3><%= etablissement.name %></h3>
+          <p><strong>Association : <%= etablissement.association.name %> </strong> </p>
+          <p><strong>Type d'établissement : <%= etablissement.type %></strong></p>
+          <p><strong>Forme juridique : <%= etablissement.association.statut %> </strong></p>
+          <div class="profil__header__infos--social">
+            <%if (etablissement.association.facebook){%>
+              <a href="" target="_blank" ><img src="/images/logoFacebook.png" alt="facebook"></a>
+            <%}%>
+            <%if (etablissement.association.linkedin){%>
+              <a href="" target="_blank"><img src="/images/logoLinkedin.png" alt="Linkedin"></a>
+            <%}%>
+            <%if (etablissement.association.twitter){%>
+              <a href="" target="_blank"><img src="/images/logoTwitter.png" alt="Twitter"></a>
+            <%}%>
+            <%if (etablissement.association.instagram){%>
+              <a href="" target="_blank"><img src="/images/logoInstagram.png" alt="Instagram"></a>
+            <%}%>
+          </div>
+        </div>
+        <div class="profil__header__infos--right">
+          <%if (user.role === 'Admin'){%>
+            <a href="/etablissement/edit/<%= etablissement.id %>"><i data-feather="edit"></i>Modifier</a>
+          <%}%>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="etablissement__content row">
+      <div class="etablissement__content__left col s12 m12 l6">
+
+        <div class="etablissement__content__left__membres">
+          <h2>Membres</h2>
+          <table class="etablissement__content__left__membres--table">
+            <% users.forEach(function(usr){ %>
+            <tr>
+              <td>
+                <%if (usr.photo_profil){%>
+                  <img src="/images/uploads/<%= usr.photo_profil%>" alt="photo de profil" class="circle">
+                <%}
+                else {%>
+                  <img src="/images/NavPhotoNoProfil.png" alt="photo de profil">
+                <%}%>
+              </td>
+              <td class="title"><%= usr.firstname %> <%= usr.lastname %></td>
+              <td><%= usr.poste %></td>
+              <td><a href="/profile/<%= usr.id %>" class="secondary-content">Voir profil</a></td>
+            </tr>
+            <%})%>
+          </table>
+        </div>
+      </div>
+      <div class="etablissement__content__right col s12 m12 l4 offset-l1">
+        <div class="etablissement__content__right__informations col s12">
+          <h2>Informations de l'établissement</h2>
+          <div class="etablissement__content__right__informations--top">
+            <div class="col s6">
+              <p class="line1">Adresse</p>
+              <p class="line2"><%= etablissement.adresse %></p>
+            </div>
+            <div class="col s6 right">
+              <p class="line1">ville</p>
+              <p class="line2"><%= etablissement.ville %> <%= etablissement.code_postal %></p>
+            </div>
+            <div class="col s6">
+              <p class="line1">Pays</p>
+              <p class="line2">France</p>
+            </div>
+            <div class="col s6 right">
+              <p class="line1">N° siret</p>
+              <p class="line2">ideiufoieoifue</p>
+            </div>
+          </div>
+          <div class="etablissement__content__right__informations--middle col s12">
+            <div class="site">
+              <a href="">Site de l'association</a>
+            </div>
+            <div class="telephone">
+              <p>Téléphone</p>
+              <a href=""><%= etablissement.telephone %></a>
+            </div>
+            <div class="mail">
+              <p>Mail</p>
+              <a href=""><%= etablissement.mail %></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="etablissement__content__right__siege col s12">
+          <h2>Localisation de l'établissement</h2>
+          <div id="map"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+<%- include('../partials/footer'); %>
+<script type="text/javascript">
+
+var adresse = '<%= etablissement.adresse%> . <%= etablissement.code_postal%>'
+
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
+        center: {lat: -34.397, lng: 150.644}
+      });
+      var geocoder = new google.maps.Geocoder();
+
+        geocodeAddress(geocoder, map);
+
+    }
+
+    function geocodeAddress(geocoder, resultsMap) {
+      var address = adresse;
+      geocoder.geocode({'address': address}, function(results, status) {
+        if (status === 'OK') {
+          resultsMap.setCenter(results[0].geometry.location);
+          var marker = new google.maps.Marker({
+            map: resultsMap,
+            position: results[0].geometry.location
+          });
+        } else {
+          // alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    }
+  </script>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrLDt0Q4IKrw7Y1CRqy0O3ja8h7QkTUHQ&callback=initMap">
+  </script>

@@ -1,0 +1,22 @@
+.users{
+  h4{
+    font-family: Avenir;
+    font-size: 42px;
+    font-weight: 900;
+    color: #d60968;
+  }
+  table{
+    background: white;
+    margin-bottom: 100px;
+    a{
+      color: #d60968;
+      &:hover{
+        color: black;
+      }
+    }
+  }
+  .pagination{
+    display: flex;
+    justify-content: center;
+  }
+}

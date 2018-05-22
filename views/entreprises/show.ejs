@@ -1,0 +1,161 @@
+<%- include('../partials/header'); %>
+
+<div class="row">
+    <%- include('../partials/sidenav'); %>
+
+  <div class="entreprise content">
+    <div class="entreprise__header">
+      <div id="photoModal" class="modal">
+        <div class="modal-content">
+          <h4>Changer l'image de l'entreprise</h4>
+        </div>
+        <div class="modal-footer">
+          <form class="col s12" method="post" action="/entreprise/photo/<%= entreprise._id %>" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <button class="btn waves-effect waves-light blue" type="submit"  value="Enregistrer" name="action">Submit
+          </form>
+        </div>
+        </div>
+
+      <%if (entreprise.logo){%>
+        <a class="modal-trigger" href="#photoModal"><img src="/images/uploads/<%= entreprise.logo%>" alt="photo de profil" class="assoImg"></a>
+      <%}
+      else {%>
+        <a class="modal-trigger" href="#photoModal"><img src="/images/CompanyNoProfil.png" alt="photo de profil"></a>
+      <%}%>
+      <div class="profil__header__infos">
+        <div class="profil__header__infos--left">
+          <h3><%= entreprise.name %></h3>
+          <p><strong>Type d'entreprise : </strong> type d'entreprise</p>
+          <p><strong>Forme juridique : </strong><%= entreprise.statut %></p>
+          <div class="profil__header__infos__left--social">
+            <%if (entreprise.facebook){%>
+              <a href="<%= entreprise.facebook %>" target="_blank" ><img src="/images/logoFacebook.png" alt="facebook"></a>
+            <%}%>
+            <%if (entreprise.linkedin){%>
+              <a href="<%= entreprise.linkedin %>" target="_blank"><img src="/images/logoLinkedin.png" alt="Linkedin"></a>
+            <%}%>
+            <%if (entreprise.twitter){%>
+              <a href="<%= entreprise.twitter %>" target="_blank"><img src="/images/logoTwitter.png" alt="Twitter"></a>
+            <%}%>
+            <%if (entreprise.instagram){%>
+              <a href="<%= entreprise.instagram %>" target="_blank"><img src="/images/logoInstagram.png" alt="Instagram"></a>
+            <%}%>
+            <%if (entreprise.site){%>
+              <a href="<%= entreprise.site %>" target="_blank" class="site"><%= entreprise.site %></a>
+            <%}%>
+          </div>
+        </div>
+        <div class="profil__header__infos--right">
+          <% if (user.organizationType == "Entreprise" && user.entreprise.id === entreprise.id || user.organizationType == "Anatomik"){%>
+            <a href="/entreprise/edit/<%= entreprise.id %>"><i data-feather="edit"></i>Modifier</a>
+          <%}%>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="entreprise__content row">
+      <div class="entreprise__content__left col s12 m12 l6">
+        <div class="entreprise__content__left__services col s12">
+          <h2>Membres</h2>
+          <div class="entreprise__content__left__services__domaine">
+            <h3>Domaine d'activités</h3>
+            <p><%= entreprise.domaine %></p>
+          </div>
+        </div>
+      </div>
+      <div class="entreprise__content__right col s12 m12 l4 offset-l1">
+        <div class="entreprise__content__right__informations col s12">
+          <h2>Informations de l'association</h2>
+          <div class="entreprise__content__right__informations--top">
+            <div class="col s6">
+              <p class="line1">Adresse</p>
+              <p class="line2"><%= entreprise.adresse %></p>
+            </div>
+            <div class="col s6 right">
+              <p class="line1">ville</p>
+              <p class="line2"><%= entreprise.code_postal%> <%= entreprise.ville %></p>
+            </div>
+            <div class="col s6">
+              <p class="line1">Pays</p>
+              <p class="line2"><%= entreprise.pays %></p>
+            </div>
+            <div class="col s6 right">
+              <p class="line1">N° siret</p>
+              <p class="line2"><%= entreprise.siret %></p>
+            </div>
+          </div>
+          <div class="entreprise__content__right__informations--middle col s12">
+            <div class="site">
+              <a href="">Site de l'association</a>
+            </div>
+            <div class="telephone">
+              <p>Téléphone</p>
+              <a href=""><%= entreprise.telephone %></a>
+            </div>
+            <div class="mail">
+              <p>Mail</p>
+              <a href=""><%= entreprise.contact %></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="entreprise__content__right__siege col s12">
+          <h2>Localisation du siège social</h2>
+          <div id="map"></div>
+        </div>
+
+        <div class="entreprise__content__right__about col s12">
+          <h2>A propos</h2>
+          <p><%= entreprise.description %></p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+<%- include('../partials/footer'); %>
+<script type="text/javascript">
+  var adresse = '<%= entreprise.adresse%> . <%= entreprise.code_postal%>'
+
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
+        center: {lat: -34.397, lng: 150.644}
+      });
+      var geocoder = new google.maps.Geocoder();
+
+        geocodeAddress(geocoder, map);
+
+    }
+
+    function geocodeAddress(geocoder, resultsMap) {
+      var address = adresse;
+      geocoder.geocode({'address': address}, function(results, status) {
+        if (status === 'OK') {
+          resultsMap.setCenter(results[0].geometry.location);
+          var marker = new google.maps.Marker({
+            map: resultsMap,
+            position: results[0].geometry.location
+          });
+        } else {
+          // alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    }
+  </script>
+  <script>
+  $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
+
+  </script>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrLDt0Q4IKrw7Y1CRqy0O3ja8h7QkTUHQ&callback=initMap">
+  </script>

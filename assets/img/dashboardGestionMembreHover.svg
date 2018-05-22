@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="55px" height="57px" viewBox="0 0 55 57" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>[DASHBOARD]GESTIONMEMBRE</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="[DASHBOARD]GESTIONMEMBRE" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="users" transform="translate(2.000000, 8.000000)" stroke="#D60968" stroke-width="2">
+            <path d="M36.25,40 L36.25,35.5555556 C36.25,30.6463578 32.1925805,26.6666667 27.1875,26.6666667 L9.0625,26.6666667 C4.05741945,26.6666667 5.03069808e-16,30.6463578 0,35.5555556 L0,40" id="Shape"></path>
+            <ellipse id="Oval" cx="18.125" cy="9.09090909" rx="9.375" ry="9.09090909"></ellipse>
+            <path d="M50,40 L50,35.4571266 C49.9971673,31.316565 47.4270808,27.7018062 43.75,26.6666667" id="Shape"></path>
+            <path d="M33.75,0 C37.4277075,0.992277932 40,4.48435989 40,8.48484848 C40,12.4853371 37.4277075,15.977419 33.75,16.969697" id="Shape"></path>
+        </g>
+    </g>
+</svg>

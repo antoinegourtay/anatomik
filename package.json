@@ -1,0 +1,53 @@
+{
+  "name": "anatomik-webapp",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./app",
+    "dev": "nodemon ./app -e js,twig,css,json"
+  },
+  "dependencies": {
+    "async": "^2.6.0",
+    "bcrypt": "^1.0.3",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "~1.18.2",
+    "busboy": "^0.2.14",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^2.0.1",
+    "connect-multiparty": "^2.1.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "ejs": "~2.5.7",
+    "express": "~4.15.5",
+    "express-fileupload": "^0.4.0",
+    "express-flash": "0.0.2",
+    "express-session": "^1.15.6",
+    "formidable": "^1.2.1",
+    "frappe-gantt": "^0.1.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-livereload": "^3.8.1",
+    "gulp-notify": "^3.2.0",
+    "gulp-plumber": "^1.2.0",
+    "gulp-sass": "^3.2.0",
+    "method-override": "^2.3.10",
+    "mkdirp": "^0.5.1",
+    "moment": "^2.22.1",
+    "mongodb": "^3.0.3",
+    "mongoose": "^5.0.4",
+    "morgan": "~1.9.0",
+    "nodemailer": "^4.6.4",
+    "nodemon": "^1.14.12",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^4.5.0",
+    "promise": "^8.0.1",
+    "serve-favicon": "~2.4.5",
+    "snapsvg": "^0.5.1",
+    "socket.io": "^2.0.4",
+    "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "gulp-imagemin": "^4.1.0"
+  }
+}

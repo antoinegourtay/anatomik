@@ -1,0 +1,224 @@
+<%- include('../partials/header'); %>
+
+<div class="row">
+  <%- include('../partials/sidenav'); %>
+
+  <div class="association content">
+  <div id="photoModal" class="modal">
+        <div class="modal-content">
+          <h4>Changer l'image de l'association</h4>
+        </div>
+        <div class="modal-footer">
+          <form class="col s12" method="post" action="/association/photo/<%= association._id %>" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <button class="btn waves-effect waves-light blue" type="submit"  value="Enregistrer" name="action">Submit
+          </form>
+        </div>
+        </div>
+    <div class="association__header">
+      <%if (association.logo ){%>
+        <a class="modal-trigger" href="#photoModal"><img src="/images/uploads/<%= association.logo%>" alt="photo de profil" ></a>
+      <%}
+      else {%>
+        <a class="modal-trigger" href="#photoModal"><img src="/images/AssoNoProfil.png" alt="photo de profil" class="profil"></a>
+      <%}%>
+      <div class="profil__header__infos">
+        <div class="profil__header__infos--left">
+          <h3><%= association.name %></h3>
+          <%if (association.date_creation){%>
+            <p><strong>Date de création : </strong> <%= association.date_creation %></p>
+          <%}%>
+          <%if (association.statut){%>
+            <p><strong>Forme juridique : </strong><%= association.statut %></p>
+          <%}%>
+
+          <div class="profil__header__infos__left--social">
+            <%if (association.facebook){%>
+              <a href="<%= association.facebook %>" target="_blank" ><img src="/images/logoFacebook.png" alt="facebook"></a>
+            <%}%>
+            <%if (association.linkedin){%>
+              <a href="<%= association.linkedin %>" target="_blank"><img src="/images/logoLinkedin.png" alt="Linkedin"></a>
+            <%}%>
+            <%if (association.twitter){%>
+              <a href="<%= association.twitter %>" target="_blank"><img src="/images/logoTwitter.png" alt="Twitter"></a>
+            <%}%>
+            <%if (association.instagram){%>
+              <a href="<%= association.instagram %>" target="_blank"><img src="/images/logoInstagram.png" alt="Instagram"></a>
+            <%}%>
+            <%if (association.site){%>
+              <a href="<%= association.site %>" class="site"><%= association.site %></a>
+            <%}%>
+          </div>
+        </div>
+        <div class="profil__header__infos--right">
+          <% if (user.organizationType == "Association" && user.association.id === association.id || user.organizationType == "Anatomik"){%>
+            <a href="/association/edit/<%= association.id %>"><i data-feather="edit"></i>Modifier</a>
+          <%}%>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="association__content row">
+      <div class="association__content__left col s12 m12 l6">
+        <div class="association__content__left__etablissements col s12">
+          <h2>Les établissements</h2>
+            <% if(etablissements.length >0){%>
+            <div class="association__content__left__etablissements--liste col s12">
+              <table>
+                <thead>
+                  <tr>
+                      <th>Nom</th>
+                      <th>Ville</th>
+                      <th>Voir</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% etablissements.forEach(function(etablissement) { %>
+                    <%if(etablissement.is_archive === false){%>
+                    <tr>
+                      <td><%= etablissement.name %></td>
+                      <td><%= etablissement.ville%> <%= etablissement.code_postal%></td>
+                      <td><a href="/etablissement/<%= etablissement.id %>">Voir</a></td>
+                    </tr>
+                    <%}%>
+                  <%})%>
+                </tbody>
+              </table>
+            </div>
+            <%}
+            else { %>
+              <div class="association__content__left__etablissements--liste col s12">
+                Cette association ne dispose pas encore d'établissements
+              </div>
+            <% } %>
+        </div>
+
+        <div class="association__content__left__membres col s12">
+          <h2>Membres</h2>
+          <table class="association__content__left__membres--table">
+            <% users.forEach(function(usr){ %>
+              <% if (!usr.etablissement){%>
+                <tr>
+                  <td>
+                    <%if (usr.photo_profil){%>
+                      <img src="/images/uploads/<%= usr.photo_profil%>" alt="photo de profil" class="circle">
+                    <%}
+                    else {%>
+                      <img src="/images/NavPhotoNoProfil.png" alt="photo de profil">
+                    <%}%>
+                  <td class="title"><%= usr.firstname %> <%= usr.lastname %></td>
+                  <td><%= usr.poste %></td>
+                  <td><a href="/profile/<%= usr.id %>" class="secondary-content">Voir profil</a></td>
+                </tr>
+              <%}%>
+            <%})%>
+          </table>
+        </div>
+      </div>
+      <div class="association__content__right col s12 m12 l4 offset-l1">
+        <div class="association__content__right__informations col s12">
+          <h2>Informations de l'association</h2>
+          <div class="association__content__right__informations--top">
+            <div class="col s6">
+              <p class="line1">Adresse</p>
+              <p class="line2"><%= association.adresse %></p>
+            </div>
+              <div class="col s6 right">
+                <p class="line1">ville</p>
+                <p class="line2"><%= association.code_postal%> <%= association.ville %></p>
+              </div>
+              <div class="col s6">
+                <p class="line1">Pays</p>
+                <p class="line2"><%= association.pays %></p>
+              </div>
+            <%if (association.siret){%>
+              <div class="col s6 right">
+                <p class="line1">N° siret</p>
+                <p class="line2"><%= association.siret %></p>
+              </div>
+            <%}%>
+            <%if (association.finess){%>
+              <div class="col s6 right">
+                <p class="line1">N° Finess</p>
+                <p class="line2"><%= association.finess %></p>
+              </div>
+            <%}%>
+          </div>
+          <div class="association__content__right__informations--middle col s12">
+            <%if (association.telephone){%>
+              <div class="telephone">
+                <p>Téléphone</p>
+                <a href=""><%= association.telephone %></a>
+              </div>
+            <%}%>
+            <%if (association.contact){%>
+              <div class="mail">
+                <p>Mail</p>
+                <a href=""><%= association.contact %></a>
+              </div>
+            <%}%>
+          </div>
+        </div>
+
+        <%if (association.adresse){%>
+          <div class="association__content__right__siege col s12">
+            <h2>Localisation du siège social</h2>
+            <div id="map"></div>
+          </div>
+        <%}%>
+
+        <%if (association.description){%>
+          <div class="association__content__right__about col s12">
+            <h2>A propos</h2>
+            <p><%= association.description %></p>
+          </div>
+        <%}%>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+<%- include('../partials/footer'); %>
+<script>
+  $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
+
+  </script>
+<script type="text/javascript">
+  var adresse = '<%= association.adresse%> . <%= association.code_postal%>'
+
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
+        center: {lat: -34.397, lng: 150.644}
+      });
+      var geocoder = new google.maps.Geocoder();
+
+        geocodeAddress(geocoder, map);
+
+    }
+
+    function geocodeAddress(geocoder, resultsMap) {
+      var address = adresse;
+      geocoder.geocode({'address': address}, function(results, status) {
+        if (status === 'OK') {
+          resultsMap.setCenter(results[0].geometry.location);
+          var marker = new google.maps.Marker({
+            map: resultsMap,
+            position: results[0].geometry.location
+          });
+        } else {
+          // alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    }
+  </script>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrLDt0Q4IKrw7Y1CRqy0O3ja8h7QkTUHQ&callback=initMap">
+  </script>

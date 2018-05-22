@@ -1,0 +1,224 @@
+<%- include('../partials/header'); %>
+    <a href="/ogp/edit/">
+    </a>
+    <div class="row">
+      <%- include('../partials/sidenav'); %>
+      <div class="singleProject content">
+        <h4>Gestion de projet</h4>
+        <div class="singleProject__header">
+          <div class="singleProject__header__tab col s12">
+            <ul>
+              <li><a href="/ogp">Retour</a></li>
+              <li><a class="active" href="/ogp/<%= project.id %>">Tableau de bord</a></li>
+              <li><a href="/ogp/edit/<%= project.id %>">Editer</a></li>
+              <li><a href="/ogp/documents/<%= project.id %>">Gestion des documents</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="singleProject__board col s12">
+          <div class="singleProject__board__left col s12 m12 l8">
+            <div class="singleProject__board__left__resume">
+              <div class="singleProject__board__left__resume--id">
+                <p>N° <%= project.id %></p>
+              </div>
+              <div class="singleProject__board__left__resume--title">
+                <h2><%= project.name %></h2>
+              </div>
+              <div class="singleProject__board__left__resume--responsable">
+                <div class="left">
+                  <%if (project.associationResponsible.photo_profil ){%>
+                    <img src="/images/uploads/<%= project.associationResponsible.photo_profil%>" alt="photo de profil" >
+                  <%}
+                  else {%>
+                    <img src="/images/PhotoNoProfil.png" alt="photo de profil" class="profil">
+                  <%}%>
+                </div>
+                <div class="right">
+                  <span>Dirigé par :</span>
+                  <p><%= project.associationResponsible.fullname%></p>
+                </div>
+              </div>
+              <div class="singleProject__board__left__resume__general col s12">
+                <div class="singleProject__board__left__resume__general--objectif col s12 m12 l6">
+                  <h3>Objectif</h3>
+                  <p><%= project.objective%></p>
+                </div>
+                <div class="singleProject__board__left__resume__general--description col s12 m12 l6">
+                  <h3>Description</h3>
+                  <p><%= project.description%></p>
+                </div>
+                <div class="singleProject__board__left__resume__general__informations col s12 m12 l12">
+                  <div class="col s12 m6 left">
+                    <p>Date de début : <span><%= project.startDate%></span></p>
+                    <p>Date de fin : <span><%= project.endDate%></span></p>
+                  </div>
+                  <div class="col s12 m6 right">
+                    <p>Montant total du projet</p>
+                    <% phases.reverse().forEach(function(phase) { %>
+                          <% subphases.forEach(function(subphase){%>
+                            <% if (subphase.phase == phase.id){%>
+                              <% subphasesPrice += subphase.value %>
+                            <%}%>
+                          <% }); %>
+                    <% }); %>
+                  <p class="price"><%= subphasesPrice %> €</p>
+                  </div>
+                </div>
+                <div class="singleProject__board__left__resume__general__progression col s12">
+                  <p>Progression du projet</p>
+                  <div class="progress">
+                    <div class="determinate" style="width: 70%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="singleProject__board__left__membres">
+              <h2>Membres du projet</h2>
+              <div class="singleProject__board__left__membres--form">
+                <form class="" action="add_members/<%= project.id %>" method="post">
+                  <div class="input-field col s6 ">
+                    <select multiple name="users">
+                      <option disabled selected>Ajouter des membres</option>
+                      <%users.forEach(function(user){%>
+                          <option value="<%=user.id%>" <% if(projectUsers.includes(user.id) == true){ %> selected <% } %> ><%=user.fullname%></option>
+                      <%})%>
+                    </select>
+                    <label>Ajouter des membres au projet</label>
+                  </div>
+                  <div class="input-field col s12 m6">
+                    <button class="btn waves-effect waves-light blue right" type="submit" name="submit">Ajouter le(s) membre(s)
+                      <i class="material-icons right">send</i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>Supprimer</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <%users.forEach(function(user){%>
+                    <%if(projectUsers.includes(user.id) === true){%>
+                        <tr>
+                            <td><%=user.fullname%></td>
+                            <td><a href="delete_member/<%=project.id%>/<%=user.id%>">Supprimer</a></td>
+                          </tr>
+                      <%}%>
+                  <%})%>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="singleProject__board__right col s12 m12 l4">
+            <div class="singleProject__board__right__cards col s12">
+              <h5>Phases du projet</h5>
+              <% for(var k = 0; k < phases.length; k++) { %>
+                <div class="singleProject__board__right__cards__card col s12">
+                  <div class="singleProject__board__right__cards__card--title">
+                    <h3><%=phases[k].name%></h3>
+                  </div>
+                  <div class="singleProject__board__right__cards__card--infos">
+                    <div class="image"><img src="/images/logo.png" alt=""></div>
+                    <div>
+                      <p class="type">Entreprise</p>
+                      <% if (entreprises.length > 0) {%> 
+                      <p class="name"><%= entreprises[k].name %></p>
+                      <% } %>
+                    </div>
+                  </div>
+                  <div class="singleProject__board__right__cards__card--files">
+                    <p class="files"> <img src="/images/iconeFolder.svg" alt="">12 fichiers attachés</p>
+                    <p class="percent">77%</p>
+                  </div>
+                  <div class="singleProject__board__right__cards__card--more">
+                    <a class="modal-trigger" href="#modal<%= phases[k].id%>">Voir</a>
+                  </div>
+                  <!-- Modal Structure -->
+                  <div id="modal<%= phases[k].id%>" class="modal">
+                    <div class="modal__header col s12">
+                      <p>N° <%= phases[k].id%></p>
+                      <div class="modal__header--infos">
+                        <p>Nom de la phase </p>
+                        <h3><%= phases[k].name%></h3>
+                      </div>
+                    </div>
+                    <div class="modal__general col s12">
+                      <div class="modal__general__item col s12 m12 l4">
+                        <img src="/images/AssoNoProfil.png" class="circle" alt="photo de profil" class="profil">
+                        <div class="modal__general__item--data">
+                          <p>Entreprise</p>
+                          <p class="data"><%= entreprises[k].name %></p>
+                        </div>
+                      </div>
+                      <div class="modal__general__item col s12 m12 l3">
+                        <p>Date de début <span class="data"><%= phases[k].startDatePhase%></span></p>
+                      </div>
+                      <div class="modal__general__item col  s12 m12 l3">
+                        <p>Date de fin <span class="data"><%= phases[k].endDatePhase%></span></p>
+                      </div>
+                      <div class="modal__general__item col s12 m12 l3">
+                          <% var phase_price = 0%>
+                          <%for (var i = 0; i < subphases.length; i++){%>
+                            <%if (subphases[i].phase == phases[k].id){%>
+                              <% phase_price = phase_price + subphases[i].value %>
+
+                            <%}%>
+                          <%}%>
+                        <p>Montant de la phase <span class="data"><%= phase_price%>€</span></p>
+                      </div>
+                    </div>
+                    <div class="modal__description col s12">
+                      <p>Description</p>
+                      <div class="modal__description--item">
+                        <p><%= phases[k].description %></p>
+                      </div>
+                    </div>
+                    <div class="modal__phases col s12">
+                      <h2>sous phases</h2>
+                      <% subphases.reverse().forEach(function(subphase){%>
+                        <% if (subphase.phase == phases[k].id){%>
+                          <div class="modal__phases__phase col s12 m4 l4">
+                            <h3><%=subphase.name%></h3>
+                            <div class="modal__phases__phase--content">
+                              <p><%=subphase.value%> €</p>
+                              <p><%=subphase.name%></p>
+                              <%if (subphase.state === "En cours" ){%>
+                                <p class="state finished red">v</p>
+                              <%}
+                              else {%>
+                                <p class="state">v</p>
+                              <%}%>
+                            </div>
+                          </div>
+                        <%}%>
+                      <% }); %>
+                    </div>
+                  </div>
+                </div>
+              <% } %>
+            </div>
+          </div>
+      </div>
+    </div>
+
+
+
+
+<%- include('../partials/footer'); %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
+
+  $(document).ready(function() {
+  $('select').material_select();
+  });
+
+</script>

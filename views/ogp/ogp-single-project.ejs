@@ -8,18 +8,32 @@
         <div class="singleProject__header">
           <div class="singleProject__header__tab col s12">
             <ul>
-              <li><a href="/ogp">Retour</a></li>
-              <li><a class="active" href="/ogp/<%= project.id %>">Tableau de bord</a></li>
-              <li><a href="/ogp/edit/<%= project.id %>">Editer</a></li>
-              <li><a href="/ogp/documents/<%= project.id %>">Gestion des documents</a></li>
+              <li><a href="/ogp"><i data-feather="home"></i>Retour</a></li>
+              <li><a class="active" href="/ogp/<%= project.id %>"><i data-feather="clipboard"></i>Tableau de bord</a></li>
+              <li><a href="/ogp/edit/<%= project.id %>"><i data-feather="edit"></i>Editer</a></li>
+              <li><a href="/ogp/documents/<%= project.id %>"> <i data-feather="file"></i>Gestion des documents</a></li>
             </ul>
           </div>
         </div>
+
+
         <div class="singleProject__board col s12">
           <div class="singleProject__board__left col s12 m12 l8">
             <div class="singleProject__board__left__resume">
               <div class="singleProject__board__left__resume--id">
                 <p>N° <%= project.id %></p>
+                <a class="waves-effect waves-light modal-trigger" href="#modal<%=project.id%>"><i data-feather="trash-2"></i></a>
+                <!-- Modal Structure -->
+                <div id="modal<%=project.id%>" class="modal">
+                  <div class="modal-content">
+                    <h4>Supprimer ?</h4>
+                    <p>En cliquant sur continuer, vous supprimerez le projet <%=project.name%>. Etes vous sur de vouloir continuer ? </p>
+                  </div>
+                  <div class="modal-footer">
+                    <a href="/ogp/archive/<%= project.id %>" class="modal-action modal-close waves-effect waves-green btn-flat">OUI</a>
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">NON</a>
+                  </div>
+                </div>
               </div>
               <div class="singleProject__board__left__resume--title">
                 <h2><%= project.name %></h2>
@@ -53,6 +67,15 @@
                     <p>Date de fin : <span><%= project.endDate%></span></p>
                   </div>
                   <div class="col s12 m6 right">
+                    <p>Budget prévisionnel du projet</p>
+                    <% if (project.provisionnalBudget === 0 || project.provisionnalBudget === null) {%>
+                        <p class="price">Budget prévisionnel non-défini</p>
+                    <%} else { %>
+                        <p class="price"> <%= project.provisionnalBudget %> €</p>
+                    <% } %>
+                    
+                  </div>
+                  <div class="col s12 m6 right">
                     <p>Montant total du projet</p>
                     <% phases.reverse().forEach(function(phase) { %>
                           <% subphases.forEach(function(subphase){%>
@@ -67,7 +90,7 @@
                 <div class="singleProject__board__left__resume__general__progression col s12">
                   <p>Progression du projet</p>
                   <div class="progress">
-                    <div class="determinate" style="width: 70%"></div>
+                    <div class="determinate" style="width: <%= percentageOfProject %>%"></div>
                   </div>
                 </div>
               </div>
@@ -76,14 +99,13 @@
               <h2>Membres du projet</h2>
               <div class="singleProject__board__left__membres--form">
                 <form class="" action="add_members/<%= project.id %>" method="post">
-                  <div class="input-field col s6 ">
-                    <select multiple name="users">
-                      <option disabled selected>Ajouter des membres</option>
+                  <div class="input-field col s12 m6">
+                    <p>Ajouter des membres</p>
+                    <select multiple name="users" class="js-example-basic-single">
                       <%users.forEach(function(user){%>
                           <option value="<%=user.id%>" <% if(projectUsers.includes(user.id) == true){ %> selected <% } %> ><%=user.fullname%></option>
                       <%})%>
                     </select>
-                    <label>Ajouter des membres au projet</label>
                   </div>
                   <div class="input-field col s12 m6">
                     <button class="btn waves-effect waves-light blue right" type="submit" name="submit">Ajouter le(s) membre(s)
@@ -123,23 +145,23 @@
                     <h3><%=phases[k].name%></h3>
                   </div>
                   <div class="singleProject__board__right__cards__card--infos">
-                    <div class="image"><img src="/images/logo.png" alt=""></div>
+                    <% if( phases[k].entreprise != null && entreprises[k].logo){%>
+                      <div class="image"><img src="/images/uploads/<%=entreprises[k].logo%>" alt=""></div>
+                    <%}else{%>
+                      <div class="image"><img src="/images/CompanyNoProfil.png"></div>
+                    <%}%>
                     <div>
                       <p class="type">Entreprise</p>
-                      <% if (entreprises.length > 0) {%> 
+                      <% if (phases[k].entreprise != null && entreprises.length > 0) {%>
                       <p class="name"><%= entreprises[k].name %></p>
                       <% } %>
                     </div>
-                  </div>
-                  <div class="singleProject__board__right__cards__card--files">
-                    <p class="files"> <img src="/images/iconeFolder.svg" alt="">12 fichiers attachés</p>
-                    <p class="percent">77%</p>
                   </div>
                   <div class="singleProject__board__right__cards__card--more">
                     <a class="modal-trigger" href="#modal<%= phases[k].id%>">Voir</a>
                   </div>
                   <!-- Modal Structure -->
-                  <div id="modal<%= phases[k].id%>" class="modal">
+                  <div id="modal<%= phases[k].id%>" class="modal" style="padding:20px;">
                     <div class="modal__header col s12">
                       <p>N° <%= phases[k].id%></p>
                       <div class="modal__header--infos">
@@ -149,10 +171,16 @@
                     </div>
                     <div class="modal__general col s12">
                       <div class="modal__general__item col s12 m12 l4">
-                        <img src="/images/AssoNoProfil.png" class="circle" alt="photo de profil" class="profil">
+                          <% if( phases[k].entreprise != null && entreprises[k].logo){%>
+                            <div class="image"><img src="/images/uploads/<%=entreprises[k].logo%>" alt=""></div>
+                          <%}else{%>
+                            <div class="image"><img src="/images/CompanyNoProfil.png"></div>
+                          <%}%>
                         <div class="modal__general__item--data">
+                        <% if( phases[k].entreprise != null && entreprises[k].name != null){%>
                           <p>Entreprise</p>
                           <p class="data"><%= entreprises[k].name %></p>
+                          <% } %>
                         </div>
                       </div>
                       <div class="modal__general__item col s12 m12 l3">
@@ -166,7 +194,6 @@
                           <%for (var i = 0; i < subphases.length; i++){%>
                             <%if (subphases[i].phase == phases[k].id){%>
                               <% phase_price = phase_price + subphases[i].value %>
-
                             <%}%>
                           <%}%>
                         <p>Montant de la phase <span class="data"><%= phase_price%>€</span></p>
@@ -216,9 +243,7 @@
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
   });
-
   $(document).ready(function() {
   $('select').material_select();
   });
-
 </script>

@@ -1,6 +1,4 @@
 /node_modules/
 .DS_STORE
-/public/images/uploads/
-/project-folders/
 /bower_components/
 .vscode/

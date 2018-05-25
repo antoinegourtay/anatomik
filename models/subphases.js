@@ -11,7 +11,7 @@ subphasesSchema = new mongoose.Schema({
     },
     state: {
         type: String,
-        required: true
+        default: 'En cours'
     },
     phase: {
         type: mongoose.Schema.Types.ObjectId,
@@ -20,6 +20,10 @@ subphasesSchema = new mongoose.Schema({
     project: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Project'
+    },
+    created_at: {
+        type: Date,
+        default: Date.now()
     }
 
 });

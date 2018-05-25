@@ -16,13 +16,35 @@
     background-image: url('../images/pattern.png');
     background-size: cover;
     background-repeat: no-repeat;
+    .modal-content{
+      color: black;
+    }
+    .modal-footer{
+      color: black;
+      form{
+        display: flex;
+        align-items: center;
+      }
+    }
     @media (max-width: 600px) {
       flex-direction: column;
     }
-    img{
-      &.assoImg{
-        border-radius: 6px;
-        width: 300px;
+    &--img{
+      display: flex;
+      width: 150px;
+      height: 150px;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 50%;
+      a{
+        width: 140px;
+        overflow: hidden;
+        border-radius: 50%;
+        img{
+          width: 140px;
+          height: 140px;
+        }
       }
     }
     &__infos{
@@ -37,21 +59,39 @@
   &__content{
     @media (max-width: 992px) {
       display: flex;
-      flex-direction: column-reverse;
+      flex-direction: column;
     }
     &__left{
       padding: 30px;
+      &__about{
+        margin-top: 30px;
+        background-color: #ffffff;
+        box-shadow: 0 0px 10px 0 #c0c0c0;
+        border-radius: 6px;
+        margin-bottom: 6px;
+        h2{
+          @include red-card-h2;
+        }
+        p{
+          font-family: 'Montserrat', sans-serif;
+          font-size: 13px;
+          line-height: 1.46;
+          letter-spacing: normal;
+          text-align: left;
+          color: #a4a4a4;
+        }
+      }
       &__services{
         h2{
-          font-family: Avenir;
+          font-family: 'Montserrat', sans-serif;
           font-size: 16px;
-          font-weight: 900;
+          font-weight: 600;
           font-style: normal;
           font-stretch: normal;
           line-height: normal;
           letter-spacing: normal;
           text-align: left;
-          color: #d60968;
+          color: #CC1137;
         }
         &__domaine{
           background-color: #ffffff;
@@ -60,7 +100,7 @@
           border-top-right-radius: 6px;
           margin-bottom: 6px;
           h3{
-            font-family: Avenir;
+            font-family: 'Montserrat', sans-serif;
             font-size: 14px;
             font-weight: 500;
             font-style: normal;
@@ -72,7 +112,7 @@
             padding-top: 15px;
           }
           p{
-            font-family: Avenir;
+            font-family: 'Montserrat', sans-serif;
             font-size: 18px;
             font-weight: 500;
             font-style: normal;
@@ -80,7 +120,7 @@
             line-height: normal;
             letter-spacing: normal;
             text-align: center;
-            color: #d60968;
+            color: #9D1111;
             padding-top: 8px;
             padding-bottom: 15px;
           }
@@ -92,7 +132,7 @@
           box-shadow: 0 4px 10px 0 #c0c0c0;
           padding: 20px;
           h3{
-            font-family: Avenir;
+            font-family: 'Montserrat', sans-serif;
             font-size: 16px;
             font-weight: 500;
             font-style: normal;
@@ -117,7 +157,7 @@
       }
       &__activites{
         h2{
-          font-family: Avenir;
+          font-family: 'Montserrat', sans-serif;
           font-size: 16px;
           font-weight: 900;
           font-style: normal;
@@ -125,7 +165,7 @@
           line-height: normal;
           letter-spacing: normal;
           text-align: left;
-          color: #d60968;
+          color: #9D1111;
         }
         &__table{
           .tabs{
@@ -135,7 +175,7 @@
             align-items: center;
             li{
               a{
-                font-family: Avenir-Roman;
+                font-family: 'Montserrat', sans-serif;
                 font-size: 12px;
                 font-weight: normal;
                 font-style: normal;
@@ -157,7 +197,7 @@
             p{
               width: 23px;
               height: 115px;
-              background-image: linear-gradient(191deg, #d60968, #fa2732);
+              background-image: linear-gradient(191deg, #9D1111, #fa2732);
               box-shadow: 0 1px 13px 0 rgba(214, 9, 104, 0.4);
               writing-mode: vertical-rl;
               text-orientation: sideways;
@@ -203,28 +243,13 @@
           @include red-card-h2;
         }
       }
-      &__about{
-        margin-top: 30px;
-        @include red-card;
-        background: white;
-        h2{
-          @include red-card-h2;
-        }
-        p{
-          font-family: Avenir-Roman;
-          font-size: 13px;
-          line-height: 1.46;
-          letter-spacing: normal;
-          text-align: left;
-          color: #a4a4a4;
-        }
-      }
       &__informations{
         &--top{
           .line1{
             font-size: 18px;
-            font-family: Avenir;
+            font-family: 'Montserrat', sans-serif;
             color: black;
+            line-height: 1;
             @media (max-width: 600px) {
               font-size: 12px;
             }
@@ -234,7 +259,8 @@
           }
           .line2{
             font-size: 14px;
-            color: #D60968;
+            color: #9D1111;
+            line-height: 1;
             @media (max-width: 600px) {
               font-size: 12px;
             }
@@ -251,7 +277,7 @@
             justify-content: center;
             align-items: center;
             p{
-              font-family: Avenir;
+              font-family: 'Montserrat', sans-serif;
               font-size: 20px;
               font-weight: 500;
               color: #000000;
@@ -262,10 +288,10 @@
               }
             }
             a{
-              font-family: Avenir;
+              font-family: 'Montserrat', sans-serif;
               font-size: 14px;
               font-weight: 500;
-              color: #d60968;
+              color: #9D1111;
               @media (max-width: 600px) {
                 font-size: 12px;
               }

@@ -9,17 +9,20 @@
     display: none;
   }
   h4 {
-    font-family: Avenir;
+    font-family: 'Montserrat', sans-serif;
     font-size: 42px;
-    font-weight: 900;
+    font-weight: 600;
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    color: #d60968;
+    color: #CC1137;
+    @media (max-width: 600px) {
+      font-size: 16px;
+    }
     span {
-      font-family: Avenir;
+      font-family: 'Montserrat', sans-serif;
       font-size: 18px;
       font-weight: 500;
       font-style: normal;
@@ -28,6 +31,9 @@
       letter-spacing: normal;
       text-align: left;
       color: #000000;
+      @media (max-width: 600px) {
+        font-size: 14px;
+      }
     }
   }
   h2 {
@@ -36,10 +42,10 @@
     border-radius: 12px;
     box-shadow: 0 2px 4px 0 rgba(230, 230, 230, 0.5);
     border: solid 1px transparent;
-    background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(261deg, #d60968, #fa2732);
+    background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(261deg, #9D1111, #fa2732);
     background-origin: border-box;
     background-clip: content-box, border-box;
-    font-family: Avenir;
+    font-family: 'Montserrat', sans-serif;
     font-size: 20px;
     font-weight: 500;
     font-style: normal;
@@ -55,7 +61,7 @@
         background-color: #ffffff;
         box-shadow: 0 2px 4px 0 rgba(231, 230, 230, 0.51);
         &:focus {
-          box-shadow: 0 1px 0 0 #d60968 !important;
+          box-shadow: 0 1px 0 0 #9D1111 !important;
         }
       }
       .none {
@@ -85,7 +91,7 @@
         }
         .select {
           p {
-            font-family: Avenir-Roman;
+            font-family: 'Montserrat', sans-serif;
             font-size: 15px;
             font-weight: normal;
             font-style: normal;
@@ -104,7 +110,7 @@
           display: flex;
           flex-direction: column;
           h3 {
-            font-family: Avenir-Roman;
+            font-family: 'Montserrat', sans-serif;
             font-size: 15px;
             font-weight: normal;
             font-style: normal;
@@ -132,10 +138,10 @@
       border-radius: 12px;
       box-shadow: 0 2px 4px 0 rgba(230, 230, 230, 0.5);
       border: solid 1px transparent;
-      background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(261deg, #d60968, #fa2732);
+      background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(261deg, #9D1111, #fa2732);
       background-origin: border-box;
       background-clip: content-box, border-box;
-      font-family: Avenir;
+      font-family: 'Montserrat', sans-serif;
       font-size: 20px;
       font-weight: 500;
       font-style: normal;
@@ -162,7 +168,7 @@
       }
       p {
         width: 100%;
-        font-family: Avenir-Roman;
+        font-family: 'Montserrat', sans-serif;
         font-size: 15px;
         font-weight: normal;
         font-style: normal;
@@ -233,7 +239,7 @@
       button {
         width: 179px;
         height: 179px;
-        background-image: linear-gradient(226deg, #d60968, #fa2732);
+        background-image: linear-gradient(226deg, #9D1111, #fa2732);
         display: flex;
         justify-content: center;
         align-items: center;

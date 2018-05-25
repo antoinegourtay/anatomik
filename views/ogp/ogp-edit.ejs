@@ -32,7 +32,11 @@
                   </p>
                 </div>
               </div>
+              <div class="input-field col s12">
+                  <label for="previsionnalbudget">Budget prévisionnel</label>
+                  <input class="validate" type="text" placeholder="1000 €" id="provisionnalbudget" name="provisionnalbudget" value="<%= project.provisionnalBudget%>">
             </div>
+            </div>            
             <div class="ogpCreate__form__part1__right">
               <div class="input-field col s12">
                   <label for="description">Description</label>
@@ -40,18 +44,18 @@
               </div>
               <div class="input-field select col s12">
                 <p>Référent</p>
-                <select>
+                <select class="js-example-basic-single">
                   <option value="" disabled selected>Choisissez un référent</option>
                   <% associationUsers.forEach(function(users) { %>
                     <option value="<%= users.id %>"><%= users.fullname %></option>
                   <%})%>
                 </select>
               </div>
-              <div class="input-field col s6">
+              <div class="input-field col s12 m6">
                 <label for="date_debut">Date de début</label>
                 <input type="text" class="datepicker validate" name="date_debut" value="<%= project.startDate %>" required>
               </div>
-              <div class="input-field col s6">
+              <div class="input-field col s12 m6">
                 <label for="date_fin">Date de fin</label>
                 <input type="text" class="datepicker validate" name="date_fin" value="<%= project.endDate %>" required>
               </div>
@@ -77,18 +81,18 @@
                     </div>
                   </div>
                   <div class="ogpCreate__form__part2__right">
-                    <div class="input-field col s6">
+                    <div class="input-field col s12 m6">
                       <label for="date_debut_phase">Date de début phase</label>
                       <input type="text" class="datepicker validate" name="date_debut_phase" value="<%= phases[i].startDatePhase %>" required>
                     </div>
-                    <div class="input-field col s6">
+                    <div class="input-field col s12 m6">
                       <label for="date_fin_phase">Date de fin de la phase</label>
                       <input type="text" class="datepicker validate" name="date_fin_phase" value="<%= phases[i].endDatePhase %>" required>
                     </div>
                   </div>
                   <div class="input-field select col s12">
                     <p>Entreprise référente</p>
-                    <select name="entreprise_select">
+                    <select name="entreprise_select" >
                       <option value="" disabled selected>Choisissez une entreprise</option>
                       <% entreprises.forEach(function(entreprise) { %>
                       <option value="<%= entreprise.id %>"><%= entreprise.name %></option>
@@ -100,7 +104,7 @@
                   </div>
                   <div class="ogpCreate__form__part2__bottom col s12">
                     <!-- innner repeater -->
-                    <div class="inner-repeater col s6 offset-s3">
+                    <div class="inner-repeater col s12 m6 offset-m3">
                       <div data-repeater-list="sous_phase">
                         <% for (var k = 0; k < subphases.length ; k++) {%>
                           <% if (subphases[k].phase == phases[i].id){%>
@@ -119,14 +123,12 @@
                               </div>
                               <div class="state col s12">
                               <div class="state__radio">
-                                <p>
-                                  <input name="sous_phase_state" type="radio" id="encoursphase<%= k %>" value="En cours" <% if (subphases[k].state == "En cours"){ %> checked <% } %>/>
-                                  <label for="encoursphase<%= k %>">En cours</label>
-                                </p>
-                                <p>
-                                  <input name="sous_phase_state" type="radio" id="terminee<%= k %>" value="Terminée" <% if (subphases[k].state == "Terminée"){ %> checked <% } %>/>
-                                  <label for="terminee<%= k %>">Terminée</label>
-                                </p>
+                                  <p>Référent</p>
+                                  <select name="sous_phase_state">
+                                    <option value="encoursphase<%= k %>" disabled selected>Choisissez l'état de la sous phase</option>
+                                    <option <% if (subphases[k].state == "En cours") { selected="selected" } %>value="En cours">En cours</option>
+                                    <option <% if (subphases[k].state == "Terminée") { selected="selected" } %>value="Terminée">Terminée</option>
+                                  </select>
                               </div>
                             </div>
                               <div class="input-field col s12 none">
@@ -135,6 +137,33 @@
                             </div>
                           <%}%>
                         <%}%>
+                        <div class="ogpCreate__form__part2__bottom--item" data-repeater-item>
+                          <p>Sous phase</p>
+                          <div class="delete">
+                            <input data-repeater-delete type="button" class="deleteSousPhase"/>
+                          </div>
+                          <div class="input-field col s12">
+                            <label for="">Nom de ma sous phase</label>
+                            <input type="text" name="nom_sous_phase" class="validate"/>
+                          </div>
+                          <div class="input-field col s12">
+                            <label for="prix_sous_phase">Montant HT</label>
+                            <input type="text" name="prix_sous_phase" class="validate" />
+                          </div>
+                          <div class="state col s12">
+                            <div class="state__radio">
+                              <p>État de la sous-phase</p>
+                              <select name="sous_phase_state">
+                                <option value="encoursphase<%= k %>" disabled selected>Choisissez l'état de la sous phase</option>
+                                <option value="En cours">En cours</option>
+                                <option value="Terminée">Terminée</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="input-field col s12 none">
+                            <input type="text" name="id_sous_phase" class="validate"/>
+                          </div>
+                        </div>
                       </div>
                       <div class="addSousPhase">
                         <input data-repeater-create type="button" value="Ajouter une sous phase"/>
@@ -166,19 +195,7 @@
                 $('.repeater').repeater({
                     // (Required if there is a nested repeater)
                     // Specify the configuration of the nested repeaters.
-                    // Nested configuration follows the same format as the base configuration,
-                    // supporting options "defaultValues", "show", "hide", etc.
-                    // Nested repeaters additionally require a "selector" field.
-                    repeaters: [{
-                        // (Required)
-                        // Specify the jQuery selector for this nested repeater
-                        selector: '.inner-repeater'
-                    }],
-                    isFirstItemUndeletable: true,
-                    show: function () {
-                         $(this).slideDown();
-                         $('.datepicker').pickadate();
-                         
+                    // 
                          var divs = document.getElementsByClassName("count");
                          for(var i = 0; i < divs.length; i++){
                             //do something to each div like

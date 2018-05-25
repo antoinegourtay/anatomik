@@ -15,6 +15,7 @@ router.get("/associations/show/:page?", isAuthentificated, (req, res, next) => {
     Association.find({
         is_archive: false
       })
+      .select({ id: 1, name: 1, logo: 1 })
       .skip((perPage * page) - perPage)
       .limit(perPage)
       .sort({
@@ -42,6 +43,7 @@ router.get("/associations/archives/:page?", isAuthentificated, (req, res, next) 
     Association.find({
         is_archive: true
       })
+      .select({ id: 1, name: 1, logo: 1 })
       .skip((perPage * page) - perPage)
       .limit(perPage)
       .sort({

@@ -1,28 +1,39 @@
 <%- include('../partials/header'); %>
 
 <%- include('../partials/sidenav'); %>
-
-
 <div class="services content">
     <div class="services__header">
       <div class="offers__header--left">
         <h1>Aide et services <span> - <%= services.length %> appels à services en cours</span></h1>
       </div>
       <div class="services__header--right">
-        <a href="/service/new_offre"><i data-feather="plus-square"></i>Ajouter un appel à service</a>
-        <a href="/service/new_demande"><i data-feather="plus-square"></i>Ajouter une demande de service</a>
-        <%if (user.organizationType === "Entreprise"){%>
+        <%if (user.organizationType === "Association"){%>
+          <a href="/service/new_offre"><i data-feather="plus-square"></i>Ajouter une proposition de service</a>
+          <a href="/service/new_demande"><i data-feather="plus-square"></i>Ajouter une demande de service</a>
+          <a href="/services/">Tous les services</a>
+          <a href="/services/archives">Mes offres de services terminés</a>
+        <%}else if (user.organizationType === "Anatomik"){%>
+          <a href="/service/new_offre"><i data-feather="plus-square"></i>Ajouter une proposition de service</a>
+          <a href="/services/">Tous les services</a>
+          <a href="/services/archives">Mes offres de services terminés</a>
+        <%}else if (user.organizationType === "Entreprise"){%>
           <a href="/service/new_promotion"><i data-feather="plus-square"></i>Ajouter une promotion</a>
+          <a href="/services/">Tous les services</a>
+          <a href="/services/archives">Mes promotions terminées</a>
         <%}%>
-        <a href="/services/">Tous les services</a>
-        <a href="/services/archives">Mes appels à service terminés</a>
+        
       </div>
     </div>
 
     <ul id="tabs-swipe-demo" class="tabs">
-      <li class="tab col s3"><a href="#test-swipe-1">Offre de service</a></li>
-      <li class="tab col s3"><a href="#test-swipe-2">Demande de service</a></li>
-      <li class="tab col s3"><a href="#test-swipe-3">Promotion d'entreprise</a></li>
+      <%if (user.organizationType === "Association"){%>
+        <li class="tab col s3"><a href="#test-swipe-1">Offres de service</a></li>
+        <li class="tab col s3"><a href="#test-swipe-2">Demandes de service</a></li>
+      <%}else if (user.organizationType === "Anatomik"){%>
+        <li class="tab col s3"><a href="#test-swipe-1">Offres de service</a></li>
+      <%}else if (user.organizationType === "Entreprise"){%>
+        <li class="tab col s3"><a href="#test-swipe-3">Promotions d'entreprise</a></li>
+      <%}%>
     </ul>
 
     <div class="services__collapsible ">
@@ -66,8 +77,7 @@
                     <div class="top">
                       <img src="/images/yuna.jpg" class="circle" alt="">
                       <div class="contact">
-                        <p>Role</p>
-                        <p>Pole urgence 91 croix rouge francaise</p>
+                        <p><%= user.poste%></p>
                       </div>
                     </div>
                     <p>Mail : <span><%=services[i].user.email %></span></p>
@@ -107,8 +117,7 @@
                   <div class="top">
                     <img src="/images/yuna.jpg" class="circle" alt="">
                     <div class="contact">
-                      <p>Role</p>
-                      <p>Pole urgence 91 croix rouge francaise</p>
+                      <p><%= user.poste%></p>
                     </div>
                   </div>
                   <p>Mail : <span><%=services[i].user.email %></span></p>
@@ -147,8 +156,7 @@
                   <div class="top">
                     <img src="/images/yuna.jpg" class="circle" alt="">
                     <div class="contact">
-                      <p>Role</p>
-                      <p>Pole urgence 91 croix rouge francaise</p>
+                      <p><%= user.poste%></p>
                     </div>
                   </div>
                   <p>Mail : <span><%=services[i].user.email %></span></p>

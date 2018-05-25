@@ -3,31 +3,42 @@
   <!-- Page Layout here -->
   <div class="row">
       <%- include('../partials/sidenav'); %>
-
     <div class="profil content">
       <div class="profil__header">
         <div class="profil__header--img">
-        <div id="profilModal" class="modal">
-          <div class="modal-content">
-            <h4>Changer l'image de profil</h4>
-          </div>
-          <div class="modal-footer">
-            <form class="col s12" method="post" action="/profile/photo/<%= user_profile._id %>" enctype="multipart/form-data">            
-                <input type="file" name="file">
-                <button class="btn waves-effect waves-light blue" type="submit"  value="Enregistrer" name="action">Submit
-            </form>
-          </div>
-        </div>
+        <%if(user_profile.id === user.id){%>
+          <div id="profilModal" class="modal">
+            <div class="modal-content">
+              <h4>Changer l'image de profil</h4>
+            </div>
+              <div class="modal-footer">
+                <form class="col s12" method="post" action="/profile/photo/<%= user_profile._id %>" enctype="multipart/form-data">
+                  <div class="file-field input-field col s8">
+                    <div class="btn">
+                      <span>Photo de profil</span>
+                      <input type="file" name="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text">
+                    </div>
+                  </div>
+                  <div class="input-field col s4">
+                    <button class="btn waves-effect waves-light blue" type="submit"  value="Enregistrer" name="action">Valider
+                  </div>
+                </form>
+              </div>
+            </div>
+          <%}%>
           <%if (user_profile.photo_profil){%>
-            <a class="modal-trigger" href="#profilModal"><img src="/images/uploads/<%= user_profile.photo_profil%>" alt="photo de profil" class=""></a>
+              <a class="modal-trigger" href="#profilModal" style="background-image: url('/images/uploads/<%= user_profile.photo_profil%>');width: 140px; height: 140px;background-size: cover;background-position: center;background-repeat: no-repeat;"></a>
           <%}
           else {%>
-            <a class="modal-trigger" href="#v"><img src="/images/PhotoNoProfil.png" alt="photo de profil" class=""></a>
+            <a class="modal-trigger" href="#profilModal"><img src="/images/PhotoNoProfil.png" alt="photo de profil" class=""></a>
           <%}%>
         </div>
         <div class="profil__header__infos">
           <div class="profil__header__infos--left">
-            <h3><%= user_profile.firstname %> <%= user_profile.lastname %></h3>
+            <h3><%= user_profile.fullname %></h3>
 
             <div class="profil__header__infos__left--social">
               <%if (user_profile.facebook){%>
@@ -52,6 +63,12 @@
         </div>
       </div>
       <div class="profil__left col s12 m12 l6">
+        <%if (user_profile.description){%>
+          <div class="profil__right__about col s12">
+            <h2>A propos</h2>
+            <p><%= user_profile.description %></p>
+          </div>
+        <%}%>
         <% if( user_profile.organizationType == "Association"){ %>
           <h2>État des lieux</h2>
           <div class="profil__left__etat">
@@ -59,14 +76,17 @@
               <h3>Mon association</h3>
               <div class="profil__left__etat__asso">
                 <%if (user_profile.association.logo ){%>
-                  <img src="/images/uploads/<%= user_profile.association.logo%>" alt="photo de profil" >
+                  <a href="/association/<%= user_profile.association.id%>">
+                    <img src="/images/uploads/<%= user_profile.association.logo%>" alt="photo de profil" >
+                  </a>
+                  
                 <%}
                 else {%>
                   <img src="/images/AssoNoProfil.png" alt="photo de profil" class="profil">
                 <%}%>
                 <div class="profil__left__etat__asso--infos">
-                  <p class="poste">Éducateur spécialisé</p>
-                  <p class="asso"><%= user_profile.association.name%></p>
+                  <p class="poste"><%=user_profile.poste%></p>
+                  <p class="asso"><a href="/association/<%= user_profile.association.id%>"><%= user_profile.association.name%></a></p>
                 </div>
               </div>
             <%}%>
@@ -88,10 +108,12 @@
               <h2>Mon entreprise</h2>
               <div class="profil__left__etat">
                 <div class="profil__left__etat__asso">
-                  <img src="/images/uploads/<%= user_profile.entreprise.logo%>" alt="">
+                  <a href="/entreprise/<%=user_profile.entreprise.id%>">
+                      <img src="/images/uploads/<%= user_profile.entreprise.logo%>" alt="">
+                  </a>
                   <div class="profil__left__etat__asso--infos">
                     <p class="poste"><%= user_profile.entreprise.domaine%></p>
-                    <p class="asso"><%= user_profile.entreprise.name%></p>
+                    <p class="asso"><a href="/entreprise/<%=user_profile.entreprise.id%>"><%= user_profile.entreprise.name%></a></p>
                   </div>
                 </div>
               </div>
@@ -146,13 +168,6 @@
 
           </div>
         </div>
-
-        <%if (user_profile.description){%>
-          <div class="profil__right__about col s12">
-            <h2>A propos</h2>
-            <p><%= user_profile.description %></p>
-          </div>
-        <%}%>
       </div>
 
 

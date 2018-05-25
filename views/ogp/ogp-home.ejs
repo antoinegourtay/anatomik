@@ -12,14 +12,13 @@
       </div>
       <% if(projects.length <= 0){%>
       <div class="ogp__noProjects">
-        <div class="ogp__noProjects--title">
-          <p>Créer votre tout premier projet</p>
+        <div class="ogp__noProjects--image">
+          <img src="/images/noProjects.png" alt="">
+          <p>Aucun projet en cours</p>
         </div>
-        <a href="/ogp/create">
-          <div class="ogp__noProjects--button">
-            <p>Commencer</p>
-          </div>
-        </a>
+        <div class="ogp__noProjects--button">
+          <a href="/ogp/create">Créer un projet</a>
+        </div>
       </div>
       <%}else{%>
       <div class="ogp__projects">
@@ -42,9 +41,6 @@
                 <div class="ogp__projects__items__item__state">
                   <div class="ogp__projects__items__item__state--item">
                     <p class="state"><%= project.state %></p>
-                  </div>
-                  <div class="ogp__projects__items__item__state--item">
-                    <p>80 %</p>
                   </div>
                 </div>
               </div>

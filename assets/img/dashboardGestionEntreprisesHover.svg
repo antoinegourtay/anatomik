@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Entreprise(hover)</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Entreprise(hover)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Entreprise" transform="translate(4.000000, 5.000000)" stroke="#CC1137" stroke-width="2">
+            <polyline id="Shape" points="38.85 10.9090909 38.85 40 4.2 40 4.2 10.9090909"></polyline>
+            <rect id="Rectangle-path" x="0" y="0" width="42" height="10.9090909"></rect>
+            <path d="M17.85,20.6060606 L25.2,20.6060606" id="Shape"></path>
+        </g>
+    </g>
+</svg>

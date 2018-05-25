@@ -41,14 +41,14 @@
                         <h4>Supprimer l'entreprise ?</h4>
                         <p>Voulez-vous vraiment supprimer l'entreprise <%= entreprise.name%> ?</p>
                       </div>
-                      <div>
-                          <a href="archive/<%=entreprise.id%>" class="modal-action">OUI</a>
-                          <a href="" class="modal-action modal-close">NON</a>
+                      <div class="modal-footer">
+                          <a href="archive/<%=entreprise.id%>" class="modal-action modal-close waves-effect waves-green btn-flat">OUI</a>
+                          <a href="" class="modal-action modal-close waves-effect waves-green btn-flat">NON</a>
                       </div>
                     </div>
 
                 <div class="showAssociations__all__items__item__bottom">
-                  <p><%= entreprise.name %></p>
+                  <a href="/entreprise/<%=entreprise.id %>"><p><%= entreprise.name %></p></a>
                 </div>
               </a>
           </div>

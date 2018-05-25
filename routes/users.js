@@ -11,7 +11,7 @@ const express = require('express'),
     Folder = require('../models/folder'),
     uuid = require('uuid/v4'),
     bcrypt = require('bcrypt-nodejs'),
-    flash = require('express-flash'),
+    flash = require('connect-flash'),
     async = require('async'),
     crypto = require('crypto'),
     nodemailer = require('nodemailer'),
@@ -22,8 +22,9 @@ const express = require('express'),
 router.get('/signup', isAuthentificated, (req, res) => {
     let user = usr;
     if (user.organizationType === "Anatomik") {
-        Association.find({}).then(associations => {
-            Entreprise.find({}).then(entreprises => {
+        Association.find({}).select({ id: 1, name: 1 }).then(associations => {
+            Entreprise.find({}).select({ id: 1, name: 1 }).then(entreprises => {
+                console.log(associations)
                 res.render('users/signup', {
                     title: 'Anatomik - Inscription',
                     user: user,
@@ -111,7 +112,7 @@ router.get('/login', (req, res) => {
 router.post('/login', (req, res) => {
     passport.authenticate('local-login', {
         successRedirect: '/', // redirect to the secure profile section
-        failureRedirect: '/login' // redirect back to the signup page if there is an error
+        failureRedirect: '/login',
     })(req, res, function () {});
 });
 
@@ -149,15 +150,17 @@ router.post('/forgot', function (req, res, next) {
         },
         function (token, user, done) {
             var smtpTransport = nodemailer.createTransport({
-                service: 'Gmail',
+                host: 'send.one.com',
+                port: 465,
+                secure: true, // use SSL
                 auth: {
-                    user: 'test.anatomik@gmail.com',
-                    pass: 'Anatomik0206'
+                    user: 'contact@anatomik.eu',
+                    pass: 'spad2306'
                 }
             });
             var mailOptions = {
                 to: user.email,
-                from: 'passwordreset@demo.com',
+                from: 'contact@anatomik.eu',
                 subject: 'Demande de changement de mot de passe Anatomik',
                 text: 'Vous recevez ce mail car vous avez cliquez sur mot de passe oublié.\n\n' +
                     'Cliquer sur le lien suivant pour être rediriger vers la page de changement de mot de passe:\n\n' +
@@ -221,15 +224,17 @@ router.post('/reset/:token', function (req, res) {
         },
         function (user, done) {
             var smtpTransport = nodemailer.createTransport({
-                service: 'Gmail',
+                host: 'send.one.com',
+                port: 465,
+                secure: true, // use SSL
                 auth: {
-                    user: 'test.anatomik@gmail.com',
-                    pass: 'Anatomik0206'
+                    user: 'contact@anatomik.eu',
+                    pass: 'spad2306'
                 }
             });
             var mailOptions = {
                 to: user.email,
-                from: 'passwordreset@demo.com',
+                from: 'contact@anatomik.eu',
                 subject: 'Votre mot de passe a été changé.',
                 text: 'Hello,\n\n' +
                     'Le mot de passe de ' + user.email + ' a bien été changé.\n'
@@ -246,7 +251,7 @@ router.post('/reset/:token', function (req, res) {
 
 router.get('/users/show/:page?', isAuthentificated, (req, res) => {
     let user = usr
-    let perPage = 10
+    let perPage = 20
     let page = req.params.page || 1
     if (user.organizationType === "Anatomik") {
         User.find({
@@ -254,6 +259,7 @@ router.get('/users/show/:page?', isAuthentificated, (req, res) => {
             })
             .populate('association')
             .populate('entreprise')
+            .select({ id: 1, firstname: 1, lastname: 1, fullname: 1, organizationType: 1, poste: 1 })
             .skip((perPage * page) - perPage)
             .limit(perPage)
             .sort({
@@ -276,6 +282,7 @@ router.get('/users/show/:page?', isAuthentificated, (req, res) => {
                 association: user.association.id,
                 is_archive: false
             })
+            .select({ id: 1, firstname: 1, lastname: 1, fullname: 1, organizationType: 1, poste: 1 })
             .skip((perPage * page) - perPage)
             .limit(perPage)
             .sort({
@@ -298,6 +305,7 @@ router.get('/users/show/:page?', isAuthentificated, (req, res) => {
                 entreprise: user.entreprise.id,
                 is_archive: false
             })
+            .select({ id: 1, firstname: 1, lastname: 1, fullname: 1, organizationType: 1, poste: 1 })
             .skip((perPage * page) - perPage)
             .limit(perPage)
             .sort({
@@ -324,7 +332,7 @@ router.get('/users/show/:page?', isAuthentificated, (req, res) => {
 });
 router.get('/users/archives/:page?', isAuthentificated, (req, res) => {
     let user = usr
-    let perPage = 10
+    let perPage = 20
     let page = req.params.page || 1
     if (user.organizationType === "Anatomik") {
         User.find({
@@ -332,6 +340,7 @@ router.get('/users/archives/:page?', isAuthentificated, (req, res) => {
             })
             .populate('association')
             .populate('entreprise')
+            .select({ id: 1, firstname: 1, lastname: 1, fullname: 1, organizationType: 1, poste: 1 })
             .skip((perPage * page) - perPage)
             .limit(perPage)
             .sort({
@@ -340,7 +349,7 @@ router.get('/users/archives/:page?', isAuthentificated, (req, res) => {
             })
             .exec(function (err, list_users) {
                 User.count().exec(function (err, count) {
-                    res.render('users/all', {
+                    res.render('users/all_archive', {
                         title: 'Anatomik - Utilisateurs',
                         users: list_users,
                         user: user,
@@ -354,6 +363,7 @@ router.get('/users/archives/:page?', isAuthentificated, (req, res) => {
                 association: user.association.id,
                 is_archive: true
             })
+            .select({ id: 1, firstname: 1, lastname: 1, fullname: 1, organizationType: 1, poste: 1 })
             .skip((perPage * page) - perPage)
             .limit(perPage)
             .sort({
@@ -362,7 +372,7 @@ router.get('/users/archives/:page?', isAuthentificated, (req, res) => {
             })
             .exec(function (err, list_users) {
                 User.count().exec(function (err, count) {
-                    res.render('users/all', {
+                    res.render('users/all_archive', {
                         title: 'Anatomik - Utilisateurs',
                         users: list_users,
                         user: user,
@@ -376,6 +386,7 @@ router.get('/users/archives/:page?', isAuthentificated, (req, res) => {
                 entreprise: user.entreprise.id,
                 is_archive: true
             })
+            .select({ id: 1, firstname: 1, lastname: 1, fullname: 1, organizationType: 1, poste: 1 })
             .skip((perPage * page) - perPage)
             .limit(perPage)
             .sort({
@@ -384,7 +395,7 @@ router.get('/users/archives/:page?', isAuthentificated, (req, res) => {
             })
             .exec(function (err, list_users) {
                 User.count().exec(function (err, count) {
-                    res.render('users/all', {
+                    res.render('users/all_archive', {
                         title: 'Anatomik - Utilisateurs',
                         users: list_users,
                         user: user,
@@ -419,7 +430,7 @@ router.get('/users/delete/:id', isAuthentificated, (req, res) => {
                 });
             })
             .then(() => {
-                res.redirect("/");
+                res.redirect("/users/show/1");
             });
     } else {
         res.redirect('/')
@@ -502,7 +513,6 @@ router.get('/profile/:id', isAuthentificated, (req, res) => {
 router.post("/profile/:id?", isAuthentificated, (req, res) => {
     let active_user = usr;
 
-
     new Promise((resolve, reject) => {
             if (req.params.id) {
                 User.findById(req.params.id).then(resolve, reject);
@@ -511,6 +521,7 @@ router.post("/profile/:id?", isAuthentificated, (req, res) => {
             }
         })
         .then(user => {
+            console.log(req.body)
             user.email = req.body.email
             user.username = req.body.email
             user.firstname = req.body.firstname
@@ -540,14 +551,14 @@ router.post("/profile/:id?", isAuthentificated, (req, res) => {
             });
         })
         .then(() => {
-            res.redirect("/");
+            res.redirect("/profile/"+req.params.id);
         });
 });
 
 router.post('/profile/photo/:idUser', isAuthentificated, (req, res) => {
     const idUser = req.params.idUser;
     let form = formidable.IncomingForm();
-    const pathToFolder = path.join(__dirname, '..', 'public/images/uploads/');
+    const pathToFolder = path.join(__dirname, '..', 'public', 'images', 'uploads');
 
     form.parse(req);
 

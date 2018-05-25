@@ -11,20 +11,20 @@
   <div class="row">
     <form class="col s12f formValidate" id="formValidate" method="post" action="<%= endpoint %>">
         <div class="input-field col s12">
-          <label for="name">Nom de l'appel d'offre</label>
-          <input class="validate" type="text" id="name" name="name" value="<%= offer.name %>" data-error=".errorTxt1">
+          <label for="name">Objectif de l'appel d'offre</label>
+          <input class="validate" type="text" id="name" name="name" value="<%= offer.name %>" data-error=".errorTxt1" placeholder="Création de site web">
           <div class="errorTxt1"></div>
         </div>
 
         <div class="input-field col s12">
           <label for="domaine">Domaine</label>
-          <input class="validate" type="text" id="domaine" name="domaine" value="<%= offer.domaine %>" data-error=".errorTxt2">
+          <input class="validate" type="text" id="domaine" name="domaine" value="<%= offer.domaine %>" data-error=".errorTxt2" placeholder="Web, Plomberie, Sécurité, Aménagement paysager">
           <div class="errorTxt2"></div>
         </div>
 
         <div class="input-field col s12">
           <label for="delai">Délai</label>
-          <input class="validate" type="text" id="delai" name="delai" value="<%= offer.delai %>" data-error=".errorTxt3">
+          <input class="validate" type="text" id="delai" name="delai" value="<%= offer.delai %>" data-error=".errorTxt3" placeholder="Ex: 6 mois, Deadline à mi-juin.">
           <div class="errorTxt3"></div>
         </div>
 
@@ -36,19 +36,19 @@
 
         <div class="input-field col s12">
           <label for="price">Prix</label>
-          <input class="validate" type="number" id="price" name="price" value="<%= offer.price %>" data-error=".errorTxt5">
+          <input class="validate" type="number" id="price" name="price" value="<%= offer.price %>" data-error=".errorTxt5" placeholder="1000-5000">
           <div class="errorTxt5"></div>
         </div>
 
         <div class="col s12">
-          <p>Archivé ?</p>
+          <p>Offre archivée ?</p>
           <input type="radio" id="is_archive" name="is_archive" class="validate" value="true" <% if (offer.is_archive == true){ %> checked <% } %> >
           <label for="is_archive">Oui</label>
           <input type="radio" id="is_not_archive" name="is_archive" class="validate" value="false" <% if (offer.is_archive == false){ %> checked <% } %> >
           <label for="is_not_archive">Non</label>
         </div>
 
-        <button class="btn waves-effect waves-light blue" type="submit"  value="Enregistrer" name="action">Submit
+        <button class="btn waves-effect waves-light blue" type="submit"  value="Enregistrer" name="action">Enregistrer
           <i class="material-icons right">send</i>
         </button>
     </form>

@@ -104,22 +104,35 @@ module.exports = function (passport) {
             User.findOne({
                 email: email,
                 is_archive: false
-            }, function (err, user) {
+            })
+            .populate({path: 'association',select: 'is_archive'})
+            .populate({path: 'entreprise',select: 'is_archive'})
+            .exec(function (err, user) {
+                console.log(user)
                 if (err) {
                     return done(err);
                 }
                 if (!user) {
                     return done(null, false, {
-                        message: 'Incorrect username.'
+                        message: 'Mail incorrect.'
                     });
                 }
-
                 if (bcrypt.compareSync(password, user.password) != true) {
-
                     return done(null, false, {
-                        message: 'Incorrect password.'
+                        message: 'Mot de passe incorrect.'
                     });
                 }
+                if (user.organizationType === "Association" && user.association.is_archive === true){
+                    return done(null, false, {
+                        message: 'Utilisateur archivé'
+                    });
+                }
+                if (user.organizationType === "Entreprise" && user.entreprise.is_archive === true){
+                    return done(null, false, {
+                        message: 'Utilisateur archivé'
+                    });
+                }
+                
                 return done(null, user);
             });
         }

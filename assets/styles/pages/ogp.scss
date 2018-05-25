@@ -34,15 +34,15 @@
         }
         &--title{
           padding: 10px;
-          font-family: Avenir;
+          font-family: 'Montserrat', sans-serif;
           font-size: 15px;
-          font-weight: 900;
+          font-weight: 600;
           font-style: normal;
           font-stretch: normal;
           line-height: normal;
           letter-spacing: normal;
           text-align: center;
-          color: #ffffff;
+          color: white;
           margin-top: 0;
           &::first-letter{
             text-transform: capitalize;
@@ -67,7 +67,7 @@
               text-transform: capitalize;
             }
             .state{
-              color: #d60968;
+              color: #9D1111;
             }
           }
         }

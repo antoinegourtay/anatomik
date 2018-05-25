@@ -2,8 +2,8 @@ const express = require('express'),
   router = express.Router(),
   mongoose = require('mongoose'),
   isAuthentificated = require("./utils/isAuthentificated"),
+  nodemailer = require('nodemailer'),
   User = mongoose.model('Users');
-
 
 
 router.get('/', (req, res) => {
@@ -31,6 +31,25 @@ router.get('/coming_soon', isAuthentificated, (req, res) => {
   });
 });
 
+router.get('/cgu', (req, res) => {
+  if (!req.user) {
+    res.render('cgu_noco', {
+      title: 'Anatomik - CGV',
+      user: ""
+    })
+} else {
+    const user = req.user;
+    User.findById(user.id).populate('association').populate('etablissement').populate('entreprise').then(user => {
+        usr = user;
+        res.render('cgu', {
+          title: 'Anatomik - CGV',
+          user: user
+        })
+    });
+}
+
+})
+
 router.get('/mentions_legales', isAuthentificated, (req, res) => {
   let user = usr
   res.render('mentions_legales', {
@@ -38,10 +57,41 @@ router.get('/mentions_legales', isAuthentificated, (req, res) => {
     user: user
   })
 })
-// router.use(function(req, res) {
-//   res.status(400);
-//   res.render('404')
-// });
+
+router.get('/contact', isAuthentificated, (req, res) => {
+  let user = usr
+  res.render('contact', {
+    title: 'Anatomik - Mentions légales',
+    user: user
+  })
+})
+
+router.post('/contact', function (req, res) {
+  var smtpTransport = nodemailer.createTransport({
+      host: 'send.one.com',
+      port: 465,
+      secure: true, // use SSL
+      auth: {
+          user: 'contact@anatomik.eu',
+          pass: 'spad2306'
+      }
+  });
+  var mailOptions = {
+      to: "contact@anatomik.eu",
+      from: "contact@anatomik.eu",
+      subject: 'Formulaire de contact',
+      text: 'De : '+req.body.email+'\nSujet : '+req.body.subject+'\n'+req.body.message
+  };
+  smtpTransport.sendMail(mailOptions, function (err) {
+      if(err){
+        console.log(err);
+      }else{
+        res.redirect('/')
+      }
+  });
+});
+
+
 /**
  * Importing other routes
  */

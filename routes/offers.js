@@ -39,7 +39,7 @@ router.get("/offers/new", isAuthentificated, (req, res, next) => {
   let user = usr;
   if (user.organizationType == "Association") {
     var offer = new Offer();
-    res.render("offers/edit", {
+    res.render("offers/new", {
       title: 'Anatomik - Nouvelle offre',
       offer: offer,
       endpoint: "/offers",

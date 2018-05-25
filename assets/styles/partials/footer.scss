@@ -8,11 +8,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  
+  z-index: 230;
+  &__left, &__right{
+    @media (max-width: 600px) {
+      width: 50%;   
+    }
+  }
   ul{
     display: flex;
     justify-content: center;
     align-items: center;
+    @media (max-width: 600px) {
+      flex-direction: column;
+    }
     li{
       a{
         text-decoration: none;

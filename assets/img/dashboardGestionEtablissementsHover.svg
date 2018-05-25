@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Etab(hover)</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Etab(hover)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Etabli" transform="translate(9.000000, 4.000000)" stroke="#CC1137" stroke-width="2">
+            <ellipse id="Oval" cx="16.5" cy="6.06060606" rx="16.5" ry="6.06060606"></ellipse>
+            <path d="M33,20.6060606 C33,23.959596 25.6666667,26.6666667 16.5,26.6666667 C7.33333333,26.6666667 0,23.959596 0,20.6060606" id="Shape"></path>
+            <path d="M0,4.84848485 L0,33.7967914 C0,37.2292335 7.33333333,40 16.5,40 C25.6666667,40 33,37.2292335 33,33.7967914 L33,4.84848485" id="Shape"></path>
+        </g>
+    </g>
+</svg>

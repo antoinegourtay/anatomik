@@ -11,22 +11,28 @@
     }
   }
   h4{
-    font-family: Avenir;
+    font-family: 'Montserrat', sans-serif;
     font-size: 42px;
-    font-weight: 900;
+    font-weight: 600;
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    color: #d60968;
+    color: #CC1137;
+    @media (max-width: 992px) {
+      font-size: 16px;
+      text-align: center;
+    }
   }
   &__header{
     &__tab{
       ul{
           background: transparent;
           display: flex;
-          @media (max-width: 992px) {
+          @media (max-width: 600px) {
+            display: flex;
+            flex-direction: column;
           }
           li{
             &.indicator{
@@ -42,8 +48,11 @@
               border-radius: 20px;
               margin-right: 10px;
             }
+            @media (max-width: 600px) {
+              margin-top: 10px;
+            }
             a{
-              font-family: Avenir;
+              font-family: 'Montserrat', sans-serif;
               font-size: 16px;
               font-weight: 500;
               font-style: normal;
@@ -52,6 +61,12 @@
               text-align: center;
               color: #9b9b9b;
               padding: 20px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              svg{
+                margin-right: 8px;
+              }
               @media (max-width: 992px) {
                 padding: 10px;
                 font-size: 12px;
@@ -76,7 +91,7 @@
         h5{
           width: 178px;
           height: 26px;
-          font-family: Avenir;
+          font-family: 'Montserrat', sans-serif;
           font-size: 16px;
           font-weight: 500;
           font-style: normal;
@@ -84,7 +99,7 @@
           line-height: normal;
           letter-spacing: normal;
           text-align: center;
-          color: #d60968;
+          color: #9D1111;
           background: white;
           border-radius: 12px;
           display: flex;
@@ -106,7 +121,7 @@
           margin-bottom: 20px;
           &--title{
             h3{
-              font-family: Avenir;
+              font-family: 'Montserrat', sans-serif;
               font-size: 14px;
               font-weight: 500;
               font-style: normal;
@@ -133,7 +148,7 @@
 
             p{
               &.type{
-                font-family: Avenir-Roman;
+                font-family: 'Montserrat', sans-serif;
                 font-size: 12px;
                 font-weight: normal;
                 font-style: normal;
@@ -143,7 +158,7 @@
                 color: #9b9b9b;
               }
               &.name{
-                font-family: Avenir;
+                 font-family: 'Montserrat', sans-serif;
                  font-size: 12px;
                  font-weight: 500;
                  font-style: normal;
@@ -162,7 +177,7 @@
             margin-top: 20px;
             p{
               &.files{
-                font-family: Avenir;
+                font-family: 'Montserrat', sans-serif;
                 font-size: 11px;
                 font-weight: normal;
                 font-style: normal;
@@ -181,7 +196,7 @@
                 }
               }
               &.percent{
-                font-family: Avenir;
+                font-family: 'Montserrat', sans-serif;
                 font-size: 12px;
                 font-weight: 500;
                 font-style: normal;
@@ -189,7 +204,7 @@
                 line-height: normal;
                 letter-spacing: -0.5px;
                 text-align: center;
-                color: #d60968;
+                color: #9D1111;
               }
             }
           }
@@ -200,7 +215,7 @@
               border-radius: 20px;
               background-color: #ffffff;
               box-shadow: 0 2px 3px 0 rgba(231, 231, 237, 0.5);
-              font-family: Avenir;
+              font-family: 'Montserrat', sans-serif;
               font-size: 12px;
               font-weight: 500;
               font-style: normal;
@@ -208,7 +223,7 @@
               line-height: normal;
               letter-spacing: normal;
               text-align: center;
-              color: #d60968;
+              color: #9D1111;
               width: 101px;
               height: 25px;
             }
@@ -219,7 +234,7 @@
               display: flex;
               flex-direction: column;
               p{
-                font-family: Avenir;
+                font-family: 'Montserrat', sans-serif;
                 font-size: 12px;
                 font-weight: 500;
                 font-style: normal;
@@ -236,7 +251,7 @@
                 justify-content: center;
                 align-items: center;
                 p{
-                  font-family: Avenir-Roman;
+                  font-family: 'Montserrat', sans-serif;
                   font-size: 12px;
                   font-weight: normal;
                   font-style: normal;
@@ -247,7 +262,7 @@
                   color: #9b9b9b;
                 }
                 h3{
-                  font-family: Avenir;
+                  font-family: 'Montserrat', sans-serif;
                   font-size: 18px;
                   font-weight: 500;
                   font-style: normal;
@@ -255,7 +270,7 @@
                   line-height: normal;
                   letter-spacing: normal;
                   text-align: center;
-                  color: #d60968;
+                  color: #9D1111;
                   padding-bottom: 15px;
                   border-bottom: 1px solid #efefef;
                   &::first-letter {
@@ -282,7 +297,7 @@
                   margin-right: 5px;
                 }
                 p{
-                  font-family: Avenir-Roman;
+                  font-family: 'Montserrat', sans-serif;
                   font-size: 12px;
                   font-weight: normal;
                   font-style: normal;
@@ -293,7 +308,7 @@
                   color: #9b9b9b;
                   span{
                     margin-left: 10px;
-                    font-family: Avenir;
+                    font-family: 'Montserrat', sans-serif;
                     font-size: 14px;
                     font-weight: 500;
                     font-style: normal;
@@ -306,7 +321,7 @@
                 }
                 &--data{
                   p{
-                    font-family: Avenir-Roman;
+                    font-family: 'Montserrat', sans-serif;
                     font-size: 12px;
                     font-weight: normal;
                     font-style: normal;
@@ -316,7 +331,7 @@
                     text-align: left;
                     color: #9b9b9b;
                     &.data{
-                      font-family: Avenir;
+                      font-family: 'Montserrat', sans-serif;
                       font-size: 14px;
                       font-weight: 500;
                       font-style: normal;
@@ -332,7 +347,7 @@
             }
             &__description{
               p{
-                font-family: Avenir-Roman;
+                font-family: 'Montserrat', sans-serif;
                 font-size: 12px;
                 font-weight: normal;
                 font-style: normal;
@@ -347,7 +362,7 @@
                box-shadow: 0 1px 4px 0 rgba(230, 230, 230, 0.5);
                 p{
                   padding: 10px;
-                  font-family: Avenir-Roman;
+                  font-family: 'Montserrat', sans-serif;
                   font-size: 12px;
                   font-weight: normal;
                   font-style: normal;
@@ -361,7 +376,7 @@
             }
             &__phases{
               h2{
-                font-family: Avenir;
+                font-family: 'Montserrat', sans-serif;
                 font-size: 14px;
                 font-weight: 500;
                 font-style: normal;
@@ -383,7 +398,7 @@
                   margin-top: 10px;
                 }
                 h3{
-                  font-family: Avenir;
+                  font-family: 'Montserrat', sans-serif;
                   font-size: 13px;
                   font-weight: 500;
                   font-style: normal;
@@ -391,7 +406,7 @@
                   line-height: normal;
                   letter-spacing: normal;
                   text-align: center;
-                  color: #d60968;
+                  color: #9D1111;
                   &::first-letter {
                     text-transform: uppercase;
                   }
@@ -400,7 +415,7 @@
                   display: flex;
                   justify-content: space-around;
                   p{
-                    font-family: Avenir;
+                    font-family: 'Montserrat', sans-serif;
                     font-size: 11px;
                     font-weight: normal;
                     font-style: normal;
@@ -439,7 +454,7 @@
         background-color: #ffffff;
         box-shadow: 0 2px 4px 0 rgba(230, 230, 230, 0.5);
         &--id{
-          font-family: Avenir;
+          font-family: 'Montserrat', sans-serif;
           font-size: 12px;
           font-weight: 500;
           font-style: normal;
@@ -448,14 +463,20 @@
           letter-spacing: normal;
           text-align: left;
           color: #9b9b9b;
+          display: flex;
+          justify-content: space-between;
+          padding: 10px;
+          a{
+            color: #9b9b9b;
+          }
         }
         &--title{
           h2{
             text-transform: uppercase;
-            font-family: Avenir;
-            color: #d7144f;
+            font-family: 'Montserrat', sans-serif;
+            color: #CC1137;
             font-size: 20px;
-            font-weight: 900;
+            font-weight: 600;
             font-style: normal;
             font-stretch: normal;
             line-height: normal;
@@ -479,7 +500,7 @@
           }
           .right{
             span{
-              font-family: Avenir-Roman;
+              font-family: 'Montserrat', sans-serif;
               font-size: 12px;
               font-weight: normal;
               font-style: normal;
@@ -490,7 +511,7 @@
               color: #9b9b9b;
             }
             p{
-              font-family: Avenir;
+              font-family: 'Montserrat', sans-serif;
               font-size: 18px;
               font-weight: 500;
               font-style: normal;
@@ -505,7 +526,7 @@
         &__general{
           &--objectif, &--description{
             h3{
-              font-family: Avenir-Roman;
+              font-family: 'Montserrat', sans-serif;
               font-size: 12px;
               font-weight: normal;
               font-style: normal;
@@ -516,7 +537,7 @@
               color: #9b9b9b;
             }
             p{
-              font-family: Avenir-Roman;
+              font-family: 'Montserrat', sans-serif;
               font-size: 12px;
               font-weight: normal;
               font-style: normal;
@@ -531,7 +552,7 @@
           }
           &__informations{
             p{
-              font-family: Avenir-Roman;
+              font-family: 'Montserrat', sans-serif;
               font-size: 12px;
               font-weight: normal;
               font-style: normal;
@@ -540,30 +561,30 @@
               letter-spacing: normal;
               color: #9b9b9b;
               &.price{
-                font-family: Avenir;
+                font-family: 'Montserrat', sans-serif;
                 font-size: 14px;
                 font-weight: 500;
                 font-style: normal;
                 font-stretch: normal;
                 line-height: normal;
                 letter-spacing: normal;
-                color: #d60968;
+                color: #9D1111;
               }
               span{
-                font-family: Avenir;
+                font-family: 'Montserrat', sans-serif;
                 font-size: 14px;
                 font-weight: 500;
                 font-style: normal;
                 font-stretch: normal;
                 line-height: normal;
                 letter-spacing: normal;
-                color: #d60968;
+                color: #9D1111;
               }
             }
           }
           &__progression{
             p{
-              font-family: Avenir-Roman;
+              font-family: 'Montserrat', sans-serif;
               font-size: 12px;
               font-weight: normal;
               font-style: normal;
@@ -576,7 +597,7 @@
             .progress{
               height: 10px;
               .determinate{
-                background: #d60968;
+                background: #9D1111;
               }
             }
           }
@@ -590,7 +611,7 @@
         box-shadow: 0 2px 4px 0 rgba(230, 230, 230, 0.5);
         margin-top: 30px;
         h2{
-          font-family: Avenir;
+          font-family: 'Montserrat', sans-serif;
           font-size: 16px;
           font-weight: 500;
           font-style: normal;
@@ -598,13 +619,33 @@
           line-height: normal;
           letter-spacing: normal;
           text-align: center;
-          color: #d60968;
+          color: #9D1111;
           background: white;
           border-radius: 11px;
           display: flex;
           align-items: center;
           justify-content: center;
           margin-top: 20px;
+        }
+        &--form{
+          form{
+            display: flex;
+            align-items: center;
+            @media (max-width: 600px) {
+              flex-direction: column;
+            }
+          }
+          p{
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: left;
+            color: #9b9b9b;
+          }
         }
       }
     }

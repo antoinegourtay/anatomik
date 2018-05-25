@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="55px" height="56px" viewBox="0 0 55 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
-    <title>[DASHBOARD]MESSAGERIE(hover)</title>
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>[DASHBOARD]MESSAGERIE</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="[DASHBOARD]MESSAGERIE(hover)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-        <g id="message-square" transform="translate(2.000000, 8.000000)" stroke="#FFFFFF" stroke-width="2">
+    <g id="[DASHBOARD]MESSAGERIE" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="message-square" transform="translate(2.000000, 8.000000)" stroke="#CC1137" stroke-width="2">
             <path d="M50,26.6666667 C50,29.1212656 47.5126931,31.1111111 44.4444444,31.1111111 L11.1111111,31.1111111 L0,40 L0,4.44444444 C0,1.98984556 2.48730695,0 5.55555556,0 L44.4444444,0 C47.5126931,0 50,1.98984556 50,4.44444444 L50,26.6666667 Z" id="Shape"></path>
         </g>
     </g>

@@ -66,7 +66,7 @@
           <div class="etablissement__content__right__informations--top">
             <div class="col s6">
               <p class="line1">Adresse</p>
-              <p class="line2"><%= etablissement.adresse %></p>
+              <p class="line2"><%= etablissement.adresse %><%=etablissement.complement_adresse%></p>
             </div>
             <div class="col s6 right">
               <p class="line1">ville</p>
@@ -82,9 +82,6 @@
             </div>
           </div>
           <div class="etablissement__content__right__informations--middle col s12">
-            <div class="site">
-              <a href="">Site de l'association</a>
-            </div>
             <div class="telephone">
               <p>Téléphone</p>
               <a href=""><%= etablissement.telephone %></a>

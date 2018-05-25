@@ -5,7 +5,7 @@
     <div class="editProfile content">
       <h2>Éditer Mon profil</h2>
       <div class="row white">
-        <form class="col s12" id="formValidate" action="/profile/<%= user_profile.id%>" method="post" enctype="multipart/form-data">
+        <form class="col s12" id="formValidate" action="/profile/<%= user_profile.id%>" method="post">
           <div class="input-field col s12">
             <label>Email *</label>
             <input type="text" class="form-control" placeholder="thomas@gmail.fr" name="email" value="<%= user_profile.email %>" data-error=".errorEmail">
@@ -16,18 +16,15 @@
             <input type="text" placeholder="Thomas" class="form-control" name="firstname" value="<%= user_profile.firstname %>" data-error=".errorPrenom">
             <div class="errorPrenom"></div>
           </div>
-          <div class="input-field col s6">
-            <label>Nom de famille *</label>
-            <input type="text" placeholder="Dupuis" class="form-control" name="lastname" value="<%= user_profile.lastname %>" data-error=".errorNom">
-            <div class="errorNom"></div>
-          </div>
           <div class="input-field col s12">
             <label>Nouveau mot de passe</label>
-            <input type="password" class="form-control" name="password">
+            <input type="password" class="form-control" name="password" data-error=".errorPassword">
+            <div class="errorPassword"></div>
           </div>
           <div class="input-field col s12">
             <label>Confirmez le mot de passe</label>
-            <input type="password" class="form-control" name="confirmPassword">
+            <input type="password" class="form-control" name="confirmPassword" data-error=".errorConfirmPassword">
+            <div class="errorConfirmPassword"></div>
           </div>
           <div class="input-field col s12">
             <label>Poste *</label>
@@ -120,9 +117,6 @@ $("#formValidate").validate({
      lastname: {
        required: true,
      },
-     password: {
-       required: true,
-     },
      organizationType: {
        required: true,
      },
@@ -144,9 +138,6 @@ $("#formValidate").validate({
      lastname:{
          required: "Saisissez votre nom de famille",
          minlength: "Votre nom de famille doit comporter au minimum 3 caractères"
-     },
-     password:{
-         required: "Saisissez votre mot de passe",
      },
      organizationType:{
          required: "Saisissez votre organisation",

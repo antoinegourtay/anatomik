@@ -9,7 +9,7 @@
       </div>
       <div class="offers__header--right">
         <%if (user.organizationType == 'Association'){%>
-          <a href="/offers/new">Ajouter une offre</a>
+          <a href="/offers/new"><i data-feather="plus-square"></i>Ajouter une offre</a>
           <a href="/offers">Appel d'Offre actif</a>
         <%}%>
       </div>
@@ -21,7 +21,7 @@
     	<thead class="offers__table--header">
     		<tr>
     			<th>Nom de l'association</th>
-    			<th>Type d'établissement</th>
+    			<th>Objectif</th>
     			<th>Domaine</th>
     			<th>Budget</th>
           <th>Délai</th>
@@ -38,7 +38,7 @@
     					<label for="offers<%= i%>"><%=offers[i].association.name%></label>
     					<input type="checkbox" name="test1" id="offers<%= i%>" data-toggle="toggle">
     				</td>
-            <td>type d'établissement</td>
+            <td><%=offers[i].name%></td>
             <td><%=offers[i].domaine%></td>
             <td><%=offers[i].price%> €</td>
             <td><%=offers[i].delai%></td>
@@ -51,7 +51,7 @@
     			<tr>
             <td colspan="2"><p><%=offers[i].description%></p></td>
             <td colspan="4">
-              <div class="Contact">
+              <div class="contactinfos">
                 <div>Prénom / nom : <%=offers[i].user.firstname %> <%=offers[i].user.lastname %></div>
                 <div>Mail : <%=offers[i].user.email %></div>
                 <div>Téléphone : 06.51.24.01.03</div>

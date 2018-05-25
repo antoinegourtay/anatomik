@@ -5,7 +5,7 @@
     <div class="showAssociations__header">
       <h2>Gestion des membres</h4>
         <div class="showAssociations__header--right">
-          <a href="/users/archives/1"><i data-feather="plus-square"></i>Membres archivés</a>
+          <a href="/users/archives/1"><i data-feather="trash-2"></i>Membres archivés</a>
           <a href="/signup"><i data-feather="plus-square"></i>Ajouter un membre</a>
         </div>
     </div>
@@ -15,9 +15,10 @@
             <th>Nom</th>
             <th>Prénom</th>
             <%if(user.organizationType === "Anatomik"){%>
-              <th>Association/Entreprise</th>
+              <th class="hide-on-med-and-down">Association/Entreprise</th>
             <%}%>
-            <th>Poste</th>
+            <th class="hide-on-med-and-down">Poste</th>
+            <th>Voir</th>
             <th>Modifier</th>
             <th>Archiver</th>
         </tr>
@@ -29,20 +30,21 @@
             <td><%=usr.firstname%></td>
             <%if(user.organizationType === "Anatomik"){%>
               <%if(usr.organizationType === "Association"){%>
-                <td><a href="/association/<%=usr.association.id%>"><%=usr.association.name%></a></td>
+                <td class="hide-on-med-and-down"><a href="/association/<%=usr.association.id%>"><%=usr.association.name%></a></td>
               <%}else if(usr.organizationType === "Entreprise"){%>
-                <td><a href="/entreprise/<%=usr.entreprise.id%>"><%=usr.entreprise.name%></a></td>
+                <td class="hide-on-med-and-down"><a href="/entreprise/<%=usr.entreprise.id%>"><%=usr.entreprise.name%></a></td>
               <%}else{%>
-                <td><%= usr.organizationType%></td>
+                <td class="hide-on-med-and-down"><%= usr.organizationType%></td>
               <%}%>
             <%}%>
-            <td><%= usr.poste %></td>
+            <td class="hide-on-med-and-down"><%= usr.poste %></td>
+            <td><a href="/profile/<%=usr.id%>">Voir</a></td>
             <td><a href="/profile/edit/<%=usr.id%>">Modifier</a></td>
-            <td><a class="modal-trigger" href="#modal1">Archiver</a></td>
+            <td><a class="modal-trigger" href="#modal<%=usr.id%>">Archiver</a></td>
           </tr>
 
           <!-- Modal Structure -->
-          <div id="modal1" class="modal">
+          <div id="modal<%=usr.id%>" class="modal">
             <div class="modal-content">
               <h4>Supprimer ?</h4>
               <p>En cliquant sur continuer, vous supprimerez le membre <%=usr.fullname%>. Etes vous sur de vouloir continuer ? </p>

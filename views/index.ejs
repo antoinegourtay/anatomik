@@ -89,59 +89,47 @@
       <div class="dashboard__items col s12 m10 offset-m1">
           <div class="dashboard__items--item col s6 m4 l4" onclick="location.href='/offers/1'">
             <a href="/offers/1">
-              <img id="appelOffre" src="/images/dashboardOffre.svg" alt="">
-              <h3>Appel d'offre</h3>
+              <img id="appelOffre" src="/images/dashboardOffreWhite.svg" alt="">
+              <h3>Appels d'offres</h3>
             </a>
           </div>
+          <% if(user.organizationType === "Association"){ %>
           <div class="dashboard__items--item col s6 m4 l4" onclick="location.href='/ogp'">
-            <a href="/ogp">
-              <img id="gestionProjet" src="/images/dashboardGestionProjet.svg" alt="">
+              <img id="gestionProjet" src="/images/dashboardGestionProjetWhite.svg" alt="">
               <h3>Gestion de projet</h3>
-            </a>
           </div>
+          <% } %>
           <div class="dashboard__items--item col s6 m4 l4" onclick="location.href='/services'">
-            <a href="/services">
-              <img id="aideServices" src="/images/dashboardAide.svg" alt="">
+              <img id="aideServices" src="/images/dashboardAideWhite.svg" alt="">
               <h3>Aide et services</h3>
-            </a>
           </div>
           <% if(user.role === "Admin"){%>
             <div class="dashboard__items--item second col s6 m4 l4" onclick="location.href='/users/show'">
-              <a href="/users/show">
-                <img id="gestionMembres" src="/images/dashboardGestionMembre.svg" alt="">
+                <img id="gestionMembres" src="/images/dashboardGestionMembreWhite.svg" alt="">
                 <h3>Gestion des membres</h3>
-              </a>
             </div>
           <% }%>
           <% if(user.organizationType === "Anatomik"){ %>
           <div class="dashboard__items--item second col s6 m4 l4" onclick="location.href='/associations/show'">
-            <a href="/associations/show">
-              <img id="gestionAssos" src="/images/dashboardGestionAssos.png" alt="">
-              <h3>Gestion des associations</h3>
-            </a>
+            <img id="gestionAssos" src="/images/dashboardGestionAssosWhite.svg" alt="">
+            <h3>Gestion des associations</h3>
           </div>
           <%}%>
           <% if(user.organizationType === "Anatomik" || user.organizationType === "Association" && user.role === "Admin"){ %>
           <div class="dashboard__items--item second col s6 m4 l4" onclick="location.href='/etablissements/show'">
-            <a href="/etablissements/show">
-              <img id="gestionEtablissements" src="/images/dashboardGestionEtablissements.png" alt="">
+              <img id="gestionEtablissements" src="/images/dashboardGestionEtablissementsWhite.svg" alt="">
               <h3>Gestion des établissements</h3>
-            </a>
           </div>
           <%}%>
           <% if(user.organizationType === "Anatomik"){ %>
           <div class="dashboard__items--item second col s6 m4 l4" onclick="location.href='/entreprises/show'">
-            <a href="/entreprises/show">
-              <img id="gestionEntreprises" src="/images/dashboardGestionEntreprises.png" alt="">
+              <img id="gestionEntreprises" src="/images/dashboardGestionEntreprisesWhite.svg" alt="">
               <h3>Gestion des entreprises</h3>
-            </a>
           </div>
           <%}%>
           <div class="dashboard__items--item second col s6 m4 l4" onclick="location.href='/coming_soon/'">
-            <a href="/coming_soon">
-              <img id="messagerie" src="/images/dashboardMessagerie.svg" alt="">
+              <img id="messagerie" src="/images/dashboardMessagerieWhite.svg" alt="">
               <h3>Messagerie</h3>
-            </a>
           </div>
       </div>
     </div>

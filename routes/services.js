@@ -26,8 +26,12 @@ router.get('/services/archives', isAuthentificated, (req, res) => {
   Service.find({
     is_archive: true,
     user: user.id
-  }).populate('user').then(services => {
-    res.render('services/index', {
+  })
+  .populate('user').sort({
+    created_at: 'desc'
+  })
+  .populate('user').then(services => {
+    res.render('services/archive', {
       title: 'Anatomik - Archives services',
       services: services,
       user: user
@@ -59,7 +63,7 @@ router.get('/service/new_demande', isAuthentificated, (req, res) => {
     user: user,
     endpoint: "/service",
     errors: false,
-    placeholderName: "Ex: Camion disponnible"
+    placeholderName: "Ex: Camion disponnible",
   });
 });
 router.get('/service/new_promotion', isAuthentificated, (req, res) => {
@@ -80,7 +84,10 @@ router.get('/my-services', isAuthentificated, (req, res) => {
   let user = usr;
   Service.find({
     user: user.id
-  }).populate('users').then(services => {
+  })
+  .populate('user').sort({
+    created_at: 'desc'})
+  .populate('users').then(services => {
     res.render('services/my-services', {
       title: 'Anatomik - Mes services',
       services: services,

@@ -42,8 +42,8 @@
 
         <% if(user.organizationType === 'Anatomik'){%>
           <div class="signup__form--organisation">
+            <p>Choisissez votre type d'organisation</p>
             <select  class="validate required" name="organizationType" id="selectid" onchange="mireille()" data-error="errorOrganizationType">
-              <option disabled selected>choisissez votre type d'organisation</option>
               <option value="Entreprise">Entreprise</option>
               <option value="Association">Association</option>
             </select>
@@ -51,6 +51,7 @@
             <div class="errorOrganizationType"></div>
           </div>
           <div class="signup__form--association" id="association" style="display:none;">
+            <p>Choisissez votre association</p>
             <select name="association" class="js-example-basic-single" onchange="mireille()">
               <option disabled selected>Choisissez votre association</option>
               <% associations.forEach(function(association) {%>
@@ -59,6 +60,7 @@
               </select>
             </div>
             <div class="signup__form--association" id="entreprise" style="display:none;">
+              <p>Choisissez votre entreprise</p>
               <select name="entreprise" class="js-example-basic-single" onchange="mireille()">
                 <option disabled selected>Choisissez votre entreprise</option>
                 <% entreprises.forEach(function(entreprise) {%>
@@ -79,8 +81,8 @@
             <div class="signup__form--association" id="association">
               <% etablissements.forEach(function(etablissement) {%>
                 <%if(etablissement.is_archive === false){%>
+              <p>Choisissez l'établissement</p>
               <select name="etablissement" id="" onchange="mireille()">
-                <option disabled selected>Choisissez l'établissement</option>
                   <option value="<%=etablissement.id%>"><%=etablissement.name%></option>
                 </select>
                 <%}%>

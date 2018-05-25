@@ -1,0 +1,127 @@
+<%- include('../partials/header'); %>
+
+<!-- Page Layout here -->
+<div class="row">
+    <%- include('../partials/sidenav'); %>
+
+<div class="newOffer content">
+  <h4>Ajouter un appel d'offre</h4>
+  <a href="/offers">Retourner sur les offres</a>
+
+  <div class="row">
+    <form class="col s12f formValidate" id="formValidate" method="post" action="<%= endpoint %>">
+        <div class="input-field col s12">
+          <label for="name">Objectif de l'appel d'offre</label>
+          <input class="validate" type="text" id="name" name="name" value="<%= offer.name %>" data-error=".errorTxt1" placeholder="Création de site web">
+          <div class="errorTxt1"></div>
+        </div>
+
+        <div class="input-field col s12">
+          <label for="domaine">Domaine</label>
+          <input class="validate" type="text" id="domaine" name="domaine" value="<%= offer.domaine %>" data-error=".errorTxt2" placeholder="Web, Plomberie, Sécurité, Aménagement paysager">
+          <div class="errorTxt2"></div>
+        </div>
+
+        <div class="input-field col s12">
+          <label for="delai">Délai</label>
+          <input class="validate" type="text" id="delai" name="delai" value="<%= offer.delai %>" data-error=".errorTxt3" placeholder="Ex: 6 mois, Deadline à mi-juin.">
+          <div class="errorTxt3"></div>
+        </div>
+
+        <div class="input-field col s12">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" class="materialize-textarea validate" data-error=".errorTxt4"><%= offer.description %></textarea>
+          <div class="errorTxt4"></div>
+        </div>
+
+        <div class="input-field col s12">
+          <label for="price">Budget</label>
+          <input class="validate" type="number" id="price" name="price" value="<%= offer.price %>" data-error=".errorTxt5" placeholder="1000-5000">
+          <div class="errorTxt5"></div>
+        </div>
+
+        <div class="col s12 hide">
+          <input type="radio" id="is_not_archive" name="is_archive" class="validate" value="false" checked>
+        </div>
+
+        <button class="btn waves-effect waves-light blue" type="submit"  value="Enregistrer" name="action">Publier
+          <i class="material-icons right">send</i>
+        </button>
+    </form>
+  </div>
+
+  </div>
+
+
+
+
+
+<%- include('../partials/footer'); %>
+
+<script type="text/javascript">
+  $("#formValidate").validate({
+   rules: {
+       name: {
+           required: true,
+           minlength: 3
+       },
+       domaine: {
+           required: true,
+       },
+       delai: {
+         required: true,
+       },
+       description: {
+         required: true,
+         minlength: 10
+       },
+       price: {
+         required: true,
+        },
+        is_archive: {
+          required: true,
+        },
+   },
+   //For custom messages
+   messages: {
+       name:{
+           required: "Vous devez saisir un nom",
+           minlength: "Le nom doit comporter au minimum 3 caractères"
+       },
+       domaine:{
+           required: "Vous devez saisir un domaine",
+       },
+       delai:{
+           required: "Saisissez un délai",
+       },
+       description:{
+           required: "Saisissez une description",
+           minlength: "La description doit comporter au minimum 10 caractères"
+       },
+       price:{
+           required: "Renseignez le champs prix",
+       },
+       is_archive:{
+           required: "remplissez le champ archive",
+       },
+   },
+   errorElement : 'div',
+   errorPlacement: function(error, element) {
+     var placement = $(element).data('error');
+     if (placement) {
+       $(placement).append(error)
+     } else {
+       error.insertAfter(element);
+     }
+   }
+});
+</script>
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+  $('select').material_select();
+});
+
+</script>

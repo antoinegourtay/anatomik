@@ -2,31 +2,42 @@
 
 <div class="row">
     <%- include('../partials/sidenav'); %>
-
   <div class="entreprise content">
     <div class="entreprise__header">
-      <div id="photoModal" class="modal">
-        <div class="modal-content">
-          <h4>Changer l'image de l'entreprise</h4>
-        </div>
-        <div class="modal-footer">
-          <form class="col s12" method="post" action="/entreprise/photo/<%= entreprise._id %>" enctype="multipart/form-data">
-            <input type="file" name="file">
-            <button class="btn waves-effect waves-light blue" type="submit"  value="Enregistrer" name="action">Submit
-          </form>
-        </div>
-        </div>
-
-      <%if (entreprise.logo){%>
-        <a class="modal-trigger" href="#photoModal"><img src="/images/uploads/<%= entreprise.logo%>" alt="photo de profil" class="assoImg"></a>
-      <%}
-      else {%>
-        <a class="modal-trigger" href="#photoModal"><img src="/images/CompanyNoProfil.png" alt="photo de profil"></a>
-      <%}%>
+      <div class="entreprise__header--img">
+        <%if(user.organizationType === "Entreprise" && user.entreprise.id === entreprise.id || user.organizationType === "Anatomik"){%>
+          <div id="photoModal" class="modal">
+            <div class="modal-content">
+              <h4>Changer l'image de l'entreprise</h4>
+            </div>
+              <div class="modal-footer">
+                <form class="col s12" method="post" action="/entreprise/photo/<%= entreprise._id %>" enctype="multipart/form-data">
+                  <div class="file-field input-field col s8">
+                    <div class="btn">
+                      <span>Photo de profil</span>
+                      <input type="file" name="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text">
+                    </div>
+                  </div>
+                  <div class="input-field col s4">
+                    <button class="btn waves-effect waves-light blue" type="submit"  value="Enregistrer" name="action">Valider
+                  </div>
+                </form>
+              </div>
+            </div>
+          <%}%>
+        <%if (entreprise.logo){%>
+          <a class="modal-trigger" href="#photoModal" style="background-image: url('/images/uploads/<%= entreprise.logo%>');width: 140px; height: 140px;background-size: cover;background-position: center;background-repeat: no-repeat;"></a>
+        <%}
+        else {%>
+          <a class="modal-trigger" href="#photoModal"><img src="/images/CompanyNoProfil.png" alt="photo de profil"></a>
+        <%}%>
+      </div>
       <div class="profil__header__infos">
         <div class="profil__header__infos--left">
           <h3><%= entreprise.name %></h3>
-          <p><strong>Type d'entreprise : </strong> type d'entreprise</p>
           <p><strong>Forme juridique : </strong><%= entreprise.statut %></p>
           <div class="profil__header__infos__left--social">
             <%if (entreprise.facebook){%>
@@ -58,6 +69,10 @@
 
     <div class="entreprise__content row">
       <div class="entreprise__content__left col s12 m12 l6">
+        <div class="entreprise__content__left__about col s12">
+          <h2>A propos</h2>
+          <p><%= entreprise.description %></p>
+        </div>
         <div class="entreprise__content__left__services col s12">
           <h2>Membres</h2>
           <div class="entreprise__content__left__services__domaine">
@@ -72,7 +87,7 @@
           <div class="entreprise__content__right__informations--top">
             <div class="col s6">
               <p class="line1">Adresse</p>
-              <p class="line2"><%= entreprise.adresse %></p>
+              <p class="line2"><%= entreprise.adresse %><%=entreprise.complement_adresse%></p>
             </div>
             <div class="col s6 right">
               <p class="line1">ville</p>
@@ -88,9 +103,6 @@
             </div>
           </div>
           <div class="entreprise__content__right__informations--middle col s12">
-            <div class="site">
-              <a href="">Site de l'association</a>
-            </div>
             <div class="telephone">
               <p>Téléphone</p>
               <a href=""><%= entreprise.telephone %></a>
@@ -106,12 +118,6 @@
           <h2>Localisation du siège social</h2>
           <div id="map"></div>
         </div>
-
-        <div class="entreprise__content__right__about col s12">
-          <h2>A propos</h2>
-          <p><%= entreprise.description %></p>
-        </div>
-
       </div>
 
     </div>

@@ -24,7 +24,6 @@
           <li class="tab"><a href="#etablissements">Établissements (<%= etablissements.length %>)</a></li>
         <% }%>
 
-        <li class="tab"><a href="#documents">Documents</a></li>
 
         <% if (projets.length < 1) { %>
           <li class="tab inactive"><a href="#projets">Projets (<%= projets.length %>)</a></li>
@@ -129,7 +128,7 @@
                     <tr>
                       <td><%= etablissement.name %></td>
                       <td><%= etablissement.ville %></td>
-                      <td><%= etablissement.association.name %></td>
+                      <td><a href="association/<%=etablissement.association.id%>"><%= etablissement.association.name %></a></td>
                       <td><a href="etablissement/<%= etablissement.id %>" class="secondary-content">Voir</a></td>
                     </tr>
                   <%})%>
@@ -140,18 +139,7 @@
         <%} %>
 
 
-        <!-- documents -->
-
-      <div class="search__all__documents">
-        <h2>Documents (2)</h2>
-        <div class="search__all__documents__items">
-          <div class="search__all__documents__items__item">
-            <h2>Fiche de paie Novembre 17</h2>
-            <div class="bar"></div>
-            <div class="search__all__documents__items__item--footer"><p class="type">Doc</p></div>
-          </div>
-        </div>
-      </div>
+  
 
       <!-- projets -->
       <% if (projets.length < 1) {
@@ -164,7 +152,7 @@
                 <div class="search__all__projets__items__item">
                   <h2> <%= projet.name %> </h2>
                   <div class="bar"></div>
-                  <div class="search__all__projets__items__item--footer"><p class="type">Menuiserie</p><p class="etat"><%= projet.state %></p></div>
+                  <div class="search__all__projets__items__item--footer"><p class="type"></p><p class="etat"><%= projet.state %></p></div>
                 </div>
               </a>
               <%})%>
@@ -193,7 +181,13 @@
                     <%}%>
                   </td>
                   <td class="name"><%= user.fullname%></td>
-                  <td class="fonction">Pole urgence 91 Croix rouge Francaise</td>
+                  <%if(user.organizationType == "Association"){%>
+                    <td class="fonction"><a href="association/<%=user.association.id%>"><%=user.association.name%></a></td>
+                  <%}else if(user.organizationType == "Entreprise"){%>
+                    <td class="fonction"><a href="entreprise/<%=user.entreprise.id%>"><%=user.entreprise.name%></a></td>
+                  <%}else{%>
+                    <td class="fonction">Anatomik</td>
+                  <%}%>
                   <td class="poste"><%= user.poste%></td>
                   <td><a href="profile/<%= user.id %>" class="secondary-content">Voir profil</a></td>
                 </tr>
@@ -240,7 +234,7 @@
                   <tr>
                     <td><%= etablissement.name %></td>
                     <td><%= etablissement.ville %></td>
-                    <td><%= etablissement.association.name %></td>
+                    <td><a href="association/<%=etablissement.association.id%>"><%= etablissement.association.name %></a></td>
                     <td><a href="etablissement/<%= etablissement.id %>" class="secondary-content">Voir</a></td>
                   </tr>
                 <%})%>
@@ -270,7 +264,6 @@
         </div>
       </div>
     </div>
-    <div id="documents" class="col s12">Documents</div>
     <div id="projets" class="col s12">
         <div class="search__all__projets">
         <h2>Projets (<%= projets.length %>)</h2>
@@ -304,7 +297,13 @@
                     <img src="/images/NavPhotoNoProfil.png" alt="photo de profil">
                   <%}%>                </td>
                 <td class="name"><%= user.fullname%></td>
-                <td class="fonction">Pole urgence 91 Croix rouge Francaise</td>
+                <%if(user.organizationType == "Association"){%>
+                  <td class="fonction"><a href="association/<%=user.association.id%>"><%=user.association.name%></a></td>
+                <%}else if(user.organizationType == "Entreprise"){%>
+                  <td class="fonction"><a href="entreprise/<%=user.entreprise.id%>"><%=user.entreprise.name%></a></td>
+                <%}else{%>
+                  <td class="fonction">Anatomik</td>
+                <%}%>
                 <td class="poste"><%=user.poste%></td>
                 <td><a href="profile/<%= user.id %>" class="secondary-content">Voir profil</a></td>
               </tr>

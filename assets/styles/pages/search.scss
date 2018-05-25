@@ -2,7 +2,7 @@
   margin-bottom: 70px;
   &__header{
     h1{
-      font-family: Avenir;
+      font-family: 'Montserrat', sans-serif;
       font-size: 26px;
       font-weight: 500;
       font-style: normal;
@@ -11,13 +11,13 @@
       letter-spacing: normal;
       color: black;
       span{
-        color: #d60968;
-        font-weight: 900;
+        color: #CC1137;
+        font-weight: 600;
       }
     }
     .tabs {
       .indicator{
-        background-image: linear-gradient(269deg, #d60968, #fa2732);
+        background-image: linear-gradient(269deg, #9D1111, #fa2732);
       }
       .tab {
         &.inactive{
@@ -28,7 +28,7 @@
           }
         }
         a{
-          font-family: Avenir-Roman;
+          font-family: 'Montserrat', sans-serif;
           font-size: 14px;
           font-weight: normal;
           font-style: normal;
@@ -36,13 +36,13 @@
           letter-spacing: normal;
           color: #4a4a4a;
           &.active{
-            font-family: Avenir;
+            font-family: 'Montserrat', sans-serif;
             font-size: 14px;
             font-weight: 500;
             font-style: normal;
             font-stretch: normal;
             letter-spacing: normal;
-            color: #d60968;
+            color: #9D1111;
           }
         }
 
@@ -53,14 +53,14 @@
   &__all{
     &__entreprises{
       h2{
-        font-family: Avenir;
+        font-family: 'Montserrat', sans-serif;
         font-size: 20px;
         font-weight: 500;
         font-style: normal;
         font-stretch: normal;
         line-height: normal;
         letter-spacing: normal;
-        color: #d60968;
+        color: #9D1111;
       }
       &__items{
         display: flex;
@@ -80,7 +80,7 @@
             background: #dadada;
           }
           h2{
-            font-family: Avenir;
+            font-family: 'Montserrat', sans-serif;
             font-size: 14px;
             font-weight: 500;
             text-align: center;
@@ -88,7 +88,7 @@
             margin: 10px;
           }
           p{
-            font-family: Avenir-Roman;
+            font-family: 'Montserrat', sans-serif;
             font-size: 12px;
             font-weight: normal;
             font-style: normal;
@@ -104,14 +104,14 @@
 
     &__etablissements{
         h2{
-          font-family: Avenir;
+          font-family: 'Montserrat', sans-serif;
           font-size: 20px;
           font-weight: 500;
           font-style: normal;
           font-stretch: normal;
           line-height: normal;
           letter-spacing: normal;
-          color: #d60968;
+          color: #9D1111;
         }
         &__items{
           padding-top: 20px;
@@ -131,7 +131,7 @@
                 background-color: #ffffff;
                 box-shadow: 0 1px 4px 0 rgba(230, 230, 230, 0.5);
                 td{
-                  font-family: Avenir-Roman;
+                  font-family: 'Montserrat', sans-serif;
                   font-size: 13px;
                   font-weight: normal;
                   font-style: normal;
@@ -144,15 +144,15 @@
                     width: 50px !important;
                   }
                   a{
-                    font-family: Avenir;
+                    font-family: 'Montserrat', sans-serif;
                     font-size: 16px;
-                    font-weight: 900;
+                    font-weight: 600;
                     font-style: normal;
                     font-stretch: normal;
                     line-height: normal;
                     letter-spacing: normal;
                     text-align: center;
-                    color: #d60968;
+                    color: #CC1137;
                     @media (max-width: 600px) {
                       font-size: 12px;
                     }
@@ -165,14 +165,14 @@
     }
     &__associations{
       h2{
-        font-family: Avenir;
+        font-family: 'Montserrat', sans-serif;
         font-size: 20px;
         font-weight: 500;
         font-style: normal;
         font-stretch: normal;
         line-height: normal;
         letter-spacing: normal;
-        color: #d60968;
+        color: #9D1111;
       }
       &__items{
         display: flex;
@@ -191,7 +191,7 @@
             background: #dadada;
           }
           p{
-            font-family: Avenir;
+            font-family: 'Montserrat', sans-serif;
             font-size: 14px;
             font-weight: 500;
             font-style: normal;
@@ -207,14 +207,14 @@
     }
     &__projets{
       h2{
-        font-family: Avenir;
+        font-family: 'Montserrat', sans-serif;
         font-size: 20px;
         font-weight: 500;
         font-style: normal;
         font-stretch: normal;
         line-height: normal;
         letter-spacing: normal;
-        color: #d60968;
+        color: #9D1111;
       }
       &__items{
         display: flex;
@@ -230,7 +230,7 @@
             transform: scale(1.1,1.1);
           }
           h2{
-            font-family: Avenir;
+            font-family: 'Montserrat', sans-serif;
             font-size: 14px;
             font-weight: 300;
             font-style: normal;
@@ -253,7 +253,7 @@
             justify-content: space-between;
             margin-top: 50px;
             .type{
-              font-family: Avenir-Roman;
+              font-family: 'Montserrat', sans-serif;
               font-size: 12px;
               font-weight: normal;
               font-style: normal;
@@ -270,7 +270,7 @@
               padding-right: 10px;
             }
             .etat{
-              font-family: Avenir-Roman;
+              font-family: 'Montserrat', sans-serif;
               font-size: 12px;
               font-weight: normal;
               font-style: normal;
@@ -293,14 +293,14 @@
 
     &__documents{
       h2{
-        font-family: Avenir;
+        font-family: 'Montserrat', sans-serif;
         font-size: 20px;
         font-weight: 500;
         font-style: normal;
         font-stretch: normal;
         line-height: normal;
         letter-spacing: normal;
-        color: #d60968;
+        color: #9D1111;
       }
       &__items{
         display: flex;
@@ -316,7 +316,7 @@
             transform: scale(1.1,1.1);
           }
           h2{
-            font-family: Avenir;
+            font-family: 'Montserrat', sans-serif;
             font-size: 14px;
             font-weight: 300;
             font-style: normal;
@@ -339,7 +339,7 @@
             justify-content: space-between;
             margin-top: 70px;
             .type{
-              font-family: Avenir-Roman;
+              font-family: 'Montserrat', sans-serif;
               font-size: 12px;
               font-weight: normal;
               font-style: normal;
@@ -360,14 +360,14 @@
     }
     &__membres{
       h2{
-        font-family: Avenir;
+        font-family: 'Montserrat', sans-serif;
         font-size: 20px;
         font-weight: 500;
         font-style: normal;
         font-stretch: normal;
         line-height: normal;
         letter-spacing: normal;
-        color: #d60968;
+        color: #9D1111;
       }
       &__items{
         padding-top: 20px;
@@ -388,7 +388,7 @@
                   width: 50px !important;
                 }
                 &.name{
-                  font-family: Avenir;
+                  font-family: 'Montserrat', sans-serif;
                   font-size: 16px;
                   font-weight: 500;
                   font-style: normal;
@@ -399,7 +399,7 @@
                   color: #000000;
                 }
                 &.fonction{
-                  font-family: Avenir-Roman;
+                  font-family: 'Montserrat', sans-serif;
                   font-size: 13px;
                   font-weight: normal;
                   font-style: normal;
@@ -410,7 +410,7 @@
                   color: #000000;
                 }
                 &.poste{
-                  font-family: Avenir;
+                  font-family: 'Montserrat', sans-serif;
                   font-size: 16px;
                   font-weight: 500;
                   font-style: normal;
@@ -421,15 +421,15 @@
                   color: #000000;
                 }
                 a{
-                  font-family: Avenir;
+                  font-family: 'Montserrat', sans-serif;
                   font-size: 16px;
-                  font-weight: 900;
+                  font-weight: 600;
                   font-style: normal;
                   font-stretch: normal;
                   line-height: normal;
                   letter-spacing: normal;
                   text-align: center;
-                  color: #d60968;
+                  color: #9D1111;
                   @media (max-width: 600px) {
                     font-size: 12px;
                   }

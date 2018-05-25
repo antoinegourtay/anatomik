@@ -17,14 +17,19 @@
           <div class="errorPrenom"></div>
         </div>
         <div class="input-field col s6">
-          <label>Nom de famille *</label>
+          <label>Nom *</label>
           <input type="text" class="form-control" name="lastname" placeholder="Dupuis" value="<%= user_profile.lastname %>" data-error=".errorNom">
           <div class="errorNom"></div>
         </div>
         <div class="input-field col s12">
-          <label>Mot de passe *</label>
-          <input type="password" class="form-control" placeholder="motdepasse" name="password" data-error=".errorPassword">
+          <label>Nouveau mot de passe</label>
+          <input type="password" class="form-control" name="password" data-error=".errorPassword">
           <div class="errorPassword"></div>
+        </div>
+        <div class="input-field col s12">
+          <label>Confirmez le mot de passe</label>
+          <input type="password" class="form-control" name="confirmPassword" data-error=".errorConfirmPassword">
+          <div class="errorConfirmPassword"></div>
         </div>
         <div class="input-field col s12">
           <label>Poste *</label>
@@ -86,9 +91,6 @@ $("#formValidate").validate({
      lastname: {
        required: true,
      },
-     password: {
-       required: true,
-     },
      organizationType: {
        required: true,
      },
@@ -110,9 +112,6 @@ $("#formValidate").validate({
      lastname:{
          required: "Saisissez votre nom de famille",
          minlength: "Votre nom de famille doit comporter au minimum 3 caractères"
-     },
-     password:{
-         required: "Saisissez votre mot de passe",
      },
      organizationType:{
          required: "Saisissez votre organisation",

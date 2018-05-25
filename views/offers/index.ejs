@@ -18,7 +18,7 @@
           	<div class="offers__collapsible--header">
           		<ul class="row">
           			<li class="col s4 m2">Nom de l'association</li>
-          			<li class="col m2 hide-on-small-only">Type d'établissement</li>
+          			<li class="col m2 hide-on-small-only">Objectif</li>
           			<li class="col s4 m2">Domaine</li>
           			<li class="col m2 hide-on-small-only">Budget</li>
                 <li class="col m2 hide-on-small-only">Délai</li>
@@ -33,7 +33,7 @@
               <li>
                 <div class="collapsible-header offers__collapsible--visible row">
                   <p class="col s4 m2"><%=offers[i].association.name%></p>
-                  <p class="col m2 hide-on-small-only">association</p>
+                  <p class="col m2 hide-on-small-only"><%=offers[i].name%></p>
                   <p class="col s4 m2"><%=offers[i].domaine%></p>
                   <p class="col m2 hide-on-small-only"><%=offers[i].price%> €</p>
                   <p class="col m2 hide-on-small-only"><%=offers[i].delai%></p>
@@ -61,7 +61,7 @@
                         else {%>
                           <img src="/images/PhotoNoProfil.png" alt="photo de profil" class="profil circle" style="background:#dadada;">
                         <%}%>
-                        <div class="contact">
+                        <div class="contactinfos">
                           <a href="/profile/<%= offers[i].user.id %>"><%=offers[i].user.firstname %> <%=offers[i].user.lastname %></a>
                           <p><%= offers[i].user.role %></p>
                           <p><%= offers[i].adresse %></p>

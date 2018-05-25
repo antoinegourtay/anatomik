@@ -14,6 +14,14 @@ body{
   }
 }
 
+.header__right ul#dropdown1 {
+    flex-direction: column;
+    align-items: flex-start;
+    width: auto !important;
+    top: 64px;
+    display: none;
+}
+
 
 .header{
   display: flex;

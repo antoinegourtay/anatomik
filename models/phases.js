@@ -26,6 +26,10 @@ phasesSchema = new mongoose.Schema({
     entreprise: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Entreprise'
+    },
+    created_at: {
+        type: Date,
+        default: Date.now()
     }
 });
 

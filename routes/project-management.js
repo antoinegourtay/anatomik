@@ -5,14 +5,13 @@ const express = require('express'),
     flash = require('connect-flash'),
     fs = require('fs'),
     path = require('path'),
-    dir = '/project-folders/',
+    dir = path.join(__dirname, '..', 'project-folders'),
     getProject = require('./utils/getProject'),
     getPhases = require('./utils/getPhases'),
     getSubphases = require('./utils/getSubphases'),
     mkdirp = require('mkdirp'),
     isDirectory = source => fs.lstatSync(source).isDirectory(),
     formidable = require('formidable');
-
 
 const User = require('../models/users'),
     Project = require('../models/project'),
@@ -37,7 +36,7 @@ const contains = function (array, element) {
 
 router.get('/ogp', isAuthentificated, (req, res) => {
     let user = usr;
-    if (user.organizationType == "Association" || user.organizationType == "Anatomik") {
+    if (user.organizationType == "Association") {
         Project.find({
                 isArchived: false,
                 $or: [{
@@ -67,7 +66,7 @@ router.get('/ogp/create', isAuthentificated, (req, res) => {
     let user = usr;
 
 
-    if (user.organizationType == "Association" || user.organizationType == "Anatomik") {
+    if (user.organizationType == "Association") {
         User.find({
                 association: user.association
 
@@ -115,15 +114,11 @@ router.post('/ogp/create', isAuthentificated, (req, res) => {
     let startDate = new Date(sY + "-" + sM + "-" + sD);
     let endDate = new Date(eY + "-" + eM + "-" + eD);
 
-    let today = new Date();
-    let myToday = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
+    if (user.organizationType == "Association") {
 
-    if (user.organizationType == "Anatomik" || user.organizationType == "Association") {
+        if (endDate < startDate || endDate === startDate) {
+            res.redirect('/ogp/create');
 
-        if (startDate < myToday || endDate < myToday) {
-            err.push('La date ne peut pas être antérieure à aujourd\'hui');
-        } else if (endDate < startDate || endDate === startDate) {
-            err.push('La date de fin ne peut pas être avant le début du projet');
         } else {
             project.startDate = req.body.date_debut;
             project.endDate = req.body.date_fin;
@@ -135,7 +130,7 @@ router.post('/ogp/create', isAuthentificated, (req, res) => {
         if (req.body.name != "") {
             project.name = req.body.name;
         } else {
-            err.push("Le nom du projet ne peut pas être vide");
+            res.redirect('/ogp/create');
         }
 
         project.objective = req.body.objective;
@@ -145,21 +140,13 @@ router.post('/ogp/create', isAuthentificated, (req, res) => {
         project.associationResponsible = req.body.associationResponsible;
         nUsers.push(req.body.associationResponsible);
         project.users = nUsers;
+        project.provisionnalBudget = req.body.provisionnalbudget;
 
-        if (err.length > 0) {
-            res.render('ogp/ogp-create', {
-                title: 'Anatomik - Créer un projet',
-                project: project,
-                user: user,
-                endpoint: "/ogp",
-                errors: err
-            });
-        } else {
-            project.save();
-            mkdirp('..' + dir + createdProjectId.toString(), err => {
-                if (err) console.log(err);
-            });
-        }
+        project.save();
+
+        mkdirp(dir + '/' + createdProjectId.toString(), err => {
+            if (err) console.log(err);
+        });
 
         for (let i = 0; i < req.body.etape.length; i++) {
             let newPhase = new Phase();
@@ -167,7 +154,11 @@ router.post('/ogp/create', isAuthentificated, (req, res) => {
 
             newPhase.name = req.body.etape[i].nom_phase;
             newPhase.description = req.body.etape[i].description_phase;
-            newPhase.entreprise = req.body.etape[i].entreprise_select;
+            if (req.body.etape[i].entreprise_select === undefined) {
+
+            } else {
+                newPhase.entreprise = req.body.etape[i].entreprise_select;
+            }
             newPhase.project = createdProjectId;
 
             let sYp = (req.body.etape[i].date_debut_phase_submit).substring(0, 4);
@@ -181,51 +172,40 @@ router.post('/ogp/create', isAuthentificated, (req, res) => {
             let startDateP = new Date(sYp + "-" + sMp + "-" + sDp);
             let endDateP = new Date(eYp + "-" + eMp + "-" + eDp);
 
-            let todayP = new Date();
-            let myTodayP = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
-
-            //TODO: put errors in array
-            if (startDateP < myTodayP) {
-                err.push("La date de début de la phase ne peut pas être antérieur à aujourd'hui")
-            }
-            if (endDateP < myTodayP) {
-                err.push("La date de début de la phase ne peut pas être antérieur à aujourd'hui")
-            }
             if (endDateP < startDateP) {
-                err.push("La date de début de la phase ne peut pas être antérieur à aujourd'hui")
+                res.redirect('/ogp/create');
             }
             if (endDateP === startDateP) {
-                err.push("La date de début de la phase ne peut pas être antérieur à aujourd'hui")
+                res.redirect('/ogp/create');
+
             }
             if (startDateP < startDate) {
-                err.push("La date de début de la phase ne peut pas être antérieur à aujourd'hui")
+                res.redirect('/ogp/create');
+
             }
             if (endDateP < startDate) {
-                err.push("La date de début de la phase ne peut pas être antérieur à aujourd'hui")
+                res.redirect('/ogp/create');
+
             }
             if (startDateP > endDate) {
-                err.push("La date de début de la phase ne peut pas être antérieur à aujourd'hui")
+                res.redirect('/ogp/create');
+
             }
             if (endDateP > endDate) {
-                err.push("La date de début de la phase ne peut pas être antérieur à aujourd'hui")
+                res.redirect('/ogp/create');
+
+
             }
 
             newPhase.startDatePhase = req.body.etape[i].date_debut_phase;
             newPhase.endDatePhase = req.body.etape[i].date_fin_phase;
-            if (err.length > 0) {
-                res.render('ogp/ogp-create', {
-                    title: 'Anatomik - Créer un projet',
-                    project: project,
-                    user: user,
-                    endpoint: "/ogp",
-                    errors: err
-                });
-            } else {
-                newPhase.save();
-                mkdirp('..' + dir + createdProjectId.toString() + "/" + newPhaseId.toString(), err => {
-                    if (err) console.log(err);
-                });
-            }
+
+            newPhase.save();
+
+            mkdirp(dir + '/' + createdProjectId.toString() + "/" + newPhaseId.toString(), err => {
+                if (err) console.log(err);
+            });
+
             for (let j = 0; j < req.body.etape[i].sous_phase.length; j++) {
                 let newSubPhase = new Subphase();
                 let newSubPhaseId = newSubPhase._id;
@@ -240,37 +220,15 @@ router.post('/ogp/create', isAuthentificated, (req, res) => {
                 newSubPhase.project = createdProjectId;
                 newSubPhase.state = "En cours";
 
-                //TODO: Ajouter avec le bouton poussoir
-
                 if (req.body.etape[i].sous_phase[j].nom_sous_phase != "") {
-                    if (err.length > 0) {
-                        res.render('ogp/ogp-create', {
-                            title: 'Anatomik - Créer un projet',
-                            project: project,
-                            user: user,
-                            endpoint: "/ogp",
-                            errors: err
-                        });
-                    } else {
-                        newSubPhase.save();
-                    }
+                    newSubPhase.save();
                 }
 
             } // end loop for subphase
 
         } // End loop for phase
 
-        if (err.length > 0) {
-            res.render('ogp/ogp-create', {
-                title: 'Anatomik - Créer un projet',
-                project: project,
-                user: user,
-                endpoint: "/ogp",
-                errors: err
-            });
-        } else {
-            res.redirect('/ogp');
-        }
+        res.redirect('/ogp');
 
     } else {
         res.render("/", {
@@ -289,9 +247,9 @@ router.get('/ogp/:id_project', isAuthentificated, (req, res) => {
     let projectSubPhases = [];
     let phasesEntreprises = [];
     const projectId = req.params.id_project;
+    let percentageOfProject;
 
-    if (user.organizationType == "Association" || user.organizationType == "Anatomik") {
-
+    if (user.organizationType == "Association") {
 
         Project.findById(req.params.id_project)
             .populate("projects")
@@ -303,6 +261,15 @@ router.get('/ogp/:id_project', isAuthentificated, (req, res) => {
                 projectPhases = selectedProject.phases;
                 projectSubPhases = selectedProject.subphases;
 
+                Subphase.find({
+                    project: projectId,
+                    $and: [{
+                        state: 'Terminée'
+                    }]
+                }).then(subphases => {
+                    percentageOfProject = Math.trunc(subphases.length / projectSubPhases.length * 100);
+                });
+
                 User.find({
                     association: project.associationResponsible.association
                 }).then(users => {
@@ -312,21 +279,24 @@ router.get('/ogp/:id_project', isAuthentificated, (req, res) => {
                             .populate("entreprise")
                             .populate("phases")
                             .then(entreprise => {
-
                                 phasesEntreprises.push(entreprise);
-                                res.render('ogp/ogp-single-project', {
-                                    title: 'Anatomik - ' + project.name,
-                                    users: users,
-                                    user: user,
-                                    projectUsers: project.users,
-                                    project: selectedProject,
-                                    phases: projectPhases,
-                                    subphases: projectSubPhases,
-                                    entreprises: phasesEntreprises,
-                                    subphasesPrice: 0,
-                                    phasesPrice: 0,
-                                });
+
                             });
+                        setTimeout(() => {
+                            res.render('ogp/ogp-single-project', {
+                                title: 'Anatomik - ' + project.name,
+                                users: users,
+                                user: user,
+                                projectUsers: project.users,
+                                project: selectedProject,
+                                phases: projectPhases.reverse(),
+                                subphases: projectSubPhases,
+                                entreprises: phasesEntreprises,
+                                subphasesPrice: 0,
+                                phasesPrice: 0,
+                                percentageOfProject: percentageOfProject
+                            });
+                        }, 2000);
                     }
                 });
             });
@@ -339,7 +309,7 @@ router.get('/ogp/:id_project', isAuthentificated, (req, res) => {
 router.get('/ogp/edit/:id_project', isAuthentificated, (req, res) => {
     let user = usr;
 
-    if (user.organizationType == "Association" || user.organizationType == "Anatomik") {
+    if (user.organizationType == "Association") {
         Project.findById(req.params.id_project)
             .populate("projects").populate('phases').populate('subphases')
             .then(project => {
@@ -391,8 +361,7 @@ router.post('/ogp/edit/:id_project', isAuthentificated, (req, res) => {
     let projectPhases = [];
     let creadtedProject;
 
-    let today = new Date();
-    let myToday = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
+
 
     let sY = (req.body.date_debut_submit).substring(0, 4);
     let sM = (req.body.date_debut_submit).substring(5, 7);
@@ -417,14 +386,14 @@ router.post('/ogp/edit/:id_project', isAuthentificated, (req, res) => {
             .then(project => {
 
                 if (endDate < startDate || endDate === startDate) {
-                    err.push('La date de fin ne peut pas être avant le début du projet');
+                    res.redirect('/ogp/edit/' + projectId);
                 } else {
                     let nUsers = [];
                     nUsers.push(user.id);
                     if (req.body.name) {
                         project.name = req.body.name;
                     } else {
-                        err.push("Le nom du projet ne peut pas être vide");
+                        res.redirect('/ogp/edit/' + projectId);
                     }
 
                     project.startDate = req.body.date_debut;
@@ -435,6 +404,7 @@ router.post('/ogp/edit/:id_project', isAuthentificated, (req, res) => {
                     project.description = req.body.description;
                     project.associationResponsible = user.id;
                     project.users = nUsers;
+                    project.provisionnalBudget = req.body.provisionnalbudget;
 
                     if (req.body.state == "") {
                         project.state = project.state;
@@ -443,18 +413,9 @@ router.post('/ogp/edit/:id_project', isAuthentificated, (req, res) => {
 
                     }
 
-                    if (err.length > 0) {
-                        res.render('ogp/ogp-edit', {
-                            title: 'Anatomik - Editer un projet',
-                            project: project,
-                            user: user,
-                            endpoint: "/ogp",
-                            errors: err
-                        });
-                    } else {
-                        creadtedProject = project;
-                        project.save();
-                    }
+                    creadtedProject = project;
+                    project.save();
+
                 }
 
             });
@@ -482,190 +443,208 @@ router.post('/ogp/edit/:id_project', isAuthentificated, (req, res) => {
                 newPhase.description = req.body.etape[i].description_phase;
 
                 if (endDateP < startDateP) {
-                    res.redirect('/ogp/create');
+                    res.redirect('/ogp/edit/' + projectId);
                 }
                 if (endDateP === startDateP) {
-                    res.redirect('/ogp/create');
+                    res.redirect('/ogp/edit/' + projectId);
                 }
                 if (startDateP < startDate) {
-                    res.redirect('/ogp/create');
+                    res.redirect('/ogp/edit/' + projectId);
                 }
                 if (endDateP < startDate) {
-                    res.redirect('/ogp/create');
+                    res.redirect('/ogp/edit/' + projectId);
                 }
                 if (startDateP > endDate) {
-                    res.redirect('/ogp/create');
+                    res.redirect('/ogp/edit/' + projectId);
                 }
                 if (endDateP > endDate) {
-                    res.redirect('/ogp/create');
+                    res.redirect('/ogp/edit/' + projectId);
                 }
 
                 newPhase.startDatePhase = req.body.etape[i].date_debut_phase;
                 newPhase.endDatePhase = req.body.etape[i].date_fin_phase;
                 newPhase.project = projectId;
-                if (req.body.etape[i].entreprise_select == "") {
+                if (req.body.etape[i].entreprise_select === undefined) {
 
                 } else {
                     newPhase.entreprise = req.body.etape[i].entreprise_select;
                 }
 
-                mkdirp('..' + dir + projectId.toString() + "/" + newPhase._id.toString(), err => {
+                mkdirp(dir + "/" + projectId.toString() + "/" + newPhase._id.toString(), '777', err => {
                     if (err) console.log(err);
                 });
+
                 phasesInForm.push(newPhase._id.toString());
                 newPhase.save();
+
+                if (req.body.etape[i].sous_phase) {
+                    for (let j = 0; j < req.body.etape[i].sous_phase.length; j++) {
+
+                        if (req.body.etape[i].sous_phase[j].id_sous_phase != '') {
+                            Subphase.findById(req.body.etape[i].sous_phase[j].id_sous_phase)
+                                .then(subphase => {
+
+                                    subphase.name = req.body.etape[i].sous_phase[j].nom_sous_phase;
+                                    if (req.body.etape[i].sous_phase[j].nom_sous_phase != "" && req.body.etape[i].sous_phase[j].prix_sous_phase == "") {
+                                        res.redirect('/ogp/edit/' + projectId);
+                                    } else {
+                                        subphase.value = req.body.etape[i].sous_phase[j].prix_sous_phase;
+                                    }
+                                    subphase.project = projectId;
+                                    if (req.body.etape[i].sous_phase[j].sous_phase_state === undefined) {
+
+                                    } else {
+                                        subphase.state = req.body.etape[i].sous_phase[j].sous_phase_state;
+                                    }
+
+                                    subphasesInForm.push(subphase._id.toString());
+                                    subphase.save();
+
+                                });
+                        } else if (req.body.etape[i].sous_phase[j].id_sous_phase === '' && req.body.etape[i].sous_phase[j].nom_sous_phase != '') {
+                            let newSubPhase = new Subphase();
+
+                            newSubPhase.name = req.body.etape[i].sous_phase[j].nom_sous_phase;
+                            if (req.body.etape[i].sous_phase[j].nom_sous_phase != "" && !req.body.etape[i].sous_phase[j].prix_sous_phase) {
+                                res.redirect('/ogp/edit/' + projectId);
+                            } else {
+                                newSubPhase.value = req.body.etape[i].sous_phase[j].prix_sous_phase;
+                            }
+                            newSubPhase.phase = createdPhaseId;
+                            newSubPhase.project = projectId;
+                            newSubPhase.state = req.body.etape[i].sous_phase[j].sous_phase_state;
+
+                            subphasesInForm.push(newSubPhase._id.toString());
+
+                            newSubPhase.save((err) => {
+                                if (err) console.log(err);
+                            });
+                        } else {
+
+                        }
+                    } // end loop for subbphase
+                }
 
                 //If there is already a phase registered
             } else {
                 Phase.findById(req.body.etape[i].id_phase)
                     .then(phase => {
-                        createdPhaseId = phase._id;
+                        createdPhaseId = req.body.etape[i].id_phase;
+
                         phase.name = req.body.etape[i].nom_phase;
                         phase.description = req.body.etape[i].description_phase;
 
                         if (endDateP < startDateP) {
-                            res.redirect('/ogp/create');
+                            res.redirect('/ogp/edit/' + projectId);
                         }
                         if (endDateP === startDateP) {
-                            res.redirect('/ogp/create');
+                            res.redirect('/ogp/edit/' + projectId);
                         }
                         if (startDateP < startDate) {
-                            res.redirect('/ogp/create');
+                            res.redirect('/ogp/edit/' + projectId);
                         }
                         if (endDateP < startDate) {
-                            res.redirect('/ogp/create');
+                            res.redirect('/ogp/edit/' + projectId);
                         }
                         if (startDateP > endDate) {
-                            res.redirect('/ogp/create');
+                            res.redirect('/ogp/edit/' + projectId);
                         }
                         if (endDateP > endDate) {
-                            res.redirect('/ogp/create');
+                            res.redirect('/ogp/edit/' + projectId);
                         }
 
                         phase.startDatePhase = req.body.etape[i].date_debut_phase;
                         phase.endDatePhase = req.body.etape[i].date_fin_phase;
-                        if (req.body.etape[i].entreprise_select == "") {
+                        if (req.body.etape[i].entreprise_select === undefined) {
 
                         } else {
                             phase.entreprise = req.body.etape[i].entreprise_select;
                         }
 
-                        if (err.length > 0) {
-                            res.render('ogp/ogp-edit', {
-                                title: 'Anatomik - Editer un projet',
-                                project: project,
-                                user: user,
-                                endpoint: "/ogp",
-                                errors: err
-                            });
-                        } else {
-                            phasesInForm.push(phase._id.toString());
-                            phase.save();
-                        }
-                    });
-            }
+                        phasesInForm.push(phase._id.toString());
+                        phase.save();
 
-            //Adding or updating subphase
-            if (req.body.etape[i].sous_phase) {
-                for (let j = 0; j < req.body.etape[i].sous_phase.length; j++) {
+                        if (req.body.etape[i].sous_phase) {
+                            for (let j = 0; j < req.body.etape[i].sous_phase.length; j++) {
 
-                    if (req.body.etape[i].sous_phase[j].nom_sous_phase == "") {
+                                if (req.body.etape[i].sous_phase[j].id_sous_phase != '') {
+                                    Subphase.findById(req.body.etape[i].sous_phase[j].id_sous_phase)
+                                        .then(subphase => {
 
-                    } else if (req.body.etape[i].sous_phase[j].id_sous_phase == "") {
-                        let newSubPhase = new Subphase();
+                                            subphase.name = req.body.etape[i].sous_phase[j].nom_sous_phase;
+                                            if (req.body.etape[i].sous_phase[j].nom_sous_phase != "" && req.body.etape[i].sous_phase[j].prix_sous_phase == "") {
+                                                res.redirect('/ogp/edit/' + projectId);
+                                            } else {
+                                                subphase.value = req.body.etape[i].sous_phase[j].prix_sous_phase;
+                                            }
+                                            subphase.project = projectId;
+                                            if (req.body.etape[i].sous_phase[j].sous_phase_state === undefined) {
 
-                        newSubPhase.name = req.body.etape[i].sous_phase[j].nom_sous_phase;
-                        if (req.body.etape[i].sous_phase[j].nom_sous_phase != "" && !req.body.etape[i].sous_phase[j].prix_sous_phase) {
-                            err.push("Le prix ne peut pas être vide");
-                        } else {
-                            newSubPhase.value = req.body.etape[i].sous_phase[j].prix_sous_phase;
-                        }
-                        newSubPhase.state = "En cours";
-                        newSubPhase.phase = createdPhaseId;
-                        newSubPhase.project = projectId;
-                        newSubPhase.state = req.body.etape[i].sous_phase[j].sous_phase_state;
+                                            } else {
+                                                subphase.state = req.body.etape[i].sous_phase[j].sous_phase_state;
+                                            }
 
-                        if (err.length > 0) {
-                            res.render('ogp/ogp-edit', {
-                                title: 'Anatomik - Editer un projet',
-                                project: project,
-                                user: user,
-                                endpoint: "/ogp",
-                                errors: err
-                            });
-                        } else {
-                            subphasesInForm.push(newSubPhase._id.toString());
-                            newSubPhase.save();
-                        }
-                    } else {
-                        Subphase.findById(req.body.etape[i].sous_phase[j].id_sous_phase)
-                            .then(subphase => {
-                                subphase.name = req.body.etape[i].sous_phase[j].nom_sous_phase;
-                                if (req.body.etape[i].sous_phase[j].nom_sous_phase != "" && req.body.etape[i].sous_phase[j].prix_sous_phase == "") {
-                                    err.push("Le prix ne peut pas être vide");
-                                } else {
-                                    subphase.value = req.body.etape[i].sous_phase[j].prix_sous_phase;
-                                }
-                                subphase.state = "null";
-                                subphase.project = projectId;
-                                subphase.state = req.body.etape[i].sous_phase[j].sous_phase_state;
+                                            subphasesInForm.push(subphase._id.toString());
+                                            subphase.save();
 
-                                if (err.length > 0) {
-                                    res.render('ogp/ogp-edit', {
-                                        title: 'Anatomik - Editer un projet',
-                                        project: project,
-                                        user: user,
-                                        endpoint: "/ogp",
-                                        errors: err
+                                        });
+                                } else if (req.body.etape[i].sous_phase[j].id_sous_phase === '' && req.body.etape[i].sous_phase[j].nom_sous_phase != '') {
+                                    let newSubPhase = new Subphase();
+
+                                    newSubPhase.name = req.body.etape[i].sous_phase[j].nom_sous_phase;
+                                    if (req.body.etape[i].sous_phase[j].nom_sous_phase != "" && !req.body.etape[i].sous_phase[j].prix_sous_phase) {
+                                        res.redirect('/ogp/edit/' + projectId);
+                                    } else {
+                                        newSubPhase.value = req.body.etape[i].sous_phase[j].prix_sous_phase;
+                                    }
+                                    newSubPhase.phase = createdPhaseId;
+                                    newSubPhase.project = projectId;
+                                    newSubPhase.state = req.body.etape[i].sous_phase[j].sous_phase_state;
+
+                                    subphasesInForm.push(newSubPhase._id.toString());
+
+                                    newSubPhase.save((err) => {
+                                        if (err) console.log(err);
                                     });
                                 } else {
-                                    subphasesInForm.push(subphase._id.toString());
-                                    subphase.save();
+
                                 }
-                            });
-                    }
-                } // end loop for subbphase
+                            } // end loop for subbphase
+
+                            Project.findById(req.params.id_project)
+                                .populate("projects")
+                                .populate("phases")
+                                .populate("subphases")
+                                .then(selectedProject => {
+                                    let phasesInProject = selectedProject.phases;
+                                    let subphasesInProject = selectedProject.subphases;
+
+
+                                    for (let y = 0; y < subphasesInProject.length; y++) {
+                                        if (!contains(subphasesInForm, subphasesInProject[y]._id.toString())) {
+                                            Subphase.findByIdAndRemove(subphasesInProject[y]._id, (err, subphase) => {
+                                                if (err) console.log(err);
+                                            });
+                                        }
+                                    }
+
+                                    for (let z = 0; z < phasesInProject.length; z++) {
+                                        if (!contains(phasesInForm, phasesInProject[z]._id.toString())) {
+                                            Phase.findByIdAndRemove(phasesInProject[z]._id, (err, phase) => {
+                                                if (err) console.log(err);
+                                            });
+                                        }
+                                    }
+                                    return;
+                                }).then(() => {
+                                    res.redirect('/ogp/' + projectId);
+                                });
+                        }
+
+                    });
             }
+            //Adding or updating subphase
         } //end loop for phase
-
-        Project.findById(req.params.id_project)
-            .populate("projects")
-            .populate("phases")
-            .populate("subphases")
-            .then(selectedProject => {
-                let phasesInProject = selectedProject.phases;
-                let subphasesInProject = selectedProject.subphases;
-
-                for (let y = 0; y < subphasesInProject.length; y++) {
-                    if (!contains(subphasesInForm, subphasesInProject[y]._id.toString())) {
-                        Subphase.findByIdAndRemove(subphasesInProject[y]._id, (err, subphase) => {
-                            if (err) console.log(err);
-                        });
-                    }
-                }
-
-                for (let z = 0; z < phasesInProject.length; z++) {
-                    if (!contains(phasesInForm, phasesInProject[z]._id.toString())) {
-                        Phase.findByIdAndRemove(phasesInProject[z]._id, (err, phase) => {
-                            if (err) console.log(err);
-                        });
-                    }
-                }
-            });
-
-
-        if (err.length > 0) {
-            res.render('ogp/ogp-edit', {
-                title: 'Anatomik - Editer un projet',
-                project: project,
-                user: user,
-                endpoint: "/ogp",
-                errors: err
-            });
-        } else {
-            res.redirect('/ogp/' + projectId);
-        }
-
     } else {
         res.render("/", {
             user: user
@@ -680,31 +659,53 @@ router.post('/ogp/edit/:id_project', isAuthentificated, (req, res) => {
 router.get('/ogp/documents/:id_project', isAuthentificated, (req, res) => {
     const idProject = req.params.id_project;
     const user = usr;
-    const folderPath = path.join(__dirname, '..', '..', 'project-folders', idProject.toString() + '/');
+    const folderPath = path.join(__dirname, '..', 'project-folders', idProject.toString() + '/');
 
     let files = [];
+    let filesInEachPhases = [];
 
+    if (user.organizationType == "Association") {
+        Project.findById(idProject).populate('phases').populate('subphases').then(project => {
+            let phases = project.phases;
+            let subphases = project.subphases;
 
-    Project.findById(idProject).populate('phases').populate('subphases').then(project => {
-        let phases = project.phases;
-        let subphases = project.subphases;
+            for (let i = 0; i < phases.length; i++) {
+                let count = 0;
+                const folderPath = path.join(__dirname, '..', 'project-folders', idProject.toString(), phases[i].id.toString());
 
-        fs.readdirSync(folderPath).forEach(file => {
-            if (!fs.lstatSync(folderPath + file).isDirectory()) {
-                files.push(file);
+                fs.readdirSync(folderPath).forEach(file => {
+                    if (!fs.lstatSync(folderPath + '/' + file).isDirectory()) {
+                        count += 1;
+                    }
+                });
+
+                filesInEachPhases.push(count);
             }
-        });
 
-        res.render('ogp/ogp-documents', {
-            title: 'Anatomik - Documents ' + project.name,
-            user: user,
-            project: project,
-            phases: phases,
-            subphases: subphases,
-            files: files,
-            projectId: idProject
+            const projectPath = path.join(__dirname, '..', 'project-folders', idProject.toString());
+
+            fs.readdirSync(projectPath).forEach(file => {
+                if (!fs.lstatSync(folderPath + '/' + file).isDirectory()) {
+                    files.push(file);
+                }
+            });
+
+
+
+            res.render('ogp/ogp-documents', {
+                title: 'Anatomik - Documents ' + project.name,
+                user: user,
+                project: project,
+                phases: phases,
+                subphases: subphases,
+                files: files,
+                projectId: idProject,
+                filesInEachPhases: filesInEachPhases
+            });
         });
-    });
+    } else {
+        res.redirect('/');
+    }
 });
 
 /**
@@ -714,86 +715,119 @@ router.get('/ogp/documents/:id_project/:id_phase', isAuthentificated, (req, res)
     const idProject = req.params.id_project;
     const idPhase = req.params.id_phase;
     const user = usr;
-    const folderPath = path.join(__dirname, '..', '..', 'project-folders', idProject.toString() + '/' + idPhase.toString() + '/');
+    const folderPath = path.join(__dirname, '..', 'project-folders', idProject.toString() + '/' + idPhase.toString() + '/');
 
     let files = [];
+    let filesInPhase;
 
-    Project.findById(idProject).populate('phases').populate('subphases').then(project => {
-        let phases = project.phases;
-        let subphases = project.subphases;
+    if (user.organizationType == "Association") {
+        Project.findById(idProject).populate('phases').populate('subphases').then(project => {
+            let phases = project.phases;
+            let subphases = project.subphases;
 
-        fs.readdirSync(folderPath).forEach(file => {
-            if (!fs.lstatSync(folderPath + file).isDirectory()) {
-                files.push(file);
-            }
-        });
-        Phase.findById(idPhase).then(phase => {
-            res.render('ogp/ogp-documents-phase', {
-                title: 'Anatomik - Documents ' + project.name,
-                user: user,
-                project: project,
-                phases: phases,
-                phase: phase,
-                subphases: subphases,
-                files: files,
-                phaseId: idPhase,
-                projectId: idProject
+            let count = 0;
+            const folderPath = path.join(__dirname, '..', 'project-folders', idProject.toString(), idPhase.toString());
+
+            fs.readdirSync(folderPath).forEach(file => {
+                if (!fs.lstatSync(folderPath + '/' + file).isDirectory()) {
+                    files.push(file);
+                    count += 1;
+                }
+            });
+            filesInPhase = count;
+
+            Phase.findById(idPhase).then(phase => {
+                res.render('ogp/ogp-documents-phase', {
+                    title: 'Anatomik - Documents ' + project.name,
+                    user: user,
+                    project: project,
+                    phases: phases,
+                    phase: phase,
+                    subphases: subphases,
+                    files: files,
+                    phaseId: idPhase,
+                    projectId: idProject,
+                    filesInPhase: filesInPhase
+                });
             });
         });
-    });
+    } else {
+        res.redirect('/');
+    }
 });
 
-router.post('/ogp/add_members/:id_project?', isAuthentificated, (req, res) => {
-    Project.findById(req.params.id_project)
-        .populate("projects")
-        .populate('associationResponsible')
-        .populate("phases")
-        .populate("subphases")
-        .populate('users')
-        .then(project => {
-            project.users = req.body.users
 
-            return project.save();
-        })
-        .then(() => {
-            res.redirect("/ogp/" + req.params.id_project);
-        });
-})
+router.post('/ogp/add_members/:id_project?', isAuthentificated, (req, res) => {
+    const user = usr;
+
+    if (user.organizationType == "Association") {
+        Project.findById(req.params.id_project)
+            .populate("projects")
+            .populate('associationResponsible')
+            .populate("phases")
+            .populate("subphases")
+            .populate('users')
+            .then(project => {
+                project.users = req.body.users
+
+                return project.save();
+            })
+            .then(() => {
+                res.redirect("/ogp/" + req.params.id_project);
+            });
+    } else {
+        res.redirect('/');
+    }
+});
 
 // Delete member in project
 router.get('/ogp/delete_member/:id_projetct/:id_member', isAuthentificated, (req, res) => {
-    let idProject = req.params.id_projetct
-    let idMember = req.params.id_member
+    let idProject = req.params.id_projetct;
+    let idMember = req.params.id_member;
 
-    Project.findById(idProject).then(project => {
-        let index = project.users.indexOf(idMember);
-        if (index > -1) {
-            project.users.splice(index, 1);
-            return project.save();
-        }
-    }).then(() => {
-        res.redirect("/ogp/" + idProject);
-    });
-})
+    const user = usr;
+
+    if (user.organizationType == "Association") {
+
+        Project.findById(idProject).then(project => {
+            let index = project.users.indexOf(idMember);
+            if (index > -1) {
+                project.users.splice(index, 1);
+                return project.save();
+            }
+        }).then(() => {
+            res.redirect("/ogp/" + idProject);
+        });
+    } else {
+        res.redirect('/');
+    }
+});
 
 /**
  * Uploading documents for projects
  */
 router.post('/ogp/documents/:id_project', isAuthentificated, (req, res) => {
+    const user = usr;
 
     let idProject = req.params.id_project;
     let form = new formidable.IncomingForm();
-    const folderPath = path.join(__dirname, '..', '..', 'project-folders', idProject.toString());
+    const folderPath = path.join(__dirname, '..', 'project-folders', idProject.toString());
 
-    form.parse(req);
+    if (user.organizationType == "Association") {
+        form.parse(req);
 
-    form.on('fileBegin', (name, file) => {
-        file.path = path.join(folderPath, file.name);
-    });
+        form.on('fileBegin', (name, file) => {
+            file.path = path.join(folderPath, file.name);
+        });
 
-    form.on('file', (name, file) => {});
+        form.on('file', (name, file) => {
+            res.redirect('/ogp/documents/' + idProject.toString());
 
-    res.redirect('/ogp/documents/' + idProject.toString());
+        });
+
+    } else {
+        res.redirect('/');
+    }
 
 });
 
@@ -803,18 +837,78 @@ router.post('/ogp/documents/:id_project', isAuthentificated, (req, res) => {
 router.post('/ogp/documents/:id_project/:id_phase', isAuthentificated, (req, res) => {
     const idProject = req.params.id_project;
     const idPhase = req.params.id_phase;
-    const folderPath = path.join(__dirname, '..', '..', 'project-folders', idProject.toString() + '/' + idPhase.toString() + '/');
+    const folderPath = path.join(__dirname, '..', 'project-folders', idProject.toString() + '/' + idPhase.toString() + '/');
     let form = new formidable.IncomingForm();
+    const user = usr;
 
-    form.parse(req);
+    if (user.organizationType == "Association") {
 
-    form.on('fileBegin', (name, file) => {
-        file.path = path.join(folderPath, file.name);
-    });
+        form.parse(req);
 
-    form.on('file', (name, file) => {});
+        form.on('fileBegin', (name, file) => {
+            file.path = path.join(folderPath, file.name);
+        });
 
-    res.redirect('/ogp/documents/' + idProject.toString() + '/' + idPhase.toString());
+        form.on('file', (name, file) => {
+            res.redirect('/ogp/documents/' + idProject.toString() + '/' + idPhase.toString());
+        });
+
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.get('/ogp/archive/:idProject', isAuthentificated, (req, res) => {
+    const user = usr;
+
+    if (user.organizationType == "Association") {
+        Project.findById(req.params.idProject)
+            .then(project => {
+                project.isArchived = true;
+                project.save((err) => {
+                    if (err) console.log(err);
+                    else res.redirect('/ogp');
+                });
+
+            });
+    } else {
+        res.redirect('/');
+    }
+
+});
+
+
+router.get('/ogp/delete-file/:idProject/:idPhase/:filename', isAuthentificated, (req, res) => {
+    let user = usr;
+    let idProject = req.params.idProject;
+    let idPhase = req.params.idPhase;
+    let filename = req.params.filename;
+
+    if (user.organizationType == "Association") {
+        let pathToFile = path.join(__dirname, '..', 'project-folders', idProject.toString(), idPhase.toString(), filename);
+
+        fs.unlinkSync(pathToFile);
+        res.redirect('/ogp/documents/' + idProject + '/' + idPhase);
+
+    } else {
+        res.redirect('/');
+    }
+});
+
+
+router.get('/ogp/delete-file/:idProject/:filename', isAuthentificated, (req, res) => {
+    let user = usr;
+    let idProject = req.params.idProject;
+    let filename = req.params.filename;
+
+    if (user.organizationType == "Association") {
+        let pathToFile = path.join(__dirname, '..', 'project-folders', idProject.toString(), filename);
+
+        fs.unlinkSync(pathToFile);
+        res.redirect('/ogp/documents/' + idProject);
+    } else {
+        res.redirect('/');
+    }
 });
 
 module.exports = router;

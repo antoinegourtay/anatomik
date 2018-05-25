@@ -24,22 +24,24 @@
       </thead>
       <tbody>
         <% etablissements.forEach(function(etablissement) { %>
-          <tr>
-            <%if(etablissement.is_archive === false){%>
-              <td><a href="/etablissement/<%=etablissement.id%>"><%=etablissement.name%></a></td>
-            <%}else{%>
-              <td><%=etablissement.name%></td>
-            <%}%>
-            <%if(user.organizationType === "Anatomik"){%>
-                <%if(etablissement.association.is_archive === true){%>
-                  <td class="hide-on-med-and-down"><%=etablissement.association.name%></td>
-                <%}else{%>
-                <td class="hide-on-med-and-down"><a href="/association/<%=etablissement.association.id%>"><%=etablissement.association.name%></a></td>
+          <%if(etablissement.association.is_archive === false){%>
+            <tr>
+              <%if(etablissement.is_archive === false){%>
+                <td><a href="/etablissement/<%=etablissement.id%>"><%=etablissement.name%></a></td>
+              <%}else{%>
+                <td><%=etablissement.name%></td>
               <%}%>
-            <%}%>
-            <td><a href="/etablissement/edit/<%=etablissement.id%>">Modifier</a></td>
-            <td><a class="modal-trigger" href="#modal1">Archiver</a></td>
-          </tr>
+              <%if(user.organizationType === "Anatomik"){%>
+                  <%if(etablissement.association.is_archive === true){%>
+                    <td class="hide-on-med-and-down"><%=etablissement.association.name%></td>
+                  <%}else{%>
+                  <td class="hide-on-med-and-down"><a href="/association/<%=etablissement.association.id%>"><%=etablissement.association.name%></a></td>
+                <%}%>
+              <%}%>
+              <td><a href="/etablissement/edit/<%=etablissement.id%>">Modifier</a></td>
+              <td><a class="modal-trigger" href="#modal1">Archiver</a></td>
+            </tr>
+          <%}%>
 
           <!-- Modal Structure -->
           <div id="modal1" class="modal">

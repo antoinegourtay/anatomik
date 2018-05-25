@@ -8,9 +8,9 @@
         <div class="singleProject__header">
           <div class="singleProject__header__tab col s12">
             <ul>
-              <li><a href="/ogp">Retour</a></li>
-              <li><a href="/ogp/">Tableau de bord</a></li>
-              <li><a  class="active" href="/ogp/documents">Gestion des documents</a></li>
+              <li><a href="/ogp/documents/<%= project.id %>">Retour</a></li>
+              <li><a href="/ogp/<%= project.id %>"><i data-feather="clipboard"></i>Tableau de bord</a></li>
+              <li><a  class="active" href="/ogp/documents/<%=phase.id%>"><i data-feather="file"></i>Gestion des documents</a></li>
             </ul>
           </div>
         </div>
@@ -20,7 +20,7 @@
             <h2><%= project.name %></h2>
             <div class="singleProject__documents__header__phase">
               <h2><%= phase.name %></h2>
-              <p>12 fichiers attachés</p>
+              <p><%= filesInPhase %> fichiers attachés</p>
             </div>
           </div>
           <div class="singleProject__documents__content">
@@ -41,22 +41,43 @@
             </form>
             <h2>Documents (<%= files.length %>)</h2>
             <div class="singleProject__documents__content__all">
-             <% files.forEach((file)=> { %>
-              <a href="/download-file/<%= projectId %>/<%= phaseId %>/<%= file %>">
-                <div class="singleProject__documents__content__all--item">
-                  <h2><%= file %></h2>
-                  <div class="bar"></div>
-                  <div class="singleProject__documents__content__all--item--footer"><p class="type">Doc</p></div>
-                </div>
-              </a>
-             <% }) %>
 
-
-
-
-
-
+             <table>
+               <thead>
+                 <tr>
+                   <th>Nom du document</th>
+                   <th>Supprimer</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 <% files.forEach((file)=> { %>
+                   <tr>
+                     <td><a href="/download-file/<%= projectId %>/<%= phaseId %>/<%= file %>" download><%= file %></a></td>
+                     <td><a class="waves-effect waves-light  modal-trigger" href="#modal<%=file %>">Supprimer</a></td>
+                   </tr>
+                   <!-- Modal Structure -->
+                   <div id="modal<%=file %>" class="modal">
+                     <div class="modal-content">
+                       <h4>Supprimer ?</h4>
+                       <p>En cliquant sur continuer, vous supprimerez le fichier <%=file%>. Etes vous sur de vouloir continuer ? </p>
+                     </div>
+                     <div class="modal-footer">
+                       <a href="/ogp/delete-file/<%= project.id%>/<%= phase.id%>/<%=file%>" class="modal-action modal-close waves-effect waves-green">OUI</a>
+                       <a href="#!" class="modal-action modal-close waves-effect waves-green ">NON</a>
+                     </div>
+                   </div>
+                 <% }) %>
+               </tbody>
+             </table>
           </div>
       </div>
     </div>
     <%- include('../partials/footer'); %>
+
+    <script type="text/javascript">
+    $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+    });
+
+    </script>

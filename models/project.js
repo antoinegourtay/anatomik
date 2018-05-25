@@ -44,6 +44,9 @@ projectSchema = new mongoose.Schema({
     isArchived: {
         type: Boolean,
         default: false
+    },
+    provisionnalBudget: {
+        type: Number
     }
 });
 

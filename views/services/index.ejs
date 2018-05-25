@@ -8,22 +8,37 @@
         <h1>Aide et services</h1>
       </div>
       <div class="services__header--right">
-        <a href="/service/new_offre"><i data-feather="plus-square"></i>Ajouter un appel à service</a>
-        <a href="/service/new_demande"><i data-feather="plus-square"></i>Ajouter une demande de service</a>
-        <%if (user.organizationType === "Entreprise"){%>
+        <%if (user.organizationType === "Association"){%>
+          <a href="/service/new_offre"><i data-feather="plus-square"></i>Ajouter une proposition de service</a>
+          <a href="/service/new_demande"><i data-feather="plus-square"></i>Ajouter une demande de service</a>
+          <a href="/my-services">Mes appels à service</a>
+          <a href="/services/archives">Mes appels à service terminés</a>
+        <%}else if (user.organizationType === "Anatomik"){%>
+          <a href="/service/new_offre"><i data-feather="plus-square"></i>Ajouter une proposition de service</a>
+          <a href="/my-services">Mes offres de services</a>
+          <a href="/services/archives">Mes offres de services terminés</a>
+        <%}else if (user.organizationType === "Entreprise"){%>
           <a href="/service/new_promotion"><i data-feather="plus-square"></i>Ajouter une promotion</a>
+          <a href="/my-services">Mes promotions</a>
+          <a href="/services/archives">Mes promotions terminées</a>
         <%}%>
-        <a href="/my-services">Mes appels à service</a>
-        <a href="/services/archives">Mes appels à service terminés</a>
+
       </div>
     </div>
+    
 
-
-    <ul id="tabs-swipe-demo" class="tabs">
-      <li class="tab col s3"><a href="#test-swipe-1">Offre de service</a></li>
-      <li class="tab col s3"><a href="#test-swipe-2">Demande de service</a></li>
-      <li class="tab col s3"><a href="#test-swipe-3">Promotion d'entreprise</a></li>
-    </ul>
+    <%if (user.organizationType === "Association" || user.organizationType === "Anatomik"){%>
+      <ul id="tabs-swipe-demo" class="tabs">
+        <li class="tab col s3"><a href="#test-swipe-1">Offres de service</a></li>
+        <li class="tab col s3"><a href="#test-swipe-2">Demandes de service</a></li>
+        <li class="tab col s3"><a href="#test-swipe-3">Promotions d'entreprise</a></li>
+      </ul>
+    <%}else if (user.organizationType === "Entreprise"){%>
+      <ul id="tabs-swipe-demo" class="tabs">
+          <li class="tab col s3"><a href="#test-swipe-2">Demandes de service</a></li>
+          <li class="tab col s3"><a href="#test-swipe-3">Promotions d'entreprise</a></li>
+        </ul>
+      <%}%>
 
     <div class="services__collapsible ">
       <div class="services__collapsible--header">
@@ -35,9 +50,10 @@
       </div>
     </div>
 
+    <%if (user.organizationType === "Association" || user.organizationType === "Anatomik"){%>
     <div id="test-swipe-1" class="col s12 ">
       <% for(var i=0; i<services.length; i++) { %>
-        <%if (services[i].type == 'offre'){%>
+        <%if (services[i].type === "offre"){%>
         <ul class="collapsible" data-collapsible="accordion">
           <li>
             <div class="collapsible-header services__collapsible--visible row">
@@ -73,6 +89,8 @@
           <%}%>
         </ul>
     </div>
+    <%}%>
+
     <div id="test-swipe-2" class="col s12 ">
         <% for(var i=0; i<services.length; i++) { %>
           <%if (services[i].type == 'demande'){%>
@@ -101,8 +119,7 @@
                     <div class="top">
                       <img src="/images/yuna.jpg" class="circle" alt="">
                       <div class="contact">
-                        <p>Role</p>
-                        <p>Pole urgence 91 croix rouge francaise</p>
+                        <p><%= user.poste%></p>
                       </div>
                     </div>
                     <p>Mail : <span><%=services[i].user.email %></span></p>
@@ -110,8 +127,9 @@
                   </div>
                 </div>
               </li>
-              <%}else{}%>
               <%}%>
+              <%}%>
+            </ul>
     </div>
 
     <div id="test-swipe-3" class="col s12 ">
@@ -131,7 +149,7 @@
                           <div class="services__collapsible__hidden__left--lieu">
                             <p>Lieu de l'offre - <span><%= services[i].adresse%></span></p>
                           </div>
-                        <%}%>                    
+                        <%}%>
                     </div>
                     <div class="services__collapsible__hidden__left--description">
                       <h2>description de l'offre</h2>
@@ -142,8 +160,7 @@
                     <div class="top">
                       <img src="/images/yuna.jpg" class="circle" alt="">
                       <div class="contact">
-                        <p>Role</p>
-                        <p>Pole urgence 91 croix rouge francaise</p>
+                        <p><%= user.poste%></p>
                       </div>
                     </div>
                     <p>Mail : <span><%=services[i].user.email %></span></p>
@@ -151,9 +168,10 @@
                   </div>
                 </div>
               </li>
+              <%}else{}%>
+              <%}%>
+            </ul>
             </div>
-            <%}else{}%>
-            <%}%>
     </div>
   </div>
 

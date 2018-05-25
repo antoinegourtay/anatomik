@@ -4,24 +4,38 @@
   <%- include('../partials/sidenav'); %>
 
   <div class="association content">
-  <div id="photoModal" class="modal">
-        <div class="modal-content">
-          <h4>Changer l'image de l'association</h4>
-        </div>
-        <div class="modal-footer">
-          <form class="col s12" method="post" action="/association/photo/<%= association._id %>" enctype="multipart/form-data">
-            <input type="file" name="file">
-            <button class="btn waves-effect waves-light blue" type="submit"  value="Enregistrer" name="action">Submit
-          </form>
-        </div>
-        </div>
     <div class="association__header">
+      <div class="association__header--img">
+        <%if(user.organizationType === "Association" && user.association.id === association.id || user.organizationType === "Anatomik"){%>
+          <div id="photoModal" class="modal">
+            <div class="modal-content">
+              <h4>Changer l'image de l'association</h4>
+            </div>
+            <div class="modal-footer">
+              <form class="col s12" method="post" action="/association/photo/<%= association._id %>" enctype="multipart/form-data">
+                <div class="file-field input-field col s8">
+                  <div class="btn">
+                    <span>Photo de l'association</span>
+                    <input type="file" name="file">
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                  </div>
+                </div>
+                <div class="input-field col s4">
+                  <button class="btn waves-effect waves-light blue" type="submit"  value="Enregistrer" name="action">Valider
+                </div>
+              </form>
+            </div>
+          </div>
+        <%}%>
       <%if (association.logo ){%>
-        <a class="modal-trigger" href="#photoModal"><img src="/images/uploads/<%= association.logo%>" alt="photo de profil" ></a>
+        <a class="modal-trigger" href="#photoModal" style="background-image: url('/images/uploads/<%= association.logo%>');width: 140px; height: 140px;background-size: cover;background-position: center;background-repeat: no-repeat;"></a>
       <%}
       else {%>
         <a class="modal-trigger" href="#photoModal"><img src="/images/AssoNoProfil.png" alt="photo de profil" class="profil"></a>
       <%}%>
+      </div>
       <div class="profil__header__infos">
         <div class="profil__header__infos--left">
           <h3><%= association.name %></h3>
@@ -61,6 +75,12 @@
 
     <div class="association__content row">
       <div class="association__content__left col s12 m12 l6">
+        <%if (association.description){%>
+          <div class="association__content__left__about col s12">
+            <h2>A propos</h2>
+            <p><%= association.description %></p>
+          </div>
+        <%}%>
         <div class="association__content__left__etablissements col s12">
           <h2>Les établissements</h2>
             <% if(etablissements.length >0){%>
@@ -122,7 +142,7 @@
           <div class="association__content__right__informations--top">
             <div class="col s6">
               <p class="line1">Adresse</p>
-              <p class="line2"><%= association.adresse %></p>
+              <p class="line2"><%= association.adresse %><%=association.complement_adresse%></p>
             </div>
               <div class="col s6 right">
                 <p class="line1">ville</p>
@@ -165,13 +185,6 @@
           <div class="association__content__right__siege col s12">
             <h2>Localisation du siège social</h2>
             <div id="map"></div>
-          </div>
-        <%}%>
-
-        <%if (association.description){%>
-          <div class="association__content__right__about col s12">
-            <h2>A propos</h2>
-            <p><%= association.description %></p>
           </div>
         <%}%>
 

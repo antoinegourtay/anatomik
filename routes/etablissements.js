@@ -115,7 +115,7 @@ router.get("/etablissement/new", isAuthentificated, (req, res, next) => {
       user: user
     });
   } else if (user.organizationType === "Anatomik") {
-    Association.find({}).then(associations => {
+    Association.find({}).select({ id: 1, name: 1 }).then(associations => {
       var etablissement = new Etablissement();
       res.render("etablissements/new", {
         title: 'Anatomik - Nouvel établissement',

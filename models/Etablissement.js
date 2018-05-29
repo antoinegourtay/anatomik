@@ -62,6 +62,7 @@ EtablissementSchema.virtual('offers', {
   foreignField: 'etablissement'
 });
 
+
 let Etablissement = mongoose.model('Etablissement', EtablissementSchema);
 
 module.exports = Etablissement;

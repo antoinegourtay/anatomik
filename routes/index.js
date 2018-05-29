@@ -37,16 +37,16 @@ router.get('/cgu', (req, res) => {
       title: 'Anatomik - CGV',
       user: ""
     })
-} else {
+  } else {
     const user = req.user;
     User.findById(user.id).populate('association').populate('etablissement').populate('entreprise').then(user => {
-        usr = user;
-        res.render('cgu', {
-          title: 'Anatomik - CGV',
-          user: user
-        })
+      usr = user;
+      res.render('cgu', {
+        title: 'Anatomik - CGV',
+        user: user
+      })
     });
-}
+  }
 
 })
 
@@ -64,30 +64,30 @@ router.get('/contact', isAuthentificated, (req, res) => {
     title: 'Anatomik - Mentions légales',
     user: user
   })
-})
+});
 
 router.post('/contact', function (req, res) {
   var smtpTransport = nodemailer.createTransport({
-      host: 'send.one.com',
-      port: 465,
-      secure: true, // use SSL
-      auth: {
-          user: 'contact@anatomik.eu',
-          pass: 'spad2306'
-      }
+    host: 'send.one.com',
+    port: 465,
+    secure: true, // use SSL
+    auth: {
+      user: 'contact@anatomik.eu',
+      pass: 'spad2306'
+    }
   });
   var mailOptions = {
-      to: "contact@anatomik.eu",
-      from: "contact@anatomik.eu",
-      subject: 'Formulaire de contact',
-      text: 'De : '+req.body.email+'\nSujet : '+req.body.subject+'\n'+req.body.message
+    to: "contact@anatomik.eu",
+    from: "contact@anatomik.eu",
+    subject: 'Formulaire de contact',
+    text: 'De : ' + req.body.email + '\nSujet : ' + req.body.subject + '\n' + req.body.message
   };
   smtpTransport.sendMail(mailOptions, function (err) {
-      if(err){
-        console.log(err);
-      }else{
-        res.redirect('/')
-      }
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect('/')
+    }
   });
 });
 
@@ -105,8 +105,7 @@ const users = require('./users'),
   entreprises = require('./entreprises'),
   projectManagament = require('./project-management'),
   admin = require('./admin'),
-  archive = require('./archive'),
-  download = require('./download');
+  archive = require('./archive');
 
 router.use(users);
 router.use(offers);
@@ -118,6 +117,5 @@ router.use(entreprises);
 router.use(projectManagament);
 router.use(admin);
 router.use(archive);
-router.use(download);
 
 module.exports = router;

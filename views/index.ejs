@@ -104,30 +104,30 @@
               <h3>Aide et services</h3>
           </div>
           <% if(user.role === "Admin"){%>
-            <div class="dashboard__items--item second col s6 m4 l4" onclick="location.href='/users/show'">
+            <div class="dashboard__items--item  col s6 m4 l4" onclick="location.href='/users/show'">
                 <img id="gestionMembres" src="/images/dashboardGestionMembreWhite.svg" alt="">
                 <h3>Gestion des membres</h3>
             </div>
           <% }%>
           <% if(user.organizationType === "Anatomik"){ %>
-          <div class="dashboard__items--item second col s6 m4 l4" onclick="location.href='/associations/show'">
+          <div class="dashboard__items--item  col s6 m4 l4" onclick="location.href='/associations/show'">
             <img id="gestionAssos" src="/images/dashboardGestionAssosWhite.svg" alt="">
             <h3>Gestion des associations</h3>
           </div>
           <%}%>
           <% if(user.organizationType === "Anatomik" || user.organizationType === "Association" && user.role === "Admin"){ %>
-          <div class="dashboard__items--item second col s6 m4 l4" onclick="location.href='/etablissements/show'">
+          <div class="dashboard__items--item  col s6 m4 l4" onclick="location.href='/etablissements/show'">
               <img id="gestionEtablissements" src="/images/dashboardGestionEtablissementsWhite.svg" alt="">
               <h3>Gestion des établissements</h3>
           </div>
           <%}%>
           <% if(user.organizationType === "Anatomik"){ %>
-          <div class="dashboard__items--item second col s6 m4 l4" onclick="location.href='/entreprises/show'">
+          <div class="dashboard__items--item  col s6 m4 l4" onclick="location.href='/entreprises/show'">
               <img id="gestionEntreprises" src="/images/dashboardGestionEntreprisesWhite.svg" alt="">
               <h3>Gestion des entreprises</h3>
           </div>
           <%}%>
-          <div class="dashboard__items--item second col s6 m4 l4" onclick="location.href='/coming_soon/'">
+          <div class="dashboard__items--item  col s6 m4 l4" onclick="location.href='/coming_soon/'">
               <img id="messagerie" src="/images/dashboardMessagerieWhite.svg" alt="">
               <h3>Messagerie</h3>
           </div>

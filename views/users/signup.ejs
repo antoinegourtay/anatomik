@@ -44,8 +44,9 @@
           <div class="signup__form--organisation">
             <p>Choisissez votre type d'organisation</p>
             <select  class="validate required" name="organizationType" id="selectid" onchange="mireille()" data-error="errorOrganizationType">
-              <option value="Entreprise">Entreprise</option>
+              <option value="Anatomik">Anatomik</option>
               <option value="Association">Association</option>
+              <option value="Entreprise">Entreprise</option>
             </select>
             <label>Type d'organisation</label>
             <div class="errorOrganizationType"></div>
@@ -121,6 +122,10 @@
     else if (document.getElementById('selectid').value == "Association") {
       document.getElementById('association').style.display = "block";
       document.getElementById('entreprise').style.display = "none";
+    }
+    else if (document.getElementById('selectid').value == "Anatomik") {
+      document.getElementById('entreprise').style.display = "none";
+      document.getElementById('association').style.display = "none";
     }
   }
 

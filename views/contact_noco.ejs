@@ -1,0 +1,75 @@
+<%- include('./partials/header_noco'); %>
+  <div class="row">
+    <div class="contact content">
+      <div class="contact__form">
+        <h4>Contactez nous</h4>
+        <form class="col s12" id="formValidate" action="/contact" method="post">
+          <div class="input-field col s12">
+            <label for="email">Email *</label>
+            <input class="validate" type="text" id="email" name="email" data-error=".errorEmail">
+            <div class="errorEmail"></div>
+          </div>
+          <div class="input-field col s12">
+            <label for="subject">Objet</label>
+            <input class="validate" type="text" id="subject" name="subject" data-error=".errorSubject">
+            <div class="errorSubject"></div>
+          </div>
+
+          <div class="input-field col s12">
+            <label for="message">Message</label>
+            <textarea name="message" id="message"  class="materialize-textarea validate" data-error=".errorMessage"></textarea>
+            <div class="errorMessage"></div>
+          </div>
+          <div class="input-field col s12">
+            <button class="btn waves-effect waves-light blue" type="submit"  value="Enregistrer" name="action">Envoyer
+              <i class="material-icons right">send</i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <%- include('./partials/footer'); %>
+
+
+  <script type="text/javascript">
+
+    $("#formValidate").validate({
+     rules: {
+         email: {
+             required: true,
+         },
+         subject: {
+             required: true,
+             minlength: 5
+         },
+         message: {
+           required: true,
+           minlength: 15
+         },
+     },
+     //For custom messages
+     messages: {
+         email:{
+             required: "Vous devez saisir votre adresse email",
+         },
+         subject:{
+             required: "Vous devez saisir l'objet de votre message",
+             minlength: "l'objet de votre message doit comporter au minimum 5 caractères"
+         },
+         message:{
+             required: "Saisissez votre message",
+             minlength: "Votre message doit comporter au minimum 15 caractères"
+         },
+     },
+     errorElement : 'div',
+     errorPlacement: function(error, element) {
+       var placement = $(element).data('error');
+       if (placement) {
+         $(placement).append(error)
+       } else {
+         error.insertAfter(element);
+       }
+     }
+  });
+  </script>

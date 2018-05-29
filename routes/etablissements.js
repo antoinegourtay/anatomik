@@ -14,7 +14,7 @@ router.get("/etablissements/show/:page?", isAuthentificated, (req, res, next) =>
     Etablissement.find({
         is_archive: false
       })
-      .populate('association')
+      .populate({path: 'association',select: '_id name is_archive'})
       .skip((perPage * page) - perPage)
       .limit(perPage)
       .sort({
@@ -22,6 +22,8 @@ router.get("/etablissements/show/:page?", isAuthentificated, (req, res, next) =>
       })
       .exec(function (err, etablissements) {
         Etablissement.count().exec(function (err, count) {
+
+          console.log(etablissements)
           res.render("etablissements/index", {
             title: 'Anatomik - Etablissements',
             etablissements: etablissements,
@@ -33,9 +35,10 @@ router.get("/etablissements/show/:page?", isAuthentificated, (req, res, next) =>
       })
   } else if (user.organizationType === "Association" && user.role === "Admin") {
     Etablissement.find({
-        association: user.association.id,
-        is_archive: false
+        is_archive: false,
+        association: user.association.id
       })
+      .populate({path: 'association',select: '_id name is_archive'})
       .skip((perPage * page) - perPage)
       .limit(perPage)
       .sort({
@@ -43,6 +46,7 @@ router.get("/etablissements/show/:page?", isAuthentificated, (req, res, next) =>
       })
       .exec(function (err, etablissements) {
         Etablissement.count().exec(function (err, count) {
+          console.log(etablissements)
           res.render("etablissements/index", {
             title: 'Anatomik - Etablissements',
             etablissements: etablissements,
@@ -63,7 +67,7 @@ router.get("/etablissements/archives/:page?", isAuthentificated, (req, res, next
     Etablissement.find({
         is_archive: true
       })
-      .populate('association')
+      .populate({path: 'association',select: '_id name is_archive'})
       .skip((perPage * page) - perPage)
       .limit(perPage)
       .sort({
@@ -85,6 +89,7 @@ router.get("/etablissements/archives/:page?", isAuthentificated, (req, res, next
         association: user.association.id,
         is_archive: true
       })
+      .populate({path: 'association',select: '_id name is_archive'})
       .skip((perPage * page) - perPage)
       .limit(perPage)
       .sort({

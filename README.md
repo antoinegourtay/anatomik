@@ -12,6 +12,9 @@ These are the X steps to launch the project :
 * ``` brew services start mongodb ```
 * ``` make run ```
 
+To Lauch CSS :
+* ``` gulp ```
+
 
 If you want to restart the server during the developement, type ``` rs ``` in the terminal.
 If you want to stop the mongodb service, type ``` brew services stop mongodb ``` 
@@ -36,11 +39,7 @@ For gitmojis significations, follow this [link](http://gitmoji.carloscuesta.me)
 * Project
 * Service
 * Subphases 
-* Users : 
-
-## Controllers
-
-## Views
+* Users
 
 ## Organisation
 On retrouve 3 types d'organisations : Anatomik, Association et Entreprise. 

@@ -41,7 +41,7 @@
     <div class="services__collapsible ">
       <div class="services__collapsible--header">
         <ul class="row">
-          <li class="col s4">Nom </li>
+          <li class="col s4">Objet</li>
           <li class="col s4">Date de début</li>
           <li class="col s4">Date de fin</li>
         </ul>
@@ -73,9 +73,14 @@
               </div>
               <div class="services__collapsible__hidden__right--contact col s12 m3 offset-m1">
                 <div class="top">
-                  <img src="/images/yuna.jpg" class="circle" alt="">
+                  <%if (services[i].user.photo_profil ){%>
+                    <img src="/images/uploads/<%= services[i].user.photo_profil%>" alt="photo de profil" >
+                  <%}
+                  else {%>
+                    <img src="/images/PhotoNoProfil.png" alt="photo de profil" class="profil circle" style="background:#dadada;">
+                  <%}%>
                   <div class="contact">
-                    <p><%= user.poste%></p>
+                    <p><%= services[i].user.poste%></p>
                   </div>
                 </div>
                 <p>Mail : <span><%=services[i].user.email %></span></p>
@@ -114,9 +119,14 @@
                   </div>
                   <div class="services__collapsible__hidden__right--contact col s12 m3 offset-m1">
                     <div class="top">
-                      <img src="/images/yuna.jpg" class="circle" alt="">
+                      <%if (services[i].user.photo_profil ){%>
+                        <img src="/images/uploads/<%= services[i].user.photo_profil%>" alt="photo de profil" >
+                      <%}
+                      else {%>
+                        <img src="/images/PhotoNoProfil.png" alt="photo de profil" class="profil circle" style="background:#dadada;">
+                      <%}%>
                       <div class="contact">
-                        <p><%= user.poste%></p>
+                        <p><%= services[i].user.poste%></p>
                       </div>
                     </div>
                     <p>Mail : <span><%=services[i].user.email %></span></p>
@@ -154,9 +164,14 @@
                   </div>
                   <div class="services__collapsible__hidden__right--contact col s12 m3 offset-m1">
                     <div class="top">
-                      <img src="/images/yuna.jpg" class="circle" alt="">
+                      <%if (services[i].user.photo_profil ){%>
+                        <img src="/images/uploads/<%= services[i].user.photo_profil%>" alt="photo de profil" >
+                      <%}
+                      else {%>
+                        <img src="/images/PhotoNoProfil.png" alt="photo de profil" class="profil circle" style="background:#dadada;">
+                      <%}%>
                       <div class="contact">
-                        <p><%= user.poste%></p>
+                        <p><%= services[i].user.poste%></p>
                       </div>
                     </div>
                     <p>Mail : <span><%=services[i].user.email %></span></p>

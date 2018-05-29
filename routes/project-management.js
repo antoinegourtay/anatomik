@@ -11,7 +11,10 @@ const express = require('express'),
     getSubphases = require('./utils/getSubphases'),
     mkdirp = require('mkdirp'),
     isDirectory = source => fs.lstatSync(source).isDirectory(),
-    formidable = require('formidable');
+    formidable = require('formidable'),
+    Client = require('ftp');
+
+
 
 const User = require('../models/users'),
     Project = require('../models/project'),
@@ -19,6 +22,18 @@ const User = require('../models/users'),
     Phase = require('../models/phases'),
     Subphase = require('../models/subphases'),
     Entreprise = require('../models/Entreprise');
+
+/**
+ * Configuration of ftp module
+ */
+const ftpClientOptions = {
+    host: 'ftp.cluster003.ovh.net',
+    port: 21,
+    user: 'antoinegiq',
+    password: 'Handball72',
+    keepalive: 10000
+};
+
 
 /**
  * This function checks if a the element passed is in the array in argument
@@ -114,6 +129,13 @@ router.post('/ogp/create', isAuthentificated, (req, res) => {
     let startDate = new Date(sY + "-" + sM + "-" + sD);
     let endDate = new Date(eY + "-" + eM + "-" + eD);
 
+    /**
+     * Connection to ftp
+     */
+    const client = new Client();
+    client.connect(ftpClientOptions);
+
+
     if (user.organizationType == "Association") {
 
         if (endDate < startDate || endDate === startDate) {
@@ -143,10 +165,6 @@ router.post('/ogp/create', isAuthentificated, (req, res) => {
         project.provisionnalBudget = req.body.provisionnalbudget;
 
         project.save();
-
-        mkdirp(dir + '/' + createdProjectId.toString(), err => {
-            if (err) console.log(err);
-        });
 
         for (let i = 0; i < req.body.etape.length; i++) {
             let newPhase = new Phase();
@@ -202,8 +220,11 @@ router.post('/ogp/create', isAuthentificated, (req, res) => {
 
             newPhase.save();
 
-            mkdirp(dir + '/' + createdProjectId.toString() + "/" + newPhaseId.toString(), err => {
-                if (err) console.log(err);
+            client.on('ready', () => {
+                client.mkdir('/project-folders/' + createdProjectId.toString() + '/' + newPhaseId.toString(), true, (err) => {
+                    if (err) throw err
+                    client.end();
+                });
             });
 
             for (let j = 0; j < req.body.etape[i].sous_phase.length; j++) {
@@ -361,8 +382,6 @@ router.post('/ogp/edit/:id_project', isAuthentificated, (req, res) => {
     let projectPhases = [];
     let creadtedProject;
 
-
-
     let sY = (req.body.date_debut_submit).substring(0, 4);
     let sM = (req.body.date_debut_submit).substring(5, 7);
     let sD = (req.body.date_debut_submit).substring(8);
@@ -379,6 +398,9 @@ router.post('/ogp/edit/:id_project', isAuthentificated, (req, res) => {
      */
     let subphasesInForm = [];
     let phasesInForm = [];
+
+    const client = new Client();
+    client.connect(ftpClientOptions);
 
     if (user.organizationType == "Anatomik" || user.organizationType == "Association") {
         Project.findById(projectId)
@@ -470,12 +492,18 @@ router.post('/ogp/edit/:id_project', isAuthentificated, (req, res) => {
                     newPhase.entreprise = req.body.etape[i].entreprise_select;
                 }
 
-                mkdirp(dir + "/" + projectId.toString() + "/" + newPhase._id.toString(), '777', err => {
-                    if (err) console.log(err);
-                });
-
                 phasesInForm.push(newPhase._id.toString());
                 newPhase.save();
+
+                /**
+                 * Create a new folder on FTP
+                 */
+                client.on('ready', () => {
+                    client.mkdir('/project-folders/' + projectId.toString() + '/' + newPhase._id.toString(), true, (err) => {
+                        if (err) throw err
+                        client.end();
+                    });
+                });
 
                 if (req.body.etape[i].sous_phase) {
                     for (let j = 0; j < req.body.etape[i].sous_phase.length; j++) {
@@ -517,7 +545,7 @@ router.post('/ogp/edit/:id_project', isAuthentificated, (req, res) => {
                             subphasesInForm.push(newSubPhase._id.toString());
 
                             newSubPhase.save((err) => {
-                                if (err) console.log(err);
+                                if (err) throw err
                             });
                         } else {
 
@@ -604,7 +632,7 @@ router.post('/ogp/edit/:id_project', isAuthentificated, (req, res) => {
                                     subphasesInForm.push(newSubPhase._id.toString());
 
                                     newSubPhase.save((err) => {
-                                        if (err) console.log(err);
+                                        if (err) throw err
                                     });
                                 } else {
 
@@ -623,7 +651,7 @@ router.post('/ogp/edit/:id_project', isAuthentificated, (req, res) => {
                                     for (let y = 0; y < subphasesInProject.length; y++) {
                                         if (!contains(subphasesInForm, subphasesInProject[y]._id.toString())) {
                                             Subphase.findByIdAndRemove(subphasesInProject[y]._id, (err, subphase) => {
-                                                if (err) console.log(err);
+                                                if (err) throw err
                                             });
                                         }
                                     }
@@ -631,7 +659,7 @@ router.post('/ogp/edit/:id_project', isAuthentificated, (req, res) => {
                                     for (let z = 0; z < phasesInProject.length; z++) {
                                         if (!contains(phasesInForm, phasesInProject[z]._id.toString())) {
                                             Phase.findByIdAndRemove(phasesInProject[z]._id, (err, phase) => {
-                                                if (err) console.log(err);
+                                                if (err) throw err
                                             });
                                         }
                                     }
@@ -653,110 +681,9 @@ router.post('/ogp/edit/:id_project', isAuthentificated, (req, res) => {
 
 });
 
-/**
- * Get documents for a project
+/***************************************************************
+ *  Documents management
  */
-router.get('/ogp/documents/:id_project', isAuthentificated, (req, res) => {
-    const idProject = req.params.id_project;
-    const user = usr;
-    const folderPath = path.join(__dirname, '..', 'project-folders', idProject.toString() + '/');
-
-    let files = [];
-    let filesInEachPhases = [];
-
-    if (user.organizationType == "Association") {
-        Project.findById(idProject).populate('phases').populate('subphases').then(project => {
-            let phases = project.phases;
-            let subphases = project.subphases;
-
-            for (let i = 0; i < phases.length; i++) {
-                let count = 0;
-                const folderPath = path.join(__dirname, '..', 'project-folders', idProject.toString(), phases[i].id.toString());
-
-                fs.readdirSync(folderPath).forEach(file => {
-                    if (!fs.lstatSync(folderPath + '/' + file).isDirectory()) {
-                        count += 1;
-                    }
-                });
-
-                filesInEachPhases.push(count);
-            }
-
-            const projectPath = path.join(__dirname, '..', 'project-folders', idProject.toString());
-
-            fs.readdirSync(projectPath).forEach(file => {
-                if (!fs.lstatSync(folderPath + '/' + file).isDirectory()) {
-                    files.push(file);
-                }
-            });
-
-
-
-            res.render('ogp/ogp-documents', {
-                title: 'Anatomik - Documents ' + project.name,
-                user: user,
-                project: project,
-                phases: phases,
-                subphases: subphases,
-                files: files,
-                projectId: idProject,
-                filesInEachPhases: filesInEachPhases
-            });
-        });
-    } else {
-        res.redirect('/');
-    }
-});
-
-/**
- * Get documents for a specific phase
- */
-router.get('/ogp/documents/:id_project/:id_phase', isAuthentificated, (req, res) => {
-    const idProject = req.params.id_project;
-    const idPhase = req.params.id_phase;
-    const user = usr;
-    const folderPath = path.join(__dirname, '..', 'project-folders', idProject.toString() + '/' + idPhase.toString() + '/');
-
-    let files = [];
-    let filesInPhase;
-
-    if (user.organizationType == "Association") {
-        Project.findById(idProject).populate('phases').populate('subphases').then(project => {
-            let phases = project.phases;
-            let subphases = project.subphases;
-
-            let count = 0;
-            const folderPath = path.join(__dirname, '..', 'project-folders', idProject.toString(), idPhase.toString());
-
-            fs.readdirSync(folderPath).forEach(file => {
-                if (!fs.lstatSync(folderPath + '/' + file).isDirectory()) {
-                    files.push(file);
-                    count += 1;
-                }
-            });
-            filesInPhase = count;
-
-            Phase.findById(idPhase).then(phase => {
-                res.render('ogp/ogp-documents-phase', {
-                    title: 'Anatomik - Documents ' + project.name,
-                    user: user,
-                    project: project,
-                    phases: phases,
-                    phase: phase,
-                    subphases: subphases,
-                    files: files,
-                    phaseId: idPhase,
-                    projectId: idProject,
-                    filesInPhase: filesInPhase
-                });
-            });
-        });
-    } else {
-        res.redirect('/');
-    }
-});
-
-
 router.post('/ogp/add_members/:id_project?', isAuthentificated, (req, res) => {
     const user = usr;
 
@@ -796,7 +723,111 @@ router.get('/ogp/delete_member/:id_projetct/:id_member', isAuthentificated, (req
                 return project.save();
             }
         }).then(() => {
-            res.redirect("/ogp/" + idProject);
+            res.redirect(`/ogp/${idProject.toString()}`);
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+
+/**
+ * Get documents for a project
+ */
+router.get('/ogp/documents/:id_project', isAuthentificated, (req, res) => {
+    const idProject = req.params.id_project;
+    const user = usr;
+    const folderPath = path.join('project-folders', idProject.toString());
+    const client = new Client();
+
+    let files = [];
+    let filesInEachPhases = [];
+
+    if (user.organizationType == "Association") {
+        Project.findById(idProject).populate('phases').populate('subphases').then(project => {
+            let phases = project.phases;
+            let subphases = project.subphases;
+
+            client.on('ready', () => {
+                client.list(folderPath, (err, list) => {
+                    if(list) {
+                        for (let i = 0; i < list.length; i++) {
+                            if (list[i].type === '-') {
+                                files.push(list[i].name);
+                            }
+                        }
+                    }
+
+                    client.end();
+
+                    res.render('ogp/ogp-documents', {
+                        title: 'Anatomik - Documents ' + project.name,
+                        user: user,
+                        project: project,
+                        phases: phases,
+                        subphases: subphases,
+                        files: files,
+                        projectId: idProject,
+                        filesInEachPhases: filesInEachPhases
+                    });
+                });
+            });
+
+            client.connect(ftpClientOptions);
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+/**
+ * Get documents for a specific phase
+ */
+router.get('/ogp/documents/:id_project/:id_phase', isAuthentificated, (req, res) => {
+    const idProject = req.params.id_project;
+    const idPhase = req.params.id_phase;
+    const user = usr;
+    const folderPath = path.join('project-folders', idProject.toString(), idPhase.toString());
+    const client = new Client();
+
+    let files = [];
+    let filesInPhase;
+
+    if (user.organizationType == "Association") {
+        Project.findById(idProject).populate('phases').populate('subphases').then(project => {
+            let phases = project.phases;
+            let subphases = project.subphases;
+
+            client.on('ready', () => {
+                client.list(folderPath, (err, list) => {
+                    if(list) {
+                        for (let i = 0; i < list.length; i++) {
+                            if (list[i].type === '-') {
+                                files.push(list[i].name);
+                            }
+                        }
+                    }
+
+                    client.end();
+
+                    Phase.findById(idPhase).then(phase => {
+                        res.render('ogp/ogp-documents-phase', {
+                            title: 'Anatomik - Documents ' + project.name,
+                            user: user,
+                            project: project,
+                            phases: phases,
+                            phase: phase,
+                            subphases: subphases,
+                            files: files,
+                            phaseId: idPhase,
+                            projectId: idProject,
+                            filesInPhase: files.length
+                        });
+                    });
+                });
+            });
+
+            client.connect(ftpClientOptions);
         });
     } else {
         res.redirect('/');
@@ -811,19 +842,29 @@ router.post('/ogp/documents/:id_project', isAuthentificated, (req, res) => {
 
     let idProject = req.params.id_project;
     let form = new formidable.IncomingForm();
-    const folderPath = path.join(__dirname, '..', 'project-folders', idProject.toString());
+    const folderPath = path.join('project-folders', idProject.toString());
+    const client = new Client();
 
     if (user.organizationType == "Association") {
-        form.parse(req);
 
-        form.on('fileBegin', (name, file) => {
-            file.path = path.join(folderPath, file.name);
+        client.on('ready', () => {
+            form.parse(req, (err, fields, files) => {
+                if(err) throw err;
+                // oldpath : temporary folder to which file is saved to
+                var oldpath = files.file.path;
+                var newpath = `${folderPath}/${files.file.name}`;
+
+                // copy the file to a new location
+                client.put(oldpath, newpath, (err) => {
+                  if (err) throw err;
+                  client.end();
+                });
+
+                res.redirect(`/ogp/documents/${idProject.toString()}`);
+            });
         });
 
-        form.on('file', (name, file) => {
-            res.redirect('/ogp/documents/' + idProject.toString());
-
-        });
+        client.connect(ftpClientOptions);
 
     } else {
         res.redirect('/');
@@ -837,27 +878,41 @@ router.post('/ogp/documents/:id_project', isAuthentificated, (req, res) => {
 router.post('/ogp/documents/:id_project/:id_phase', isAuthentificated, (req, res) => {
     const idProject = req.params.id_project;
     const idPhase = req.params.id_phase;
-    const folderPath = path.join(__dirname, '..', 'project-folders', idProject.toString() + '/' + idPhase.toString() + '/');
+    const folderPath = path.join('project-folders', idProject.toString(), idPhase.toString());
     let form = new formidable.IncomingForm();
     const user = usr;
+    const client = new Client();
 
     if (user.organizationType == "Association") {
 
-        form.parse(req);
+        client.on('ready', () => {
+            form.parse(req, (err, fields, files) => {
+                if(err) throw err;
+                // oldpath : temporary folder to which file is saved to
+                var oldpath = files.file.path;
+                var newpath = `${folderPath}/${files.file.name}`;
 
-        form.on('fileBegin', (name, file) => {
-            file.path = path.join(folderPath, file.name);
+                // copy the file to a new location
+                client.put(oldpath, newpath, (err) => {
+                  if (err) throw err;
+                  client.end();
+                });
+
+                res.redirect(`/ogp/documents/${idProject.toString()}/${idPhase.toString()}`);
+            });
         });
 
-        form.on('file', (name, file) => {
-            res.redirect('/ogp/documents/' + idProject.toString() + '/' + idPhase.toString());
-        });
+        client.connect(ftpClientOptions);
 
     } else {
         res.redirect('/');
     }
 });
 
+
+/**
+ * Archive project
+ */
 router.get('/ogp/archive/:idProject', isAuthentificated, (req, res) => {
     const user = usr;
 
@@ -866,7 +921,7 @@ router.get('/ogp/archive/:idProject', isAuthentificated, (req, res) => {
             .then(project => {
                 project.isArchived = true;
                 project.save((err) => {
-                    if (err) console.log(err);
+                    if (err) throw err
                     else res.redirect('/ogp');
                 });
 
@@ -877,38 +932,99 @@ router.get('/ogp/archive/:idProject', isAuthentificated, (req, res) => {
 
 });
 
-
+/**
+ * Deleting documents for phases
+ */
 router.get('/ogp/delete-file/:idProject/:idPhase/:filename', isAuthentificated, (req, res) => {
     let user = usr;
     let idProject = req.params.idProject;
     let idPhase = req.params.idPhase;
     let filename = req.params.filename;
+    const client = new Client();
 
     if (user.organizationType == "Association") {
-        let pathToFile = path.join(__dirname, '..', 'project-folders', idProject.toString(), idPhase.toString(), filename);
+        let pathToFile = path.join('project-folders', idProject.toString(), idPhase.toString(), filename);
 
-        fs.unlinkSync(pathToFile);
-        res.redirect('/ogp/documents/' + idProject + '/' + idPhase);
+        client.on('ready', () => {
+            client.delete(pathToFile, (err) => {
+                if (err) throw err
+                client.end();
+                res.redirect('/ogp/documents/' + idProject + '/' + idPhase);
+            });
+        });
+
+      client.connect(ftpClientOptions);
 
     } else {
         res.redirect('/');
     }
 });
 
-
+/**
+ * Deleting documents for project
+ */
 router.get('/ogp/delete-file/:idProject/:filename', isAuthentificated, (req, res) => {
     let user = usr;
     let idProject = req.params.idProject;
     let filename = req.params.filename;
+    const client = new Client();
 
     if (user.organizationType == "Association") {
-        let pathToFile = path.join(__dirname, '..', 'project-folders', idProject.toString(), filename);
+        let pathToFile = path.join('project-folders', idProject.toString(), filename);
 
-        fs.unlinkSync(pathToFile);
-        res.redirect('/ogp/documents/' + idProject);
+        client.on('ready', () => {
+            client.delete(pathToFile, (err) => {
+                if (err) throw err
+                client.end();
+                res.redirect('/ogp/documents/' + idProject);
+            });
+        });
+
+        client.connect(ftpClientOptions);
+
     } else {
         res.redirect('/');
     }
+});
+
+/**
+ * Downloading documents for projects
+ */
+router.get('/download-file/:idProject/:filename', isAuthentificated, (req, res) => {
+    const filePath = path.join('project-folders', req.params.idProject, req.params.filename);
+    const client = new Client();
+
+    client.on('ready', () => {
+        client.get(filePath, (err, stream) => {
+            if (err) throw err
+            stream.once('close', () => {
+                client.end()
+            });
+            stream.pipe(res);
+        });
+    });
+
+    client.connect(ftpClientOptions);
+
+});
+
+/**
+ * Downloading documents for phases
+ */
+router.get('/download-file/:idProject/:idPhase/:filename', isAuthentificated, (req, res) => {
+    const filePath = path.join('project-folders', req.params.idProject, req.params.idPhase, req.params.filename);
+    const client = new Client();
+
+    client.on('ready', () => {
+        client.get(filePath, (err, stream) => {
+            if (err) throw err
+            stream.once('close', () => {
+                client.end()
+            });
+            stream.pipe(res);
+        });
+    });
+    client.connect(ftpClientOptions);
 });
 
 module.exports = router;

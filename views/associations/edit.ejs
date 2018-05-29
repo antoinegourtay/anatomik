@@ -7,29 +7,29 @@
       <div class="row white">
         <div class="input-field col s12">
           <label for="name">Nom de l'association *</label>
-          <input class="validate" placeholder="La croix rouge" type="text" id="name" name="name" value="<%= association.name %>" data-error=".errorName">
+          <input class="validate" type="text" id="name" name="name" value="<%= association.name %>" data-error=".errorName">
           <div class="errorName"></div>
         </div>
         <div class="input-field col s6">
           <label for="adresse">Adresse *</label>
-          <input class="validate" placeholder="3 rue des mauvais garcons" type="text" id="adresse" name="adresse" value="<%= association.adresse %>" data-error=".errorAdress">
+          <input class="validate" type="text" id="adresse" name="adresse" value="<%= association.adresse %>" data-error=".errorAdress">
           <div class="errorAdress"></div>
         </div>
         
         <div class="input-field col s6">
           <label for="adresse">Complément d'adresse</label>
-          <input class="validate" type="text" placeholder="" name="complement_adresse" value="<%= association.complement_adresse %>" >
+          <input class="validate" type="text"  name="complement_adresse" value="<%= association.complement_adresse %>" >
           <div class="errorAdress"></div>
         </div>
 
         <div class="input-field col s6">
           <label for="code_postal">Code Postal *</label>
-          <input class="validate" placeholder="75004" type="number" id="code_postal" name="code_postal" value="<%= association.code_postal %>" data-error=".errorZip">
+          <input class="validate"  type="number" id="code_postal" name="code_postal" value="<%= association.code_postal %>" data-error=".errorZip">
           <div class="errorZip"></div>
         </div>
         <div class="input-field col s6">
           <label for="ville">Ville *</label>
-          <input class="validate" placeholder="Paris" type="text" id="ville" name="ville" value="<%= association.ville %>" data-error=".errorVille">
+          <input class="validate"  type="text" id="ville" name="ville" value="<%= association.ville %>" data-error=".errorVille">
           <div class="errorVille"></div>
         </div>
         <div class="col s6">
@@ -269,12 +269,12 @@
 
         <div class="input-field col s12">
           <label for="description">Description *</label>
-          <textarea id="description" name="description" placeholder="Fondée en 1864, La Croix-Rouge française est une association loi 1901, reconnue d'utilité publique depuis 1945. La Croix-Rouge française est engagée dans une économie sociale de services à but non lucratif."class="materialize-textarea validate" data-error=".errorDescription"><%= association.description %></textarea>
+          <textarea id="description" name="description" placeholder="Présentez l'association" class="materialize-textarea validate" data-error=".errorDescription"><%= association.description %></textarea>
           <div class="errorDescription"></div>
         </div>
         <div class="input-field col s6">
           <label for="finess">Numéro FINESS</label>
-          <input class="validate" type="text" placeholder="750721334" id="finess" name="finess" value="<%= association.finess %>">
+          <input class="validate" type="text" placeholder="Entrez votre numéro FINESS" id="finess" name="finess" value="<%= association.finess %>">
         </div>
 
         <div class="input-field col s12 validate">
@@ -349,11 +349,11 @@
         </div>
         <div class="input-field col s6">
           <label for="telephone">Téléphone</label>
-          <input class="validate" placeholder="0157926892" type="text" id="telephone" name="telephone" value="<%= association.telephone %>">
+          <input class="validate"  type="text" id="telephone" name="telephone" value="<%= association.telephone %>">
         </div>
         <div class="input-field col s12">
           <label for="name">Email</label>
-          <input class="validate" type="email" id="contact" placeholder="contact@lacroixrouge.fr" name="contact" value="<%= association.contact %>">
+          <input class="validate" type="email" id="contact"  name="contact" value="<%= association.contact %>">
         </div>
         <div class="input-field col s12">
           <label for="date_creation">Date de création</label>
@@ -361,26 +361,26 @@
         </div>
         <div class="input-field col s6">
           <label for="site">Site Internet</label>
-          <input class="validate" type="text" placeholder="http://www.lacroixrouge.fr" id="site" name="site" value="<%= association.site %>">
+          <input class="validate" type="text"  id="site" name="site" value="<%= association.site %>">
         </div>
 
         <div class="input-field col s6">
           <label for="facebook">Facebook</label>
-          <input class="validate" placeholder="https://www.facebook.com/fr.CroixRouge/" type="text" id="facebook" name="facebook" value="<%= association.facebook %>">
+          <input class="validate"  type="text" id="facebook" name="facebook" value="<%= association.facebook %>">
         </div>
 
         <div class="input-field col s6">
           <label for="twitter">Twitter</label>
-          <input class="validate" placeholder="https://twitter.com/CRF53_LAVAL" type="text" id="twitter" name="twitter" value="<%= association.twitter %>">
+          <input class="validate"  type="text" id="twitter" name="twitter" value="<%= association.twitter %>">
         </div>
 
         <div class="input-field col s6">
           <label for="instagram">Instagram</label>
-          <input class="validate" placeholder="https://www.instagram.com/croixrougefr/?hl=fr" type="text" id="instagram" name="instagram" value="<%= association.instagram %>">
+          <input class="validate"  type="text" id="instagram" name="instagram" value="<%= association.instagram %>">
         </div>
         <div class="input-field col s6">
           <label for="linkedin">linkedin</label>
-          <input class="validate" placeholder="https://fr.linkedin.com/company/croix-rouge-fran-aise" type="text" id="linkedin" name="linkedin" value="<%= association.linkedin %>">
+          <input class="validate"  type="text" id="linkedin" name="linkedin" value="<%= association.linkedin %>">
         </div>
 
         <% if(user.organizationType === "Anatomik") {%>

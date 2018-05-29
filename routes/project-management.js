@@ -27,10 +27,10 @@ const User = require('../models/users'),
  * Configuration of ftp module
  */
 const ftpClientOptions = {
-    host: 'ftp.cluster003.ovh.net',
+    host: 'ftp.anatomik.eu',
     port: 21,
-    user: 'antoinegiq',
-    password: 'Handball72',
+    user: 'anatomik.eu',
+    password: '750092306',
     keepalive: 10000
 };
 
@@ -750,7 +750,7 @@ router.get('/ogp/documents/:id_project', isAuthentificated, (req, res) => {
 
             client.on('ready', () => {
                 client.list(folderPath, (err, list) => {
-                    if(list) {
+                    if (list) {
                         for (let i = 0; i < list.length; i++) {
                             if (list[i].type === '-') {
                                 files.push(list[i].name);
@@ -800,7 +800,7 @@ router.get('/ogp/documents/:id_project/:id_phase', isAuthentificated, (req, res)
 
             client.on('ready', () => {
                 client.list(folderPath, (err, list) => {
-                    if(list) {
+                    if (list) {
                         for (let i = 0; i < list.length; i++) {
                             if (list[i].type === '-') {
                                 files.push(list[i].name);
@@ -849,15 +849,15 @@ router.post('/ogp/documents/:id_project', isAuthentificated, (req, res) => {
 
         client.on('ready', () => {
             form.parse(req, (err, fields, files) => {
-                if(err) throw err;
+                if (err) throw err;
                 // oldpath : temporary folder to which file is saved to
                 var oldpath = files.file.path;
                 var newpath = `${folderPath}/${files.file.name}`;
 
                 // copy the file to a new location
                 client.put(oldpath, newpath, (err) => {
-                  if (err) throw err;
-                  client.end();
+                    if (err) throw err;
+                    client.end();
                 });
 
                 res.redirect(`/ogp/documents/${idProject.toString()}`);
@@ -887,15 +887,15 @@ router.post('/ogp/documents/:id_project/:id_phase', isAuthentificated, (req, res
 
         client.on('ready', () => {
             form.parse(req, (err, fields, files) => {
-                if(err) throw err;
+                if (err) throw err;
                 // oldpath : temporary folder to which file is saved to
                 var oldpath = files.file.path;
                 var newpath = `${folderPath}/${files.file.name}`;
 
                 // copy the file to a new location
                 client.put(oldpath, newpath, (err) => {
-                  if (err) throw err;
-                  client.end();
+                    if (err) throw err;
+                    client.end();
                 });
 
                 res.redirect(`/ogp/documents/${idProject.toString()}/${idPhase.toString()}`);
@@ -953,7 +953,7 @@ router.get('/ogp/delete-file/:idProject/:idPhase/:filename', isAuthentificated, 
             });
         });
 
-      client.connect(ftpClientOptions);
+        client.connect(ftpClientOptions);
 
     } else {
         res.redirect('/');
